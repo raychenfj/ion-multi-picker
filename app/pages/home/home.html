@@ -1,0 +1,13 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>Home</ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content padding class="home">
+    <ion-item>
+        <ion-label>Multi Picker</ion-label>
+        <ion-multi-picker item-content [ngModel]="pickerValue"></ion-multi-picker>
+    </ion-item>
+
+    {{pickerValue}}
+</ion-content>
