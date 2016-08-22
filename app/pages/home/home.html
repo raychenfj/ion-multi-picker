@@ -6,7 +6,7 @@
 <ion-content padding class="home">
     <ion-item>
         <ion-label>Multi Picker</ion-label>
-        <ion-multi-picker item-content [ngModel]="pickerValue"></ion-multi-picker>
+        <ion-multi-picker item-content [(ngModel)]="pickerValue" [multiPickerOptions]="multiPickerOptions"></ion-multi-picker>
     </ion-item>
 
     {{pickerValue}}
