@@ -5,9 +5,19 @@
 </ion-header>
 <ion-content padding class="home">
     <ion-item>
-        <ion-label>Multi Picker</ion-label>
-        <ion-multi-picker item-content [(ngModel)]="pickerValue" [multiPickerOptions]="multiPickerOptions"></ion-multi-picker>
+        <ion-label>Independent Picker</ion-label>
+        <ion-multi-picker item-content [multiPickerColumns]="independentColumns"></ion-multi-picker>
     </ion-item>
-
-    {{pickerValue}}
+    <ion-item>
+        <ion-label>Dependent Picker</ion-label>
+        <ion-multi-picker item-content [multiPickerColumns]="dependentColumns"></ion-multi-picker>
+    </ion-item>
+    <ion-item>
+        <ion-label>Disabled Picker</ion-label>
+        <ion-multi-picker item-content [multiPickerColumns]="dependentColumns" [disabled]="true"></ion-multi-picker>
+    </ion-item>
+    <ion-item>
+        <ion-label>Default Value</ion-label>
+        <ion-multi-picker [(ngModel)] = "default" item-content [multiPickerColumns]="dependentColumns"></ion-multi-picker>
+    </ion-item>
 </ion-content>

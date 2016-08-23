@@ -14,8 +14,6 @@ var about_1 = require('../about/about');
 var contact_1 = require('../contact/contact');
 var TabsPage = (function () {
     function TabsPage() {
-        // this tells the tabs component which Pages
-        // should be each tab's root Page
         this.tab1Root = home_1.HomePage;
         this.tab2Root = about_1.AboutPage;
         this.tab3Root = contact_1.ContactPage;

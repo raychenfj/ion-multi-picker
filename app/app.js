@@ -17,8 +17,6 @@ var MyApp = (function () {
         this.platform = platform;
         this.rootPage = tabs_1.TabsPage;
         platform.ready().then(function () {
-            // Okay, so the platform is ready and our plugins are available.
-            // Here you can do any higher level native things you might need.
             ionic_native_1.StatusBar.styleDefault();
         });
     }

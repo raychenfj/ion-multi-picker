@@ -10,15 +10,71 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var ionic_angular_1 = require('ionic-angular');
-var multi_picker_1 = require('../../component/multi-picker/multi-picker');
+var ion_multi_picker_1 = require('../../../ion-multi-picker');
 var HomePage = (function () {
     function HomePage(navCtrl) {
         this.navCtrl = navCtrl;
+        this.default = '1 1-2 1-2-2';
     }
+    HomePage.prototype.ngOnInit = function () {
+        this.dependentColumns = [
+            {
+                options: [{ text: '1', value: '1' },
+                    { text: '2', value: '2' },
+                    { text: '3', value: '3' }]
+            },
+            {
+                options: [{ text: '1-1', value: '1-1', parentVal: '1' },
+                    { text: '1-2', value: '1-2', parentVal: '1' },
+                    { text: '2-1', value: '2-1', parentVal: '2' },
+                    { text: '2-2', value: '2-2', parentVal: '2' },
+                    { text: '3-1', value: '3-1', parentVal: '3' },]
+            },
+            {
+                options: [{ text: '1-1-1', value: '1-1-1', parentVal: '1-1' },
+                    { text: '1-1-2', value: '1-1-2', parentVal: '1-1' },
+                    { text: '1-2-1', value: '1-2-1', parentVal: '1-2' },
+                    { text: '1-2-2', value: '1-2-2', parentVal: '1-2' },
+                    { text: '2-1-1', value: '2-1-1', parentVal: '2-1' },
+                    { text: '2-1-2', value: '2-1-2', parentVal: '2-1' },
+                    { text: '2-2-1', value: '2-2-1', parentVal: '2-2' },
+                    { text: '2-2-2', value: '2-2-2', parentVal: '2-2' },
+                    { text: '3-1-1', value: '3-1-1', parentVal: '3-1' },
+                    { text: '3-1-2', value: '3-1-2', parentVal: '3-1' },]
+            }
+        ];
+        this.independentColumns = [
+            {
+                options: [{ text: '1', value: '1' },
+                    { text: '2', value: '2' },
+                    { text: '3', value: '3' }]
+            },
+            {
+                options: [{ text: '1-1', value: '1-1' },
+                    { text: '1-2', value: '1-2' },
+                    { text: '2-1', value: '2-1' },
+                    { text: '2-2', value: '2-2' },
+                    { text: '3-1', value: '3-1' },]
+            },
+            {
+                options: [{ text: '1-1-1', value: '1-1-1' },
+                    { text: '1-1-2', value: '1-1-2' },
+                    { text: '1-2-1', value: '1-2-1' },
+                    { text: '1-2-2', value: '1-2-2' },
+                    { text: '2-1-1', value: '2-1-1' },
+                    { text: '2-1-2', value: '2-1-2' },
+                    { text: '2-2-1', value: '2-2-1' },
+                    { text: '2-2-2', value: '2-2-2' },
+                    { text: '3-1-1', value: '3-1-1' },
+                    { text: '3-1-2', value: '3-1-2' },]
+            }
+        ];
+        this.cityPickerOption = [];
+    };
     HomePage = __decorate([
         core_1.Component({
             templateUrl: 'build/pages/home/home.html',
-            directives: [multi_picker_1.MultiPicker],
+            directives: [ion_multi_picker_1.MultiPicker],
         }), 
         __metadata('design:paramtypes', [ionic_angular_1.NavController])
     ], HomePage);

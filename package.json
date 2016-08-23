@@ -38,5 +38,27 @@
     "cordova-plugin-statusbar",
     "ionic-plugin-keyboard"
   ],
-  "cordovaPlatforms": []
+  "cordovaPlatforms": [],
+  "version": "1.0.1",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/raychenfj/ion-multi-picker.git"
+  },
+  "keywords": [
+    "ionic",
+    "ionic2",
+    "ios",
+    "picker",
+    "component"
+  ],
+  "author": "raychenfj",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/raychenfj/ion-multi-picker/issues"
+  },
+  "homepage": "https://github.com/raychenfj/ion-multi-picker#readme"
 }

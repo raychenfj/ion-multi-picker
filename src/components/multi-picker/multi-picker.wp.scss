@@ -3,31 +3,31 @@
 // Windows Multi Picker
 // --------------------------------------------------
 
-$datetime-wp-min-width:           45% !default;
+$multi-picker-wp-min-width:           45% !default;
 
-$datetime-wp-padding-top:         $item-wp-padding-top !default;
-$datetime-wp-padding-right:       ($item-wp-padding-right / 2) !default;
-$datetime-wp-padding-bottom:      $item-wp-padding-bottom !default;
-$datetime-wp-padding-left:        $item-wp-padding-left !default;
+$multi-picker-wp-padding-top:         $item-wp-padding-top !default;
+$multi-picker-wp-padding-right:       ($item-wp-padding-right / 2) !default;
+$multi-picker-wp-padding-bottom:      $item-wp-padding-bottom !default;
+$multi-picker-wp-padding-left:        $item-wp-padding-left !default;
 
-$datetime-wp-border-width:        2px !default;
-$datetime-wp-border-color:        $input-wp-border-color !default;
+$multi-picker-wp-border-width:        2px !default;
+$multi-picker-wp-border-color:        $input-wp-border-color !default;
 
-ion-datetime {
-  padding: $datetime-wp-padding-top $datetime-wp-padding-right $datetime-wp-padding-bottom $datetime-wp-padding-left;
+ion-multi-picker {
+  padding: $multi-picker-wp-padding-top $multi-picker-wp-padding-right $multi-picker-wp-padding-bottom $multi-picker-wp-padding-left;
 
-  min-width: $datetime-wp-min-width;
+  min-width: $multi-picker-wp-min-width;
 }
 
-.datetime-text {
+.multi-picker-text {
   padding: 0 8px;
 
   min-height: 3.4rem;
 
-  border: $datetime-wp-border-width solid $datetime-wp-border-color;
+  border: $multi-picker-wp-border-width solid $multi-picker-wp-border-color;
   line-height: 3rem;
 }
 
-.item-datetime ion-label[floating] {
+.item-multi-picker ion-label[floating] {
   transform: translate3d(8px, 41px, 0);
 }

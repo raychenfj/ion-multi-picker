@@ -1,15 +1,10 @@
 import { AfterContentInit, OnInit, Component, EventEmitter, forwardRef, HostListener, Input, OnDestroy, Optional, Output, Provider, ViewEncapsulation } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-
-// import { Config } from '../../config/config';
 import { Picker, PickerController, Form, Item, IONIC_DIRECTIVES } from 'ionic-angular';
-// import { PickerColumn, PickerColumnOption } from '../picker/picker-options';
-// import { dateValueRange, renderDateTime, renderTextFormat, convertFormatToKey, getValueFromFormat, parseTemplate, parseDate, updateDate, DateTimeData, convertDataToISO, daysInMonth, dateSortValue, dateDataSortValue, LocaleData } from 'ionic-angular';
+import {MultiPickerColumn, MultiPickerOption} from './multi-picker-options';
 
 export const MULTI_PICKER_VALUE_ACCESSOR = new Provider(
     NG_VALUE_ACCESSOR, { useExisting: forwardRef(() => MultiPicker), multi: true });
-
-
 
 @Component({
   selector: 'ion-multi-picker',
@@ -35,9 +30,10 @@ export const MULTI_PICKER_VALUE_ACCESSOR = new Provider(
   providers: [MULTI_PICKER_VALUE_ACCESSOR],
   encapsulation: ViewEncapsulation.None,
 })
-export class MultiPicker implements OnInit, AfterContentInit, ControlValueAccessor, OnDestroy {
+
+export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDestroy {
   private _disabled: any = false;
-  private _labelId: string = "90";
+  private _labelId: string = '';
   private _text: string = '';
   private _fn: Function;
   private _isOpen: boolean = false;
@@ -47,8 +43,9 @@ export class MultiPicker implements OnInit, AfterContentInit, ControlValueAccess
    * @private
    */
   id: string;
-
-  columns: any[] = [];
+  /**
+   * @private
+   */
 
   /**
    * @input {string} The text to display on the picker's cancel button. Default: `Cancel`.
@@ -60,23 +57,24 @@ export class MultiPicker implements OnInit, AfterContentInit, ControlValueAccess
    */
   @Input() doneText: string = 'Done';
 
-  @Input() multiPickerOptions: any[] = [];
-
-  // @Input() pickerOptions: any = {};
 
   /**
-   * @output {any} Any expression to evaluate when the datetime selection has changed.
+   * @input
+   */
+  @Input() multiPickerColumns: MultiPickerColumn[] = [];
+
+  /**
+   * @output {any} Any expression to evaluate when the multi picker selection has changed.
    */
   @Output() ionChange: EventEmitter<any> = new EventEmitter();
 
   /**
-   * @output {any} Any expression to evaluate when the datetime selection was cancelled.
+   * @output {any} Any expression to evaluate when the multi pickker selection was cancelled.
    */
   @Output() ionCancel: EventEmitter<any> = new EventEmitter();
 
   constructor(
     private _form: Form,
-    // private _config: Config,
     @Optional() private _item: Item,
     @Optional() private _pickerCtrl: PickerController
   ) {
@@ -103,12 +101,6 @@ export class MultiPicker implements OnInit, AfterContentInit, ControlValueAccess
   private _keyup() {
     if (!this._isOpen) {
       this.open();
-    }
-  }
-
-  ngOnInit() {
-    if (this.columns.length === 0) {
-      this.generateColums(this.multiPickerOptions, 0);
     }
   }
 
@@ -166,73 +158,82 @@ export class MultiPicker implements OnInit, AfterContentInit, ControlValueAccess
    */
   generate(picker: Picker) {
     let values = this._value.split(' ');
-    for (let i = 0; i < this.columns.length; i++) {
-      this.columns[i].selectedIndex = this.columns[i].options.findIndex(option => option.value == values[i]);
-      picker.addColumn(this.columns[i]);
-    }
-    // for (let column of this.columns) {
-    //    picker.addColumn(column);
-    // }
+    this.multiPickerColumns.forEach((col, index) => {
+      if (index > 0) {
+        col.options = col.options.sort((a: MultiPickerOption, b: MultiPickerOption) => {
+          a.parentVal;
+          b.parentVal;
+          if (a.parentVal != b.parentVal) {
+            if (!a.parentVal) {
+              return 1;
+            }
+            if (!b.parentVal) {
+              return -1;
+            } else {
+              return a.parentVal - b.parentVal;
+            }
+          } else {
+            return a.value - b.value;
+          }
+        });
+      }
+      let selectedIndex = col.options.findIndex(option => option.value == values[index]);
+
+
+      let column: any = {
+        name: col.name || index.toString(),
+        options: col.options.map(option => { return { text: option.text, value: option.value, disabled: false } }),
+        selectedIndex: selectedIndex != -1 ? selectedIndex : 0
+      }
+
+      picker.addColumn(column);
+    });
 
     this.divyColumns(picker);
   }
 
-  generateColums(options: any[], level: any) {
-    let column = this.columns.find(column => column.name === level.toString());
-    if (!column) {
-      column = {
-        selectedIndex: 0,
-        name: level.toString(),
-        options: []
+  /**
+   * @private
+   */
+  validate(picker: Picker) {
+    let columns = picker.getColumns();
+    for (let i = 1; i < columns.length; i++) {
+      let curCol = columns[i];
+      let preCol = columns[i - 1];
+      let curOption: MultiPickerOption = curCol.options[curCol.selectedIndex];
+      let preOption: MultiPickerOption = preCol.options[preCol.selectedIndex];
+      let selectedOptionWillChanged: boolean = false;
+      let curParentVal = this.getOptionParentValue(i, curOption);
+      if (curParentVal && curParentVal != preOption.value) {
+        selectedOptionWillChanged = true;
       }
-      this.columns.push(column);
-    }
+      if (selectedOptionWillChanged) {
+        curCol.options.forEach((option: MultiPickerOption, index) => {
+          let parentVal = this.getOptionParentValue(i, option);
+          option.disabled = parentVal != preOption.value || index > curCol.options.findIndex((opt: MultiPickerOption) => this.getOptionParentValue(i, opt) == preOption.value);
+        });
 
-    for (let option of options) {
-      column.options.push({ text: option.text, value: option.value, disabled: false });
-      if (option.options) {
-        this.generateColums(option.options, level + 1)
+        console.log('first', curCol.options);
+
+        break;
+      } else {
+        curCol.options.forEach((option: MultiPickerOption, index) => {
+          let parentVal = this.getOptionParentValue(i, option);
+          option.disabled = parentVal != null && parentVal != preOption.value;
+        });
       }
     }
+    picker.refresh();
+  }
+
+  getOptionParentValue(colIndex, option) {
+    return this.multiPickerColumns[colIndex].options.find(opt => opt.value == option.value).parentVal;
   }
 
   /**
    * @private
    */
-    validate(picker: Picker) {
-    let columns = picker.getColumns();
-    let preOption;
-    let multiPickerOptions = this.multiPickerOptions;
-    for (let column of columns) {
-      let columnChanged: boolean = false;
-      if (column.name != '0' && preOption) {
-        let multiPickerOption = multiPickerOptions.find(option => option.value === preOption.value);
-        for (let option of column.options) {
-          let disabled = multiPickerOption.options.findIndex(subOption => subOption.value === option.value) === -1;
-          if (option.disabled != disabled) {
-            option.disabled = disabled;
-            columnChanged = true;
-          }
-          if (option.disabled) {
-
-          }
-        }
-        if (columnChanged) {
-          // column.selectedIndex = column.options.findIndex(option => option.value === multiPickerOption.options[0].value);
-          break;
-        }
-        multiPickerOptions = multiPickerOption.options;
-      }
-      preOption = column.options[column.selectedIndex];
-    }
-
-    picker.refresh();
-    }
-
-  /**
-   * @private
-   */
-    divyColumns(picker: Picker) {
+  divyColumns(picker: Picker) {
     let pickerColumns = picker.getColumns();
     let columns: number[] = [];
 
@@ -261,115 +262,101 @@ export class MultiPicker implements OnInit, AfterContentInit, ControlValueAccess
         pickerColumns[i].columnWidth = `${col * 12}px`;
       });
     }
-    }
+  }
 
-  //   /**
-  //    * @private
-  //    */
-    setValue(newData: any) {
+  /**
+   * @private
+   */
+  setValue(newData: any) {
     this._value = newData || '';
-    // console.log("setvalue",newData);
-    // this._value=``;
-    // this.columns.forEach(column=>{
-    //   this._value += `${newData[column.name].value} `;
-    // })
-    // this._value.trim();
-    }
+  }
 
-  //   /**
-  //    * @private
-  //    */
-    getValue(): string {
+  /**
+   * @private
+   */
+  getValue(): string {
     return this._value;
-    }
+  }
 
-  //   /**
-  //    * @private
-  //    */
-    checkHasValue(inputValue: any) {
+  /**
+   * @private
+   */
+  checkHasValue(inputValue: any) {
     if (this._item) {
       this._item.setCssClass('input-has-value', !!(inputValue && inputValue !== ''));
     }
-    }
+  }
 
-    /**
-     * @private
-     */
-    updateText() {
+  /**
+   * @private
+   */
+  updateText() {
     this._text = '';
     let values: string[] = this._value.split(' ');
-    for (let i = 0; i < this.columns.length; i++) {
-      let option = this.columns[i].options.find(option => option.value == values[i]);
+    this.multiPickerColumns.forEach((col, index) => {
+      let option = col.options.find(option => option.value == values[index]);
       if (option) {
         this._text += `${option.text} `
       }
-    }
+    });
     this._text.trim();
-    }
+  }
 
-    /**
-     * @input {boolean} Whether or not the datetime component is disabled. Default `false`.
-     */
-    @Input()
-    get disabled() {
+  /**
+   * @input {boolean} Whether or not the multi picker component is disabled. Default `false`.
+   */
+  @Input()
+  get disabled() {
     return this._disabled;
-    }
+  }
 
-    set disabled(val: boolean) {
+  set disabled(val: boolean) {
     this._disabled = val;
-    this._item && this._item.setCssClass('item-datetime-disabled', this._disabled);
-    }
+    this._item && this._item.setCssClass('item-multi-picker-disabled', this._disabled);
+  }
 
-    /**
-     * @private
-     */
-    writeValue(val: any) {
-        console.debug('multi picker, writeValue', val);
-        this.setValue(val);
-        this.updateText();
-        this.checkHasValue(val);
-    }
+  /**
+   * @private
+   */
+  writeValue(val: any) {
+    console.debug('multi picker, writeValue', val);
+    this.setValue(val);
+    this.updateText();
+    this.checkHasValue(val);
+  }
 
-    /**
-     * @private
-     */
-    ngAfterContentInit() {
-        // first see if locale names were provided in the inputs
-        // then check to see if they're in the config
-        // if neither were provided then it will use default English names
-        // ['monthNames', 'monthShortNames', 'dayNames', 'dayShortNames'].forEach(type => {
-        //   this._locale[type] = convertToArrayOfStrings(isPresent(this[type]) ? this[type] : this._config.get(type), type);
-        // });
+  /**
+   * @private
+   */
+  ngAfterContentInit() {
+    // update how the multi picker value is displayed as formatted text
+    this.updateText();
+  }
 
-        // update how the datetime value is displayed as formatted text
-        this.updateText();
-    }
-
-    /**
-     * @private
-     */
-    registerOnChange(fn: Function): void {
-        this._fn = fn;
-        this.onChange = (val: any) => {
+  /**
+   * @private
+   */
+  registerOnChange(fn: Function): void {
+    this._fn = fn;
+    this.onChange = (val: any) => {
       console.debug('datetime, onChange', val);
       this.setValue(this.convertObjectToString(val));
       this.updateText();
       this.checkHasValue(val);
 
-      // convert DateTimeData value to iso datetime format
       fn(this._value);
       this.onTouched();
-        };
-    }
+    };
+  }
 
-    /**
-     * @private
-     */
+  /**
+   * @private
+   */
   registerOnTouched(fn: any) { this.onTouched = fn; }
 
-    /**
-     * @private
-     */
+  /**
+  * @private
+  */
   onChange(val: any) {
     // onChange used when there is not an formControlName
     console.debug('multi picker, onChange w/out formControlName', val);
@@ -378,23 +365,25 @@ export class MultiPicker implements OnInit, AfterContentInit, ControlValueAccess
     this.onTouched();
   }
 
-    /**
-     * @private
-     */
+  /**
+  * @private
+  */
   onTouched() { }
 
-    /**
-     * @private
-     */
+  /**
+  * @private
+  */
   ngOnDestroy() {
     this._form.deregister(this);
-    this.columns = [];
   }
 
+  /**
+  * @private convert the Picker ionChange event object data to string
+  */
   convertObjectToString(newData) {
     let value = ``;
-    this.columns.forEach(column => {
-      value += `${newData[column.name].value} `;
+    this.multiPickerColumns.forEach((col, index) => {
+      value += `${newData[col.name || index.toString()].value} `;
     })
     return value.trim();
   }
