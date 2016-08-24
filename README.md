@@ -4,5 +4,74 @@ Ion Multi Item Picker--An Ionic2 Custom Component
 Simulate IOS multi column picker by ionic2 picker. There could be dependency between each column.
 
 **Note:Still in early stage**
-## Effect
-![multi picker](https://lh3.googleusercontent.com/-DSuXELQfEfT8vqVvjfpgjLUcvMTj-UMNxGPIufz7zzqCJuFSo4lJ_DIdxJTIMaQ0kt_iZvrBYSF4NNa1TKd_8tqPgYiiL56f4SFGLgLtV8jmwckmuxJAM6WMJf_oIqC0HFKADaTfjrYqDsK2_pokvRplNS5mPT62wfsqRJwvdiFoZylHYYlJrTpwLRw8168ZFX3HDa4_ntnzE2FEyxktXvpZtsEZlHU04VmehnNO2txQ9HSaec27_r2PS6mcj09bNBTy7Rz6OEj6oqypclYOScfLFEO0IGBwgpAE3lrRs0SFYvbK-JpR5ccV-NNa9U7dMzMRDX-kSXEVQUEk1hC7_zUEqGhG78-p3iiQvO-1OmFc6hu9ymM2S_nw407kTdd-tPQ0x7zKZL8CLs-FWI0d4zRWWMud9BW3q1O2h1Nyai48YJvDWK5fGtepde_2KGC31HELNNskdHDcmgqvlxl7Sr-NZDWs8K4337I1c3uVET4--c7jfPJqxpt8ij-qikWJFkMUBbFNBE_KTV6PeTVcjUmdgPmjzo-NleKpH2D3keFgQssLBtwt5LyT6u1RE1TgfISMFfpQCZYd_5opqfYKbC9TKVf2g=s454-no)
+## Demo
+Check out the live demo here: [https://raychenfj.github.io/ion-multi-picker/](https://raychenfj.github.io/ion-multi-picker/)
+
+### Quick Start
+### ionic2 version
+Currently, this component is based on Ionic2-beta11.
+### angular2 version
+ionic2-beta11 is based on auglar rc4, rc5 is not compatible at this point.
+## Simple Example
+
+```TypeScript
+import {Component, OnInit} from '@angular/core';
+import {NavController} from 'ionic-angular';
+import {MultiPicker} from '../../../ion-multi-picker';
+
+@Component({
+	templateUrl: 'build/pages/simple/simple.html',
+	directives: [MultiPicker],
+})
+export class SimpleExamplePage implements OnInit {
+	default: string = '1 1-2 1-2-2';
+	simpleColumns: any[];
+	independentColumns:any[];
+	cityPickerOption: any[];
+	datetime;
+
+	constructor(private navCtrl: NavController) {
+
+	}
+
+	ngOnInit() {
+		this.simpleColumns = [
+			{
+				name:'col1',
+				options: [{ text: '1', value: '1' },
+					{ text: '2', value: '2' },
+					{ text: '3', value: '3' }]
+			},
+			{
+				name:'col2',
+				options: [{ text: '1-1', value: '1-1'},
+					{ text: '1-2', value: '1-2'},
+					{ text: '2-1', value: '2-1'},
+					{ text: '2-2', value: '2-2'},
+					{ text: '3-1', value: '3-1'},]
+			},
+			{
+				name:'col3',
+				options: [{ text: '1-1-1', value: '1-1-1'},
+					{ text: '1-1-2', value: '1-1-2'},
+					{ text: '1-2-1', value: '1-2-1'},
+					{ text: '1-2-2', value: '1-2-2'},
+					{ text: '2-1-1', value: '2-1-1'},
+					{ text: '2-1-2', value: '2-1-2'},
+					{ text: '2-2-1', value: '2-2-1'},
+					{ text: '2-2-2', value: '2-2-2'},
+					{ text: '3-1-1', value: '3-1-1'},
+					{ text: '3-1-2', value: '3-1-2'},]
+			}
+		];
+	}
+}
+```
+
+## Build
+```
+ionic serve //start the demo
+```
+
+## License
+MIT
