@@ -9,3 +9,4 @@ plugins/
 .DS_Store
 Thumbs.db
 typings/
+*.tgz

@@ -12,7 +12,7 @@ Check out the live demo here: [https://raychenfj.github.io/ion-multi-picker/](ht
 Currently, this component is based on Ionic2-beta11.
 ### angular2 version
 ionic2-beta11 is based on auglar rc4, rc5 is not compatible at this point.
-## Simple Example
+## Simple Examples
 
 ```TypeScript
 import {Component, OnInit} from '@angular/core';
