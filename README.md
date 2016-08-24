@@ -76,6 +76,7 @@ import {MultiPicker} from 'ion-multi-picker';
 @import "../../node_modules/ion-multi-picker/multi-picker.wp"; //app.wp.scss
 ```
 4.In your html template, add ion-multi-picker like other ionic component.Use [(ngModel)] to bind your data.
+
 **Note: Don't forget the item-content attribute**
 ```html
     <ion-item>
