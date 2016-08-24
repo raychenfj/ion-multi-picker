@@ -1,20 +1,2 @@
-www/build/
-platforms/
-plugins/
-*.swp
-.DS_Store
-Thumbs.db
-typings/
-app/
-hooks/
-resources/
-.editorconfig
-.npmignore
-.gitingore
-ionic.config.js
-gulpfile.js
-tsconfig.json
-stlint.json
-typings.json
-src/*.ts
+
 

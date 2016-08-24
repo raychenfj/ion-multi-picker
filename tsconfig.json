@@ -1,22 +1,16 @@
 {
   "compilerOptions": {
-    "target": "es5",
     "module": "commonjs",
+    "target": "es5",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "removeComments": true
+    "sourceMap": false,
+    "moduleResolution": "node",
+    "declaration": true,
+    "outDir": "./dist"
   },
-  "filesGlob": [
-    "**/*.ts",
-    "!node_modules/**/*"
-  ],
-  "exclude": [
-    "node_modules",
-    "typings/global",
-    "typings/global.d.ts"
-  ],
-  "compileOnSave": false,
-  "atom": {
-    "rewriteTsconfig": false
-  }
+  "files": [
+    "ion-multi-picker.ts",
+    "typings/index.d.ts"
+  ]
 }

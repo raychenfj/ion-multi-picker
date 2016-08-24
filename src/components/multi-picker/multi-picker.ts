@@ -213,8 +213,6 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
           option.disabled = parentVal != preOption.value || index > curCol.options.findIndex((opt: MultiPickerOption) => this.getOptionParentValue(i, opt) == preOption.value);
         });
 
-        console.log('first', curCol.options);
-
         break;
       } else {
         curCol.options.forEach((option: MultiPickerOption, index) => {

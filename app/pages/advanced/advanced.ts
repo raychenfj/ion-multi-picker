@@ -1,24 +1,21 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {NavController} from 'ionic-angular';
 import {MultiPicker} from '../../../ion-multi-picker';
 
 @Component({
-	templateUrl: 'build/pages/home/home.html',
-	directives: [MultiPicker],
+  templateUrl: 'build/pages/advanced/advanced.html',
+  directives: [MultiPicker]
 })
-export class HomePage implements OnInit {
-	default: string = '1 1-2 1-2-2';
-	dependentColumns: any[];
+
+export class AdvancedExamplePage {
+	default='1 1-2 1-2-2';
+	dependentColumns:any[];
 	independentColumns:any[];
-	cityPickerOption: any[];
-	datetime;
+	cityPickerOption:any[];
 
-	constructor(private navCtrl: NavController) {
 
-	}
-
-	ngOnInit() {
-		this.dependentColumns = [
+  constructor(private navCtrl: NavController) {
+  	this.dependentColumns = [
 			{
 				options: [{ text: '1', value: '1' },
 					{ text: '2', value: '2' },
@@ -80,5 +77,5 @@ export class HomePage implements OnInit {
 			// 	]
 			// }
 		];
-	}
+  }
 }

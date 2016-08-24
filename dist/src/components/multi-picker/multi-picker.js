@@ -25,10 +25,28 @@ var MultiPicker = (function () {
         this._text = '';
         this._isOpen = false;
         this._value = '';
+        /**
+         * @private
+         */
+        /**
+         * @input {string} The text to display on the picker's cancel button. Default: `Cancel`.
+         */
         this.cancelText = 'Cancel';
+        /**
+         * @input {string} The text to display on the picker's "Done" button. Default: `Done`.
+         */
         this.doneText = 'Done';
+        /**
+         * @input
+         */
         this.multiPickerColumns = [];
+        /**
+         * @output {any} Any expression to evaluate when the multi picker selection has changed.
+         */
         this.ionChange = new core_1.EventEmitter();
+        /**
+         * @output {any} Any expression to evaluate when the multi pickker selection was cancelled.
+         */
         this.ionCancel = new core_1.EventEmitter();
         this._form.register(this);
         if (_item) {
@@ -39,6 +57,7 @@ var MultiPicker = (function () {
     }
     MultiPicker.prototype._click = function (ev) {
         if (ev.detail === 0) {
+            // do not continue if the click event came from a form submit
             return;
         }
         ev.preventDefault();
@@ -50,12 +69,16 @@ var MultiPicker = (function () {
             this.open();
         }
     };
+    /**
+     * @private
+     */
     MultiPicker.prototype.open = function () {
         var _this = this;
         if (this._disabled) {
             return;
         }
         console.debug('multi picker, open picker');
+        // the user may have assigned some options specifically for the alert
         var pickerOptions = {};
         var picker = this._pickerCtrl.create(pickerOptions);
         pickerOptions.buttons = [
@@ -88,6 +111,9 @@ var MultiPicker = (function () {
             _this._isOpen = false;
         });
     };
+    /**
+     * @private
+     */
     MultiPicker.prototype.generate = function (picker) {
         var values = this._value.split(' ');
         this.multiPickerColumns.forEach(function (col, index) {
@@ -121,6 +147,9 @@ var MultiPicker = (function () {
         });
         this.divyColumns(picker);
     };
+    /**
+     * @private
+     */
     MultiPicker.prototype.validate = function (picker) {
         var _this = this;
         var columns = picker.getColumns();
@@ -139,7 +168,6 @@ var MultiPicker = (function () {
                     var parentVal = _this.getOptionParentValue(i, option);
                     option.disabled = parentVal != preOption.value || index > curCol.options.findIndex(function (opt) { return _this.getOptionParentValue(i, opt) == preOption.value; });
                 });
-                console.log('first', curCol.options);
                 return "break";
             }
             else {
@@ -159,6 +187,9 @@ var MultiPicker = (function () {
     MultiPicker.prototype.getOptionParentValue = function (colIndex, option) {
         return this.multiPickerColumns[colIndex].options.find(function (opt) { return opt.value == option.value; }).parentVal;
     };
+    /**
+     * @private
+     */
     MultiPicker.prototype.divyColumns = function (picker) {
         var pickerColumns = picker.getColumns();
         var columns = [];
@@ -185,17 +216,29 @@ var MultiPicker = (function () {
             });
         }
     };
+    /**
+     * @private
+     */
     MultiPicker.prototype.setValue = function (newData) {
         this._value = newData || '';
     };
+    /**
+     * @private
+     */
     MultiPicker.prototype.getValue = function () {
         return this._value;
     };
+    /**
+     * @private
+     */
     MultiPicker.prototype.checkHasValue = function (inputValue) {
         if (this._item) {
             this._item.setCssClass('input-has-value', !!(inputValue && inputValue !== ''));
         }
     };
+    /**
+     * @private
+     */
     MultiPicker.prototype.updateText = function () {
         var _this = this;
         this._text = '';
@@ -209,6 +252,9 @@ var MultiPicker = (function () {
         this._text.trim();
     };
     Object.defineProperty(MultiPicker.prototype, "disabled", {
+        /**
+         * @input {boolean} Whether or not the multi picker component is disabled. Default `false`.
+         */
         get: function () {
             return this._disabled;
         },
@@ -219,15 +265,25 @@ var MultiPicker = (function () {
         enumerable: true,
         configurable: true
     });
+    /**
+     * @private
+     */
     MultiPicker.prototype.writeValue = function (val) {
         console.debug('multi picker, writeValue', val);
         this.setValue(val);
         this.updateText();
         this.checkHasValue(val);
     };
+    /**
+     * @private
+     */
     MultiPicker.prototype.ngAfterContentInit = function () {
+        // update how the multi picker value is displayed as formatted text
         this.updateText();
     };
+    /**
+     * @private
+     */
     MultiPicker.prototype.registerOnChange = function (fn) {
         var _this = this;
         this._fn = fn;
@@ -240,17 +296,33 @@ var MultiPicker = (function () {
             _this.onTouched();
         };
     };
+    /**
+     * @private
+     */
     MultiPicker.prototype.registerOnTouched = function (fn) { this.onTouched = fn; };
+    /**
+    * @private
+    */
     MultiPicker.prototype.onChange = function (val) {
+        // onChange used when there is not an formControlName
         console.debug('multi picker, onChange w/out formControlName', val);
         this.setValue(this.convertObjectToString(val));
         this.updateText();
         this.onTouched();
     };
+    /**
+    * @private
+    */
     MultiPicker.prototype.onTouched = function () { };
+    /**
+    * @private
+    */
     MultiPicker.prototype.ngOnDestroy = function () {
         this._form.deregister(this);
     };
+    /**
+    * @private convert the Picker ionChange event object data to string
+    */
     MultiPicker.prototype.convertObjectToString = function (newData) {
         var value = "";
         this.multiPickerColumns.forEach(function (col, index) {
