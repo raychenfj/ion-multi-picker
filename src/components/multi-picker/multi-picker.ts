@@ -159,26 +159,31 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
   generate(picker: Picker) {
     let values = this._value.split(' ');
     this.multiPickerColumns.forEach((col, index) => {
-      if (index > 0) {
-        col.options = col.options.sort((a: MultiPickerOption, b: MultiPickerOption) => {
-          a.parentVal;
-          b.parentVal;
-          if (a.parentVal != b.parentVal) {
-            if (!a.parentVal) {
-              return 1;
-            }
-            if (!b.parentVal) {
-              return -1;
-            } else {
-              return a.parentVal - b.parentVal;
-            }
-          } else {
-            return a.value - b.value;
-          }
-        });
-      }
+      // if (index > 0) {
+      //   col.options = col.options.sort((a: MultiPickerOption, b: MultiPickerOption) => {
+      //     a.parentVal;
+      //     b.parentVal;
+      //     if (a.parentVal != b.parentVal) {
+      //       if (!a.parentVal) {
+      //         return 1;
+      //       }
+      //       if (!b.parentVal) {
+      //         return -1;
+      //       } else {
+      //         return a.parentVal - b.parentVal;
+      //       }
+      //     } else {
+      //       return a.value - b.value;
+      //     }
+      //   });
+      // }
+      console.log(col.options);
       let selectedIndex = col.options.findIndex(option => option.value == values[index]);
-
+      if (selectedIndex == -1 && index > 0) {
+        let preCol = picker.getColumns()[index - 1];
+        let preOption: MultiPickerOption = preCol.options[preCol.selectedIndex];
+        selectedIndex = col.options.findIndex(option => this.getOptionParentValue(index, option) == preOption.value);
+      }
 
       let column: any = {
         name: col.name || index.toString(),
@@ -196,6 +201,7 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
    * @private
    */
   validate(picker: Picker) {
+    console.log('validate');
     let columns = picker.getColumns();
     for (let i = 1; i < columns.length; i++) {
       let curCol = columns[i];
@@ -239,8 +245,8 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
       columns.push(0);
 
       col.options.forEach(opt => {
-        if (opt.text.length > columns[i]) {
-          columns[i] = opt.text.length;
+        if (opt.text.replace(/[^\x00-\xff]/g,"01").length > columns[i]) {
+          columns[i] = opt.text.replace(/[^\x00-\xff]/g,"01").length;
         }
       });
 
