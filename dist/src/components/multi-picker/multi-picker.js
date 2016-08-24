@@ -115,29 +115,34 @@ var MultiPicker = (function () {
      * @private
      */
     MultiPicker.prototype.generate = function (picker) {
+        var _this = this;
         var values = this._value.split(' ');
         this.multiPickerColumns.forEach(function (col, index) {
-            if (index > 0) {
-                col.options = col.options.sort(function (a, b) {
-                    a.parentVal;
-                    b.parentVal;
-                    if (a.parentVal != b.parentVal) {
-                        if (!a.parentVal) {
-                            return 1;
-                        }
-                        if (!b.parentVal) {
-                            return -1;
-                        }
-                        else {
-                            return a.parentVal - b.parentVal;
-                        }
-                    }
-                    else {
-                        return a.value - b.value;
-                    }
-                });
-            }
+            // if (index > 0) {
+            //   col.options = col.options.sort((a: MultiPickerOption, b: MultiPickerOption) => {
+            //     a.parentVal;
+            //     b.parentVal;
+            //     if (a.parentVal != b.parentVal) {
+            //       if (!a.parentVal) {
+            //         return 1;
+            //       }
+            //       if (!b.parentVal) {
+            //         return -1;
+            //       } else {
+            //         return a.parentVal - b.parentVal;
+            //       }
+            //     } else {
+            //       return a.value - b.value;
+            //     }
+            //   });
+            // }
+            console.log(col.options);
             var selectedIndex = col.options.findIndex(function (option) { return option.value == values[index]; });
+            if (selectedIndex == -1 && index > 0) {
+                var preCol = picker.getColumns()[index - 1];
+                var preOption_1 = preCol.options[preCol.selectedIndex];
+                selectedIndex = col.options.findIndex(function (option) { return _this.getOptionParentValue(index, option) == preOption_1.value; });
+            }
             var column = {
                 name: col.name || index.toString(),
                 options: col.options.map(function (option) { return { text: option.text, value: option.value, disabled: false }; }),
@@ -152,6 +157,7 @@ var MultiPicker = (function () {
      */
     MultiPicker.prototype.validate = function (picker) {
         var _this = this;
+        console.log('validate');
         var columns = picker.getColumns();
         var _loop_1 = function(i) {
             var curCol = columns[i];
@@ -196,8 +202,8 @@ var MultiPicker = (function () {
         pickerColumns.forEach(function (col, i) {
             columns.push(0);
             col.options.forEach(function (opt) {
-                if (opt.text.length > columns[i]) {
-                    columns[i] = opt.text.length;
+                if (opt.text.replace(/[^\x00-\xff]/g, "01").length > columns[i]) {
+                    columns[i] = opt.text.replace(/[^\x00-\xff]/g, "01").length;
                 }
             });
         });
