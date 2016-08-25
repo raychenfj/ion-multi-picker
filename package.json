@@ -34,7 +34,10 @@
     "ionic-gulp-sass-build": "^1.0.0",
     "ionic-gulp-scripts-copy": "^2.0.0",
     "ionic-gulp-tslint": "^1.0.0",
+    "jasmine-core": "2.4.1",
     "karma": "^1.2.0",
+    "karma-chrome-launcher": "^2.0.0",
+    "karma-jasmine": "^1.0.2",
     "run-sequence": "1.1.5",
     "tslint-ionic-rules": "0.0.4"
   },
@@ -51,9 +54,6 @@
   "cordovaPlatforms": [],
   "version": "1.0.3",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/raychenfj/ion-multi-picker.git"

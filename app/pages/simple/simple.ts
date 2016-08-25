@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {NavController} from 'ionic-angular';
-import {MultiPicker} from '../../../ion-multi-picker';
+import {MultiPicker} from '../../../index';
 
 @Component({
 	templateUrl: 'build/pages/simple/simple.html',

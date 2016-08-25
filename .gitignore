@@ -10,3 +10,6 @@ plugins/
 Thumbs.db
 typings/
 *.tgz
+src/**/*.js
+src/**/*.d.ts
+src/**/*.js.map
