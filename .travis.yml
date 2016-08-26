@@ -1,9 +1,7 @@
 language: node_js
 node_js:
-  - "6"
-  - "6.1"
-  - "5.11"
-  - "0.6"
-  - "iojs"
-
-before_script: npm run typings:install
+- '6'
+before_install:
+- npm install -g typescript
+script:
+- npm test
