@@ -3,5 +3,16 @@ node_js:
 - '6'
 before_install:
 - npm install -g typescript
+- npm install -g typings
+- typings install
+
+before_script:
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+  - 'node_modules/protractor/bin/webdriver-manager update --standalone --firefox'
+  - 'node_modules/protractor/bin/webdriver-manager start 2>&1 &'  
+  - sleep 3 # give xvfb some time to start
+  - ionic serve
+  - sleep 10
 script:
 - npm test
