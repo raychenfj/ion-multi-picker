@@ -23,7 +23,11 @@
     "rxjs": "5.0.0-beta.6",
     "zone.js": "0.6.12"
   },
+  "scripts": {
+    "test": "tsc && concurrently \"tsc -p tsconfig.test.json\" \"webdriver-manager start\" \"protractor protractor.conf.js\""
+  },
   "devDependencies": {
+    "concurrently": "^2.2.0",
     "del": "2.2.0",
     "gulp": "3.9.1",
     "gulp-shell": "^0.5.2",
@@ -38,6 +42,7 @@
     "karma": "^1.2.0",
     "karma-chrome-launcher": "^2.0.0",
     "karma-jasmine": "^1.0.2",
+    "reflect-metadata": "^0.1.8",
     "run-sequence": "1.1.5",
     "tslint-ionic-rules": "0.0.4"
   },

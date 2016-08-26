@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es5",
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "sourceMap": false,
+        "moduleResolution": "node",
+        "outDir": "./test"
+    },
+    "filesGlob": [
+        "src/**/e2e.ts"
+    ]
+}
