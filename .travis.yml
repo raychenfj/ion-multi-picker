@@ -4,13 +4,13 @@ node_js:
 before_install:
 - npm install -g typescript
 - npm install -g typings
+- npm install -g protractor
 - typings install
 
 before_script:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
-  - 'node_modules/protractor/bin/webdriver-manager update --standalone --firefox'
-  - 'node_modules/protractor/bin/webdriver-manager start 2>&1 &'  
+  - 'webdriver-manager update --standalone --firefox'
   - sleep 3 # give xvfb some time to start
   - ionic serve
   - sleep 10
