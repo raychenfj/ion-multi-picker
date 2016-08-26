@@ -5,6 +5,7 @@ before_install:
 - npm install -g typescript
 - npm install -g typings
 - npm install -g protractor
+- npm install -g ionic@beta
 - typings install
 
 before_script:
