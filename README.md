@@ -3,6 +3,10 @@ Ion Multi Item Picker--An Ionic2 Custom Component
 
 Simulate IOS multi column picker by ionic2 picker.
 
+Github: [https://github.com/raychenfj/ion-multi-picker](https://github.com/raychenfj/ion-multi-picker)
+
+NPM: [https://www.npmjs.com/package/ion-multi-picker](https://www.npmjs.com/package/ion-multi-picker)
+
 ## Preview
 ### Picker with Independent Coulmns
 
@@ -98,8 +102,6 @@ Array of MultiPickerColumn.
     * value: The associated value of the text.
     * parentVal: Specify the dependency between current column and previous column.
     * disabled: The option is displayed or not.
-
-
 
 ## License
 MIT
