@@ -1,43 +1,55 @@
-import { AfterContentInit, OnInit, Component, EventEmitter, forwardRef, HostListener, Input, OnDestroy, Optional, Output, Provider, ViewEncapsulation } from '@angular/core';
+import { AfterContentInit, OnInit, Component, EventEmitter, forwardRef, HostListener, Input, OnDestroy, Optional, Output, ViewEncapsulation } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { Picker, PickerController, Form, Item, IONIC_DIRECTIVES } from 'ionic-angular';
-import {MultiPickerColumn, MultiPickerOption} from './multi-picker-options';
+import { Picker, PickerController, Form, Item } from 'ionic-angular';
+import { MultiPickerColumn, MultiPickerOption } from './multi-picker-options';
 
-export const MULTI_PICKER_VALUE_ACCESSOR = new Provider(
-    NG_VALUE_ACCESSOR, { useExisting: forwardRef(() => MultiPicker), multi: true });
+export const MULTI_PICKER_VALUE_ACCESSOR: any = {
+  provide: NG_VALUE_ACCESSOR,
+  useExisting: forwardRef(() => MultiPicker),
+  multi: true
+};
 
 @Component({
   selector: 'ion-multi-picker',
-  template: `
-    <div class="multi-picker-text" >{{_text}}</div>
-    <button 
-            category="item-cover"
-            class="item-cover item-cover-default" 
-            aria-haspopup="true"
-            type="button"
-            [id]="id"
-            [attr.aria-labelledby]="_labelId"
-            [attr.aria-disabled]="_disabled">
-            <span class="botton-inener">
-            </span>
-            <ion-button-effect></ion-button-effect>
-    </button>
-  `,
+  // template: `
+  //   <div class="multi-picker-text" >{{_text}}</div>
+  //   <button 
+  //           category="item-cover"
+  //           class="item-cover item-cover-default" 
+  //           aria-haspopup="true"
+  //           type="button"
+  //           [id]="id"
+  //           [attr.aria-labelledby]="_labelId"
+  //           [attr.aria-disabled]="_disabled">
+  //           <span class="botton-inener">
+  //           </span>
+  //           <ion-button-effect></ion-button-effect>
+  //   </button>
+  // `,
+  template: '<div class="multi-picker-text">{{_text}}</div>' +
+  '<button aria-haspopup="true" ' +
+  'type="button" ' +
+  '[id]="id" ' +
+  'ion-button="item-cover" ' +
+  '[attr.aria-labelledby]="_labelId" ' +
+  '[attr.aria-disabled]="_disabled" ' +
+  'class="item-cover">' +
+  '</button>',
   host: {
     '[class.multi-picke-disabled]': '_disabled'
   },
-  directives: [IONIC_DIRECTIVES],
+
   providers: [MULTI_PICKER_VALUE_ACCESSOR],
   encapsulation: ViewEncapsulation.None,
 })
 
 export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDestroy {
-  private _disabled: any = false;
-  private _labelId: string = '';
-  private _text: string = '';
-  private _fn: Function;
-  private _isOpen: boolean = false;
-  private _value: string = '';
+  _disabled: any = false;
+  _labelId: string = '';
+  _text: string = '';
+  _fn: Function;
+  _isOpen: boolean = false;
+  _value: string = '';
 
   /**
    * @private
@@ -82,12 +94,12 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
     if (_item) {
       this.id = 'dt-' + _item.registerInput('multi-picker');
       this._labelId = 'lbl-' + _item.id;
-      this._item.setCssClass('item-multi-picker', true);
+      this._item.setElementClass('item-multi-picker', true);
     }
   }
 
   @HostListener('click', ['$event'])
-  private _click(ev: UIEvent) {
+  _click(ev: UIEvent) {
     if (ev.detail === 0) {
       // do not continue if the click event came from a form submit
       return;
@@ -98,7 +110,7 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
   }
 
   @HostListener('keyup.space')
-  private _keyup() {
+  _keyup() {
     if (!this._isOpen) {
       this.open();
     }
@@ -245,8 +257,8 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
       columns.push(0);
 
       col.options.forEach(opt => {
-        if (opt.text.replace(/[^\x00-\xff]/g,"01").length > columns[i]) {
-          columns[i] = opt.text.replace(/[^\x00-\xff]/g,"01").length;
+        if (opt.text.replace(/[^\x00-\xff]/g, "01").length > columns[i]) {
+          columns[i] = opt.text.replace(/[^\x00-\xff]/g, "01").length;
         }
       });
 
@@ -287,7 +299,7 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
    */
   checkHasValue(inputValue: any) {
     if (this._item) {
-      this._item.setCssClass('input-has-value', !!(inputValue && inputValue !== ''));
+      this._item.setElementClass('input-has-value', !!(inputValue && inputValue !== ''));
     }
   }
 
@@ -316,7 +328,7 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
 
   set disabled(val: boolean) {
     this._disabled = val;
-    this._item && this._item.setCssClass('item-multi-picker-disabled', this._disabled);
+    this._item && this._item.setElementClass('item-multi-picker-disabled', this._disabled);
   }
 
   /**

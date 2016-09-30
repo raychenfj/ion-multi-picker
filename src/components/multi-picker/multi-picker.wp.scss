@@ -1,3 +1,4 @@
+@import "ionic.globals.wp";
 @import "./multi-picker";
 
 // Windows Multi Picker
@@ -13,13 +14,13 @@ $multi-picker-wp-padding-left:        $item-wp-padding-left !default;
 $multi-picker-wp-border-width:        2px !default;
 $multi-picker-wp-border-color:        $input-wp-border-color !default;
 
-ion-multi-picker {
+.wp multi-picker {
   padding: $multi-picker-wp-padding-top $multi-picker-wp-padding-right $multi-picker-wp-padding-bottom $multi-picker-wp-padding-left;
 
   min-width: $multi-picker-wp-min-width;
 }
 
-.multi-picker-text {
+.wp .multi-picker-text {
   padding: 0 8px;
 
   min-height: 3.4rem;
@@ -28,6 +29,6 @@ ion-multi-picker {
   line-height: 3rem;
 }
 
-.item-multi-picker ion-label[floating] {
+.wp .item-multi-picker ion-label[floating] {
   transform: translate3d(8px, 41px, 0);
 }
