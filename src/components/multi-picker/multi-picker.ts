@@ -171,24 +171,6 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
   generate(picker: Picker) {
     let values = this._value.split(' ');
     this.multiPickerColumns.forEach((col, index) => {
-      // if (index > 0) {
-      //   col.options = col.options.sort((a: MultiPickerOption, b: MultiPickerOption) => {
-      //     a.parentVal;
-      //     b.parentVal;
-      //     if (a.parentVal != b.parentVal) {
-      //       if (!a.parentVal) {
-      //         return 1;
-      //       }
-      //       if (!b.parentVal) {
-      //         return -1;
-      //       } else {
-      //         return a.parentVal - b.parentVal;
-      //       }
-      //     } else {
-      //       return a.value - b.value;
-      //     }
-      //   });
-      // }
       console.log(col.options);
       let selectedIndex = col.options.findIndex(option => option.value == values[index]);
       if (selectedIndex == -1 && index > 0) {

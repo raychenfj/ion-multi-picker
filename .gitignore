@@ -34,5 +34,6 @@ Thumbs.db
 UserInterfaceState.xcuserstate
 
 dist/
+test/
 *.tgz
 *.ngfactory.ts
