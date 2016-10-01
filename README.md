@@ -1,3 +1,13 @@
+<style>
+.img-container {
+	width:45%;
+	float:left;
+}
+h2 {
+	clear:both;
+}
+</style>
+
 # Ion-Multi-Picker
 Ion Multi Item Picker--An Ionic2 Custom Picker Component
 
@@ -8,21 +18,15 @@ Github: [https://github.com/raychenfj/ion-multi-picker](https://github.com/raych
 NPM: [https://www.npmjs.com/package/ion-multi-picker](https://www.npmjs.com/package/ion-multi-picker)
 
 ## Preview
-### Picker with Independent Columns
+### Picker with Independent/ Dependent Columns
 
-![Picker with Independent Columns](https://lh3.googleusercontent.com/K_qfHAzPjahDn_TcmDfVqYSwI17k21sGiG49TO68DWHMcp_JZgrMh56LTHCKb772iOGbTDdC2gIamZF0XgqhdBffcyslWFVc_tvN6mxvEzsaZHTT170MkXSbaZpi0ma43NNwC-QyzcGzvMIsSITB9l-ydDt0jAzuVpcIg5WUJKYiBnxLyM1u_YyVQr1KXAE3sBFko0rek_drnApnjTA8i7CodR-gjAzdsXzlr9dkvaSDrLmZKhtcmt-6DXO6kXg4h76VwFbssBH4WHPiySt4Us_ATN0ame-zlFnVvrWBeFj950DxyN4ZEbBNv53DpNklAuqFtsniJUHt-5MX_r-9-lGSxal84pdleQlMCt-1vLZVm9dMisWvsC9nLiHDyfPIqAXITUunmh92zi72Ek93NUn_l5xuf9lBWrgV_XnsI3u-BqkawssjFAiB03ikCvXSie-_Mcjc9L2JLx66N_AaV4Lx4qudSt7Y2Hgn4al3xlBbd5TfvxO6CasJuzZYWRDcDIZAi0S0fGwW4wCkkAKPUVyopSF0b_8Nuyas_HpdHNo0KxDXrjphghsGYoErm2_CqbBymF2NZfCWqk9ZfmOGrgFz1bmsFSMrZGc-OH3kCHlRlzU=w490-h245-no)
+<div class="img-container">
+<img src="https://lh3.googleusercontent.com/35Sqi0SKzIBc3TaY9IHZhUmrxw55tufqUUwY061kCwk6S5wXFi0p107QrjjftoyG-9MxzGZ7QVPPDPVxd28x588baThkVwiZUtAOzySVCDC1tng9MSGwzWUDEgsNQXFvdo-6z7-y9yNutX79V4pC8KUe2Z-lxlUMfI6xrD3chRg0CWwV200CRqcmlk8PGdUJEoAdI9qNOWO9cgHLCcH9J6-27AeiGT9Ni1Vwx4RmN3ouj5v2mw02NxrQmQ2RLGJLtc18yGaVsxghUy03Yk153LEtz3htQjJp0gVhskPBdbtUQgNvBbyJmEpywvZkn8rDOIpu08M9sL-I6w7883lvMn-GuGoBVbznlqbov0WYONPHlj5VKgwKGjdcm32esTK3o3a1WeeIMpBcSJtFppcnQZZXqSiL9Erm8WMcs_x0G4e4jz8LBeidu4jCKSGpELMkWYwm-g055tcQSB2CdI-bdBXyxKwIDX5p5pCgL7LdNmZhNtr1Y3xqw-IfWm8JZkvHhdSoN4ln3aquv_zof6m-nX-xVUhjuufKv9fWYC5LInPN0dCqnLC0HyCIxIE6ZMZY2Nm6_L0e86US_sfmNlNgBzveBdzzpKNSaDpQwtliGvThoQ_X=w410-h659-no" alt="Picker with Independent Columns">
+</div>
 
-### Picker with Dependent Columns
-
-![Picker with Dependent Columns](https://lh3.googleusercontent.com/He5I2Z3f46UgDIaFPnGznAr2o8CSpTAZ9LmJwuELIFuts20qqvEJ6TTSkLwVIcb9W2F0Ou10C1EoO_uH22YjOfYabaf4yGrfJv5ymJJYwy1RZGlCvNWHrrs7WpohocT9Pissno-uSfvZO1egxgIFmz7sjQR_tDNBIsMjPJqPFhoLGrmU9nEGXusPF3ZRw_bMZXeS1c42HTvIiko2Pw9kUlkY8rEONRRlEZncIFPYxJblwViwOzM8GV32LRYQN9SXKuO04ux2IL2eseflkz7CVsfJk7hUp0NYCe2PtoJ5GxDAIoWqyl677mjq3d2j4DsYlobKF9loea3KOjUUdJGjcAt4AwHkzJPPbpvcgle4DCfvdZ0N84eZtdSyWcsR2Hz-XozNm_eS5Rhg3dHS1yDzl2XHJE5aGP8yfXbP1hFItY1wZwZIbo8eeVYi3Cpi8ct6FsQvEAvS8hbcoAEEwWN6z1XPq0u_8vV8vMY_IDXoSMU9mOJTE0uuERXjKbcNHeH5MIH09YjumBdrRYJ6-rcNEv4-PPBao-1QuTSfSo40N1VYW4c9SmoA9D39ZfQSRByntJTB0YE8mQtJgJBSq0P9TMMbDISkZDz-YuljUD_WxWsfnfs=w490-h245-no)
-
-### Sample: Chinese City Picker
-
-![Chinese City Picker](https://lh3.googleusercontent.com/en7ivOdQaIpjh6C7T4dVPU1Apgz1cElqoJzQnPkHe4IkvgagQV6MwWMLD07TdMFDsShU002khhY7efaxlzBKL7mE1UHp_FaS_WwKo3dhUCQF9dB57byKc-9-y_f-3KVEJ07DE84itWEtFLcc6c3x-q_XZ45pXIlHGOh1u9TlK_banlEy5xQDKop6eaZrVikUNO4WOMKfuKE18_JZz9CJTWcEndOuZUg4CKkOZeBXLBf0bxAVRCpj6DUlp38WoSphWN7veXN0jJzgZTp3RrlZfED-GV-hhNXkaGnYa6S4LCrmJQkkJ92a0qGGViHgIcDM23udmfyfROGH1SAeuXY7PpLtM7eqoKGXg1V-vmM-CsYLywTaByASALqLuy-dqzNYf9aP4cyqxReB1mODjYaMBAGTLaeDxDNMpUg56i7OEktKNwFRg7-bxXY5VbSX8xtsQT0wqPGySqRRUZwpZB-DY8emlL-VQ9Awr2lZYPURaLbnHxcmAi7DCugv7rBccaeDXkZP1TOGfOU2CZXLKZJIw8XkLQs0bmmPIvIvbYcvi4KcQrkcEMQd9DJkZq7P5vOMWqAYQzpZZSMwTvj6llyAg-wEC_5uE0zKJloNjcQZKfQqCMw=w490-h245-no)
-
-### Run on IOS Emulator
-
-![Run on IOS Emulator](https://lh3.googleusercontent.com/X6lFTwEVIsbxQ5o4cWUrlga4A0luRvf-PJFGjYs3g5bAL5B6cV4z9-ur8WgOQQCjVkdl3gCkmK8JnRCH69NRH0qwUrEbT0KyWL9m42OpWVbPK12gQPPXBljmjewBN9C-Qm3G3KNIC1WrYisw8WMDNrBi4bqC-ifAV0quag4bP1S9mePz8jG8MyYj--nV_wMEcsh7fUbKqjl4PwV9NEJ1D6rCXilSWgvy6at0aOGAyFFKkdW1pQ1xbmJghy-dVVrS1YUcMTaiG7VaxhDJmYFPi4W2-FDi_bCa9UVklcsOiLbQrAz0UnNDCZwvWOOVfMB7Y0jMKWw-A92yK-53whJWvMj9KiWSJo4HbLl5nIIrodPHV71gjfltHJ6UBhonEm49_bsdbBWLVAzXvjmnQIeZoLAWMwLCjp3ogCdk0E72y-qG8tRQV-4_815EWbm2GX_3rHaxFNhSC6cyvvHeFPPeh4FnXJCPRLJoKr0MNKHFys20JNItZdFuCiVqjH31Y0Y2y9Lee6tj4gmtbl3nOyvt8zaqJ954cYL_UP6i4wYogcenH1BH6jui6VcnbyLqRm92QOBNaWFSWu-fp_ym8rIsgvaVfusKjM9f2XEIRUUTOVbsAn0Q=w309-h579-no)
+<div class="img-container">
+<img src ="https://lh3.googleusercontent.com/sjiUk4ykFHsjw3kCTSabuycGFAcqrRJtbcw-2ywSllA8CMdPaQ5xMUWxG7LgJRz3DV26fjPMlNzCZWQx0OeN7IVKQnQQ6R56nsP6ws31aIegasPtfNmWpV444Y46NmAEeDpp7iUNrJsog4CbcriH9l6vccvUDo13aACKfeQj-fuV01cfT5p5XZbCKuQnYO3tTUM5QkmoYY4yy0gXVet8I3AypYEm89GmIWAuAodK3tegtVE9E-paVb4nf2Zf4MGl1eeAcv-h5vOS5m1MBjve5jZysLLG67RuUdcyTpO8mFXiPeopVtFnPH2lXhdZ-Bfz20mKx0lQ-dZ-f3F5fqyip7WmiV6PB8KQKeogVrOB44BWg58HGVehMa4ym4f7QMVWXd2_gceREvx9efuWZkQ8S13w0Rsd8PYbO7h6rb2ES4YdXo5PMTg9uaCiZEO0mfg9lIYaqGofX4xyXCCczKs43zXpmLoCpjO9WWPSyj7B2YMqHSutKB_8y8qNXYDPOGdhbWRO69MlC2DCeJTqFpO_MRUhH4r_bWN0rhnZaTV8han5UZ6_Lw3bhpABy8Ucvq5fvaa_yE06zdAXfcR5meMCWcH7Mw__lPvjkvIdTXwsU7CqGshg=w410-h659-no" alt="Picker with Dependent Columns">
+</div>
 
 ## Demo
 Check out the live demo here: [https://raychenfj.github.io/ion-multi-picker/](https://raychenfj.github.io/ion-multi-picker/)
@@ -102,15 +106,50 @@ constructor(private navCtrl: NavController) {
 	];
 }
 ```
-3.Add ion-multi-picker to your html template. Like other ionic component, you can use [(ngModel)] to bind your data.
+You can use `parentVal` property to create dependency between each column.
+```typescript
+	this.dependentColumns = [
+		{
+			options: [{ text: '1', value: '1' },
+				{ text: '2', value: '2' },
+				{ text: '3', value: '3' }]
+		},
+		{
+			options: [{ text: '1-1', value: '1-1', parentVal: '1' },
+				{ text: '1-2', value: '1-2', parentVal: '1' },
+				{ text: '2-1', value: '2-1', parentVal: '2' },
+				{ text: '2-2', value: '2-2', parentVal: '2' },
+				{ text: '3-1', value: '3-1', parentVal: '3' },]
+		}];
+```
+3.Add ion-multi-picker to your html template. 
 
-**Note: Don't miss the `item-content` attribute**
 ```html
     <ion-item>
         <ion-label>Simple Picker</ion-label>
         <ion-multi-picker item-content [multiPickerColumns]="simpleColumns"></ion-multi-picker>
     </ion-item>
 ```
+**Note: Don't miss the `item-content` attribute**
+
+Like other ionic components, you can use `(ngModel)]` to bind your data.
+
+```html
+	<ion-item>
+        <ion-label>Default Value</ion-label>
+        <ion-multi-picker id="default" [(ngModel)] = "default" item-content [multiPickerColumns]="dependentColumns"></ion-multi-picker>
+    </ion-item>
+```
+
+Set `disabled` to `true` to prevent interaction.
+
+```html
+    <ion-item>
+        <ion-label>Disabled Picker</ion-label>
+        <ion-multi-picker item-content [multiPickerColumns]="dependentColumns" [disabled]="true"></ion-multi-picker>
+    </ion-item>
+```
+
 
 ## Attributes
 | Attribute | Description | Type | Options | Default|
