@@ -12,7 +12,7 @@
     "ionicons": "^3.0.0"
   },
   "scripts": {
-    "test": "tsc -p tsconfig.test.json && webdriver-manager start && protractor protractor.conf.js",
+    "test": "tsc -p tsconfig.test.json && concurrently \"webdriver-manager start\" \"protractor protractor.conf.js\"",
     "build": "ionic-app-scripts build",
     "watch": "ionic-app-scripts watch",
     "serve:before": "watch",
@@ -29,7 +29,7 @@
     "gulp": "3.9.1",
     "gulp-shell": "^0.5.2",
     "gulp-watch": "4.3.5",
-    "protractor": "^4.0.4"
+    "protractor": "^4.0.9"
   },
   "name": "ion-multi-picker",
   "description": "ion-multi-picker: An Ionic project",
@@ -49,7 +49,7 @@
       "locator": "ios"
     }
   ],
-  "version": "1.0.3",
+  "version": "1.0.5",
   "main": "./dist/index.js",
   "typings":"./dist/index.d.ts",
   "repository": {

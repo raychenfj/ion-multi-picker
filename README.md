@@ -125,7 +125,7 @@ constructor(private navCtrl: NavController) {
 | Property | Description | Type | Options | Default|
 |-----------|-------------|------|---------|--------|
 |options| **Required**, Options in a column | Array of MultiPickerOption | - | - |
-|name| Optional, Column name | String | index start from 0 | - |
+|name| Optional, Column name | String | - | index start from 0 |
 
 * **MultiPickerOption**
 

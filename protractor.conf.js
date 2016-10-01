@@ -8,14 +8,13 @@ exports.config = {
   ],
 
   capabilities: {
-    'browserName': 'firefox'
+    'browserName': 'chrome'
   },
 
   baseUrl: 'http://localhost:8100/',
 
   framework: 'jasmine',
   useAllAngular2AppRoots: true,
-  // seleniumAddress: 'http://localhost:8100',
 
   jasmineNodeOpts: {
     defaultTimeoutInterval: 30000
