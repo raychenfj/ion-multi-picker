@@ -1,7 +1,7 @@
 # Ion-Multi-Picker 
 
 
-![Dependency Status](https://david-dm.org/raychenfj/ion-multi-picker.svg)
+[![Dependency Status](https://david-dm.org/raychenfj/ion-multi-picker.svg)](https://david-dm.org/raychenfj/ion-multi-picker) [![devDependencies Status](https://david-dm.org/raychenfj/ion-multi-picker/dev-status.svg)](https://david-dm.org/raychenfj/ion-multi-picker?type=dev)
 
 
 Ion Multi Item Picker--An Ionic2 Custom Picker Component
