@@ -1,4 +1,9 @@
-# Ion-Multi-Picker
+# Ion-Multi-Picker 
+
+
+![Dependency Status](https://david-dm.org/raychenfj/ion-multi-picker.svg)
+
+
 Ion Multi Item Picker--An Ionic2 Custom Picker Component
 
 Simulate IOS multi column picker by ionic2 picker.
