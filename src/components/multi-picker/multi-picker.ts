@@ -11,21 +11,6 @@ export const MULTI_PICKER_VALUE_ACCESSOR: any = {
 
 @Component({
   selector: 'ion-multi-picker',
-  // template: `
-  //   <div class="multi-picker-text" >{{_text}}</div>
-  //   <button 
-  //           category="item-cover"
-  //           class="item-cover item-cover-default" 
-  //           aria-haspopup="true"
-  //           type="button"
-  //           [id]="id"
-  //           [attr.aria-labelledby]="_labelId"
-  //           [attr.aria-disabled]="_disabled">
-  //           <span class="botton-inener">
-  //           </span>
-  //           <ion-button-effect></ion-button-effect>
-  //   </button>
-  // `,
   template: '<div class="multi-picker-text">{{_text}}</div>' +
   '<button aria-haspopup="true" ' +
   'type="button" ' +
@@ -149,13 +134,16 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
     ];
 
     this.generate(picker);
-    for (let i = 0; i < picker.getColumns().length; i++) {
-      this.validate(picker);
-    }
 
-    picker.ionChange.subscribe(() => {
-      this.validate(picker);
-    });
+    if (this.multiPickerColumns.length > 1 && this.multiPickerColumns[1].options[0].parentVal) {
+      for (let i = 0; i < picker.getColumns().length; i++) {
+        this.validate(picker);
+      }
+
+      picker.ionChange.subscribe(() => {
+        this.validate(picker);
+      });
+    }
 
     picker.present(pickerOptions);
 

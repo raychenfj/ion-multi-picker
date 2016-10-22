@@ -32,7 +32,7 @@
     "protractor": "^4.0.9"
   },
   "name": "ion-multi-picker",
-  "description": "ion-multi-picker: An Ionic project",
+  "description": "Ion Multi Item Picker--An Ionic2 Custom Picker Component",
   "cordovaPlugins": [
     "cordova-plugin-device",
     "cordova-plugin-console",
