@@ -15,9 +15,9 @@ NPM: [https://www.npmjs.com/package/ion-multi-picker](https://www.npmjs.com/pack
 ## Preview
 ### Picker with Independent/ Dependent Columns
 
-![Picker with Independent Columns](https://raw.githubusercontent.com/raychenfj/ion-multi-picker/master/img/independent.png)
+![Picker with Independent Columns](https://github.com/raychenfj/ion-multi-picker/blob/master/img/independent.gif?raw=true)
 
-![Picker with Dependent Columns](https://raw.githubusercontent.com/raychenfj/ion-multi-picker/master/img/dependent.png)
+![Picker with Dependent Columns](https://github.com/raychenfj/ion-multi-picker/blob/master/img/dependent.gif?raw=true)
 
 ## Demo
 Check out the live demo here: [https://raychenfj.github.io/ion-multi-picker/](https://raychenfj.github.io/ion-multi-picker/)
