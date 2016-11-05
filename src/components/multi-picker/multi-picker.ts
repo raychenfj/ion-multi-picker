@@ -1,4 +1,4 @@
-import { AfterContentInit, OnInit, Component, EventEmitter, forwardRef, HostListener, Input, OnDestroy, Optional, Output, ViewEncapsulation } from '@angular/core';
+import { AfterContentInit, Component, EventEmitter, forwardRef, HostListener, Input, OnDestroy, Optional, Output, ViewEncapsulation } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Picker, PickerController, Form, Item } from 'ionic-angular';
 import { MultiPickerColumn, MultiPickerOption } from './multi-picker-options';
