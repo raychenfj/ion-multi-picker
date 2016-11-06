@@ -7,7 +7,7 @@
 </ion-header>
 
 <ion-content padding class="advanced">
-    <!--<ion-item>
+    <ion-item>
         <ion-label>Independent Picker</ion-label>
         <ion-multi-picker item-content [multiPickerColumns]="independentColumns"></ion-multi-picker>
     </ion-item>
@@ -18,7 +18,7 @@
     <ion-item>
         <ion-label>Disabled Picker</ion-label>
         <ion-multi-picker item-content [multiPickerColumns]="dependentColumns" [disabled]="true"></ion-multi-picker>
-    </ion-item>-->
+    </ion-item>
     <ion-item>
         <ion-label>Default Value</ion-label>
         <ion-multi-picker id="default" [(ngModel)] = "default" item-content [multiPickerColumns]="dependentColumns"></ion-multi-picker>

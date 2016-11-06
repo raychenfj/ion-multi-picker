@@ -77,19 +77,25 @@ export class AdvancedExamplePage {
 		];
 
 		// Using enum
-		this.fruit = Fruit.Apple;
+		this.fruit = Fruit.Melon;
 		this.Fruit = Fruit;
-		this.fruits = [];
-		this.fruits[0] = {options:[]};
+		this.fruits = this.genColumnFromEnum(this.Fruit);
+	}
 
-		let keys = Object.keys(this.Fruit);
+	genColumnFromEnum(enumType: any) {
+		let col = [];
+		col[0] = { options: [] };
+
+		let keys = Object.keys(enumType);
 		let length = keys.length / 2;
 
-		for(let i = 0;i<length;i++){
-			this.fruits[0].options.push({
-				text:keys[i+length],
-				value:keys[i]
+		for (let i = 0; i < length; i++) {
+			col[0].options.push({
+				text: keys[i + length],
+				value: keys[i]
 			});
 		}
+
+		return col;
 	}
 }
