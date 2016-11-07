@@ -22,7 +22,7 @@
     "run:before": "build"
   },
   "devDependencies": {
-    "@ionic/app-scripts": "^0.0.39",
+    "@ionic/app-scripts": "^0.0.40",
     "typescript": "^2.0.3",
     "concurrently": "^3.1.0",
     "del": "2.2.2",
