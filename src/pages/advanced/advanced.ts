@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { convertEnumToColumn } from '../../util';
 
 enum Fruit {
 	Apple, Orange, Melon, Banana, Pear,
@@ -79,23 +80,6 @@ export class AdvancedExamplePage {
 		// Using enum
 		this.fruit = Fruit.Melon;
 		this.Fruit = Fruit;
-		this.fruits = this.genColumnFromEnum(this.Fruit);
-	}
-
-	genColumnFromEnum(enumType: any) {
-		let col = [];
-		col[0] = { options: [] };
-
-		let keys = Object.keys(enumType);
-		let length = keys.length / 2;
-
-		for (let i = 0; i < length; i++) {
-			col[0].options.push({
-				text: keys[i + length],
-				value: keys[i]
-			});
-		}
-
-		return col;
+		this.fruits = convertEnumToColumn(this.Fruit);
 	}
 }

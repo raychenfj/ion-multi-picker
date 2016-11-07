@@ -69,14 +69,32 @@ describe('MultiPicker', () => {
             expect(element(by.id('advanced')).element(by.className('multi-picker-text')).getText()).toEqual('2 2-2 2-2-2');
         })
 
-        it('should be disabled',()=>{
+        it('should be disabled', () => {
             browser.sleep(SLEEP);
             element(by.className('multi-picke-disabled')).element(by.tagName('button')).click();
         });
 
-        it('should have default value 1 1-2 1-2-2',()=>{
+        it('should have default value 1 1-2 1-2-2', () => {
             browser.sleep(SLEEP);
             expect(element(by.id('default')).element(by.className('multi-picker-text')).getText()).toEqual('1 1-2 1-2-2');
+        });
+
+        it('should have default value Melon', () => {
+            browser.sleep(SLEEP);
+            expect(element(by.id('fruit')).element(by.className('multi-picker-text')).getText()).toEqual('Melon');
+        });
+
+        it('should pick Banana', () => {
+            browser.sleep(SLEEP);
+            element(by.id('fruit')).click();
+            browser.sleep(SLEEP);
+            // Pick Banana
+            element.all(by.className('picker-col')).get(0).all(by.className('picker-opt')).get(3).click();
+            browser.sleep(SLEEP);
+            element.all(by.className('picker-button')).get(1).click();
+            browser.sleep(SLEEP);
+            expect(element(by.id('fruit')).element(by.className('multi-picker-text')).getText()).toEqual('Banana');
+
         });
     });
 });

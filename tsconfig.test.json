@@ -21,6 +21,6 @@
     "rewriteTsconfig": false
   },
   "include": [
-        "./src/**/e2e.ts"
+        "./src/**/*.e2e.ts"
     ]
 }

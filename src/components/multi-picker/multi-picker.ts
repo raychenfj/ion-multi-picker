@@ -290,7 +290,7 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
     this._text = '';
     let values: string[] = this._value.toString().split(' ');
     this.multiPickerColumns.forEach((col, index) => {
-      let option = col.options.find(option => option.value === values[index]);
+      let option = col.options.find(option => option.value.toString() === values[index]);
       if (option) {
         this._text += `${option.text} `
       }
