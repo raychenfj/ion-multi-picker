@@ -7,7 +7,7 @@ module.exports = function (config) {
       'coverage',
     ],
     files:[
-        'src/util.spec.ts'
+        'src/**/*.spec.ts'
     ],
 
     browsers:[
