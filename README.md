@@ -23,9 +23,9 @@ Check out the live demo here: [https://raychenfj.github.io/ion-multi-picker/](ht
 
 ## Supported Version
 
-Ionic2 2.0.0-rc.0
+Ionic2 2.0.0-rc.2
 
-Ionic CLI 2.1.0
+Ionic CLI 2.1.4
 
 
 ## Installation
@@ -140,6 +140,46 @@ Set `disabled` to `true` to prevent interaction.
     </ion-item>
 ```
 
+## New Feature, Support Enum
+
+It's a good case to use picker to choose value for an enum variable. 
+
+This componennt now provide a shorthand util function `convertEnumToColumns` to generate column from enum type,
+and also you can bind a enum variable to `ngModel`. 
+
+Check the example fruit picker in the demo.
+
+1. Use `convertEnumToColumns` to generate columns;
+
+```typescript
+import { convertEnumToColumn } from 'ion-multi-picker';
+
+enum Fruit {
+  Apple, Orange, Melon, Banana, Pear,
+}
+
+export class YourPage {
+  fruits: any[];
+  fruit: Fruit;
+  Fruit;
+
+  constructor(public navCtrl: NavController) {
+    // Using enum
+	this.fruit = Fruit.Melon;
+	this.Fruit = Fruit;
+	this.fruits = convertEnumToColumn(this.Fruit);
+  }
+}
+```
+
+2. Binding enum variable to `ngModel`;
+```html
+<ion-item>
+	<ion-label>Fruit Picker</ion-label>
+	<ion-multi-picker id="fruit" [(ngModel)]="fruit" item-content [multiPickerColumns]="fruits"></ion-multi-picker>
+</ion-item>
+```
+
 
 ## Attributes
 | Attribute | Description | Type | Options | Default|
@@ -170,8 +210,18 @@ Set `disabled` to `true` to prevent interaction.
 
 Welcome issue report, PR and contributors. Help me improve it.
 
-Ionic2 is a cross-platform framework, 
-currently I have quite limited resource to test this custom component.
+Fork and `git clone` this project, 
+most code for the multi picker is under `src/app/components/multi-picker`.
+
+The unit test framework is karma + webpack + jasmine. And e2e test is protractor. 
+
+Add your unit test and use `npm test` to start karma.
+
+Add your e2e test, run `ionic serve` and then in another terminal use `npm run e2e` to run protractor.
+
+You can also add your use case in the `app/pages`.
+
+Finally, send me a `PULL REQUEST`.
 
 ## License
 MIT

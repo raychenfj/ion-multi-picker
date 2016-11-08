@@ -1,4 +1,4 @@
-import { AfterContentInit, OnInit, Component, EventEmitter, forwardRef, HostListener, Input, OnDestroy, Optional, Output, ViewEncapsulation } from '@angular/core';
+import { AfterContentInit, Component, EventEmitter, forwardRef, HostListener, Input, OnDestroy, Optional, Output, ViewEncapsulation } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Picker, PickerController, Form, Item } from 'ionic-angular';
 import { MultiPickerColumn, MultiPickerOption } from './multi-picker-options';
@@ -34,7 +34,7 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
   _text: string = '';
   _fn: Function;
   _isOpen: boolean = false;
-  _value: string = '';
+  _value: any;
 
   /**
    * @private
@@ -80,6 +80,7 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
       this.id = 'dt-' + _item.registerInput('multi-picker');
       this._labelId = 'lbl-' + _item.id;
       this._item.setElementClass('item-multi-picker', true);
+      this._value = this._value || '';
     }
   }
 
@@ -102,6 +103,7 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
   }
 
   /**
+   * Open the picker panel
    * @private
    */
   open() {
@@ -111,7 +113,6 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
 
     console.debug('multi picker, open picker');
 
-    // the user may have assigned some options specifically for the alert
     let pickerOptions: any = {};
 
     let picker = this._pickerCtrl.create(pickerOptions);
@@ -154,17 +155,17 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
   }
 
   /**
+   * Initialize the picker panel, set selectedIndex and add columns
    * @private
    */
   generate(picker: Picker) {
-    let values = this._value.split(' ');
+    let values = this._value.toString().split(' ');
     this.multiPickerColumns.forEach((col, index) => {
-      console.log(col.options);
       let selectedIndex = col.options.findIndex(option => option.value == values[index]);
-      if (selectedIndex == -1 && index > 0) {
+      if (selectedIndex === -1 && index > 0) {
         let preCol = picker.getColumns()[index - 1];
         let preOption: MultiPickerOption = preCol.options[preCol.selectedIndex];
-        selectedIndex = col.options.findIndex(option => this.getOptionParentValue(index, option) == preOption.value);
+        selectedIndex = col.options.findIndex(option => this.getOptionParentValue(index, option) === preOption.value);
       }
 
       let column: any = {
@@ -180,6 +181,7 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
   }
 
   /**
+   * Validate the selected option, escpecially for dependent picker
    * @private
    */
   validate(picker: Picker) {
@@ -212,6 +214,10 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
     picker.refresh();
   }
 
+  /**
+   * get parentVal for an option
+   * @private
+   */
   getOptionParentValue(colIndex, option) {
     return this.multiPickerColumns[colIndex].options.find(opt => opt.value == option.value).parentVal;
   }
@@ -254,7 +260,11 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
    * @private
    */
   setValue(newData: any) {
-    this._value = newData || '';
+    if(newData=== null || newData === undefined){
+      this._value = '';
+    }else{
+      this._value = newData;
+    }
   }
 
   /**
@@ -278,9 +288,9 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
    */
   updateText() {
     this._text = '';
-    let values: string[] = this._value.split(' ');
+    let values: string[] = this._value.toString().split(' ');
     this.multiPickerColumns.forEach((col, index) => {
-      let option = col.options.find(option => option.value == values[index]);
+      let option = col.options.find(option => option.value.toString() === values[index]);
       if (option) {
         this._text += `${option.text} `
       }
@@ -325,7 +335,7 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
   registerOnChange(fn: Function): void {
     this._fn = fn;
     this.onChange = (val: any) => {
-      console.debug('datetime, onChange', val);
+      console.debug('multi picker, onChange', val);
       this.setValue(this.convertObjectToString(val));
       this.updateText();
       this.checkHasValue(val);
