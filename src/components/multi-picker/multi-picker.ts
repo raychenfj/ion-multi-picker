@@ -111,8 +111,6 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
       return;
     }
 
-    console.debug('multi picker, open picker');
-
     let pickerOptions: any = {};
 
     let picker = this._pickerCtrl.create(pickerOptions);
@@ -127,7 +125,6 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
       {
         text: this.doneText,
         handler: (data: any) => {
-          console.log('multi picker, done', data);
           this.onChange(data);
           this.ionChange.emit(data);
         }
@@ -185,7 +182,6 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
    * @private
    */
   validate(picker: Picker) {
-    console.log('validate');
     let columns = picker.getColumns();
     for (let i = 1; i < columns.length; i++) {
       let curCol = columns[i];
@@ -315,7 +311,6 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
    * @private
    */
   writeValue(val: any) {
-    console.debug('multi picker, writeValue', val);
     this.setValue(val);
     this.updateText();
     this.checkHasValue(val);
@@ -335,7 +330,6 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
   registerOnChange(fn: Function): void {
     this._fn = fn;
     this.onChange = (val: any) => {
-      console.debug('multi picker, onChange', val);
       this.setValue(this.convertObjectToString(val));
       this.updateText();
       this.checkHasValue(val);
@@ -355,7 +349,6 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
   */
   onChange(val: any) {
     // onChange used when there is not an formControlName
-    console.debug('multi picker, onChange w/out formControlName', val);
     this.setValue(this.convertObjectToString(val));
     this.updateText();
     this.onTouched();
