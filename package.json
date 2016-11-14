@@ -8,7 +8,7 @@
   "dependencies": {
     "@angular/common": "2.1.1",
     "@angular/compiler": "2.1.1",
-    "@angular/compiler-cli": "2.1.1",
+    "@angular/compiler-cli": "2.2.0",
     "@angular/core": "2.1.1",
     "@angular/forms": "2.1.1",
     "@angular/http": "2.1.1",
