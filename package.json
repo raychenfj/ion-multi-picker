@@ -19,7 +19,7 @@
     "ionic-angular": "^2.0.0-rc.2",
     "ionic-native": "^2.2.6",
     "ionicons": "^3.0.0",
-    "zone.js": "0.6.21"
+    "zone.js": "0.6.26"
   },
   "scripts": {
     "e2e": "tsc -p tsconfig.test.json && concurrently \"webdriver-manager start\" \"protractor protractor.conf.js\"",
