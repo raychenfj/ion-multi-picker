@@ -1,5 +1,11 @@
 # Change Log
 
+## [1.0.7]
+
+### Added
+* Migrate to ionic 2.0.0-rc3
+* Add protractor type definition
+
 ## [1.0.6] 
 
 ### Added

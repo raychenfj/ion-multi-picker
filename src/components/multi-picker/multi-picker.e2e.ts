@@ -1,4 +1,6 @@
-declare const element, by, browser;
+// declare const element, by, browser;
+
+import {element,by,browser} from 'protractor';
 
 const SLEEP = 1000;
 /**
