@@ -374,11 +374,10 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
     let value = ``;
     this.multiPickerColumns.forEach((col, index) => {
       value += `${newData[col.name || index.toString()].value}`;
-      if (index !== this.multiPickerColumns.length) {
+      if (index !== this.multiPickerColumns.length - 1) {
         value += this.separator;
       }
     });
-    console.log(value);
     return value;
   }
 }
