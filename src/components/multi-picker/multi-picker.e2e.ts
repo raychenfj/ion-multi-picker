@@ -1,6 +1,5 @@
-// declare const element, by, browser;
-
-import {element,by,browser} from 'protractor';
+import {element, by, browser} from 'protractor';
+import 'jasmine';
 
 const SLEEP = 1000;
 /**
@@ -31,13 +30,14 @@ describe('MultiPicker', () => {
             browser.sleep(SLEEP);
             element(by.id('simple')).click();
             browser.sleep(SLEEP);
-            //The first Column, second option
+            // Pick 2
             element.all(by.className('picker-col')).get(0).all(by.className('picker-opt')).get(1).click();
-            //The second Column, second option
+            // Pick 1-2
             element.all(by.className('picker-col')).get(1).all(by.className('picker-opt')).get(1).click();
-            //The third Column, second option
+            // Pick 1-1-2
             element.all(by.className('picker-col')).get(2).all(by.className('picker-opt')).get(1).click();
             browser.sleep(SLEEP);
+            // Click Done
             element.all(by.className('picker-button')).get(1).click();
             browser.sleep(SLEEP);
             expect(element(by.id('simple')).element(by.className('multi-picker-text')).getText()).toEqual('2 1-2 1-1-2');
@@ -66,6 +66,7 @@ describe('MultiPicker', () => {
             //Pick 2-2-2
             element.all(by.className('picker-col')).get(2).all(by.className('picker-opt')).get(7).click();
             browser.sleep(SLEEP);
+            // Click Done
             element.all(by.className('picker-button')).get(1).click();
             browser.sleep(SLEEP);
             expect(element(by.id('advanced')).element(by.className('multi-picker-text')).getText()).toEqual('2 2-2 2-2-2');
@@ -93,10 +94,29 @@ describe('MultiPicker', () => {
             // Pick Banana
             element.all(by.className('picker-col')).get(0).all(by.className('picker-opt')).get(3).click();
             browser.sleep(SLEEP);
+            // Click Done
             element.all(by.className('picker-button')).get(1).click();
             browser.sleep(SLEEP);
             expect(element(by.id('fruit')).element(by.className('multi-picker-text')).getText()).toEqual('Banana');
-
         });
+
+        it('should pick 2-2-2 2-2 2', () => {
+            browser.sleep(SLEEP);
+            element(by.id('parent')).click();
+            browser.sleep(SLEEP);
+            // Pick 2
+            element.all(by.className('picker-col')).get(2).all(by.className('picker-opt')).get(1).click();
+            browser.sleep(SLEEP);
+            // Pick 2-2
+            element.all(by.className('picker-col')).get(1).all(by.className('picker-opt')).get(3).click();
+            browser.sleep(SLEEP);
+            // Pick 2-2-2
+            element.all(by.className('picker-col')).get(0).all(by.className('picker-opt')).get(7).click();
+            browser.sleep(SLEEP);
+            // Pick Done
+            element.all(by.className('picker-button')).get(1).click();
+            browser.sleep(SLEEP);
+            expect(element(by.id('parent')).element(by.className('multi-picker-text')).getText()).toEqual('2-2-2 2-2 2');
+        })
     });
 });

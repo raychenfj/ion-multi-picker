@@ -27,4 +27,8 @@
         <ion-label>Fruit Picker</ion-label>
         <ion-multi-picker id="fruit" [(ngModel)] = "fruit" item-content [multiPickerColumns]="fruits"></ion-multi-picker>
     </ion-item>
+    <ion-item>
+      <ion-label>Parent Columns</ion-label>
+      <ion-multi-picker id="parent" item-content [multiPickerColumns]="parentColumns"></ion-multi-picker>
+    </ion-item>
 </ion-content>

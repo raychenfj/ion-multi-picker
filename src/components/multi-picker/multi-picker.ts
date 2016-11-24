@@ -1,6 +1,6 @@
 import { AfterContentInit, Component, EventEmitter, forwardRef, HostListener, Input, OnDestroy, Optional, Output, ViewEncapsulation } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { Picker, PickerController, Form, Item } from 'ionic-angular';
+import {Picker, PickerController, Form, Item, PickerColumn} from 'ionic-angular';
 import { MultiPickerColumn, MultiPickerOption } from './multi-picker-options';
 
 export const MULTI_PICKER_VALUE_ACCESSOR: any = {
@@ -133,7 +133,9 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
 
     this.generate(picker);
 
-    if (this.multiPickerColumns.length > 1 && this.multiPickerColumns[1].options[0].parentVal) {
+    // Determine if the picker is a dependent picker
+    let isDependent = this.multiPickerColumns.findIndex(col => col.options[0].parentVal) > -1;
+    if (this.multiPickerColumns.length > 1 && isDependent) {
       for (let i = 0; i < picker.getColumns().length; i++) {
         this.validate(picker);
       }
@@ -183,27 +185,28 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
    */
   validate(picker: Picker) {
     let columns = picker.getColumns();
-    for (let i = 1; i < columns.length; i++) {
-      let curCol = columns[i];
-      let preCol = columns[i - 1];
+    for (let i = 0; i < columns.length; i++) {
+      let curCol: PickerColumn = columns[i];
+      let parentCol: PickerColumn = this.getParentCol(i, columns);
+      if (!parentCol) continue;
       let curOption: MultiPickerOption = curCol.options[curCol.selectedIndex];
-      let preOption: MultiPickerOption = preCol.options[preCol.selectedIndex];
+      let parentOption: MultiPickerOption = parentCol.options[parentCol.selectedIndex];
       let selectedOptionWillChanged: boolean = false;
       let curParentVal = this.getOptionParentValue(i, curOption);
-      if (curParentVal && curParentVal != preOption.value) {
+      if (curParentVal && curParentVal != parentOption.value) {
         selectedOptionWillChanged = true;
       }
       if (selectedOptionWillChanged) {
         curCol.options.forEach((option: MultiPickerOption, index) => {
           let parentVal = this.getOptionParentValue(i, option);
-          option.disabled = parentVal != preOption.value || index > curCol.options.findIndex((opt: MultiPickerOption) => this.getOptionParentValue(i, opt) == preOption.value);
+          option.disabled = parentVal != parentOption.value || index > curCol.options.findIndex((opt: MultiPickerOption) => this.getOptionParentValue(i, opt) == parentOption.value);
         });
 
         break;
       } else {
         curCol.options.forEach((option: MultiPickerOption, index) => {
           let parentVal = this.getOptionParentValue(i, option);
-          option.disabled = parentVal != null && parentVal != preOption.value;
+          option.disabled = parentVal != null && parentVal !== parentOption.value;
         });
       }
     }
@@ -211,11 +214,23 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
   }
 
   /**
-   * get parentVal for an option
+   * Get parentVal for an option
    * @private
    */
   getOptionParentValue(colIndex, option) {
     return this.multiPickerColumns[colIndex].options.find(opt => opt.value == option.value).parentVal;
+  }
+
+  /**
+   * Get the parentCol for a column based on the property parentCol
+   * The value parentCol could be the name or alias of a column
+   */
+  getParentCol(childColIndex: number, columns: PickerColumn[]): PickerColumn {
+    var parent = this.multiPickerColumns[childColIndex].parentCol;
+    if (parent)
+      return columns[this.multiPickerColumns.findIndex(col => col.name === parent || col.alias === parent)];
+    else
+      return columns[childColIndex - 1]
   }
 
   /**
@@ -256,9 +271,9 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
    * @private
    */
   setValue(newData: any) {
-    if(newData=== null || newData === undefined){
+    if (newData === null || newData === undefined) {
       this._value = '';
-    }else{
+    } else {
       this._value = newData;
     }
   }
