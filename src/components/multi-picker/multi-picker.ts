@@ -40,9 +40,6 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
    * @private
    */
   id: string;
-  /**
-   * @private
-   */
 
   /**
    * @input {string} The text to display on the picker's cancel button. Default: `Cancel`.
@@ -54,11 +51,15 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
    */
   @Input() doneText: string = 'Done';
 
-
   /**
-   * @input
+   * @input {MultiPickerColumn} The columns display in the picker's panel.
    */
   @Input() multiPickerColumns: MultiPickerColumn[] = [];
+
+  /**
+   * @input {string} the character to separate values from different columns 
+   */
+  @Input() separator: string = ' ';
 
   /**
    * @output {any} Any expression to evaluate when the multi picker selection has changed.
@@ -158,7 +159,7 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
    * @private
    */
   generate(picker: Picker) {
-    let values = this._value.toString().split(' ');
+    let values = this._value.toString().split(this.separator);
     this.multiPickerColumns.forEach((col, index) => {
       let selectedIndex = col.options.findIndex(option => option.value == values[index]);
       if (selectedIndex === -1 && index > 0) {
@@ -299,7 +300,7 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
    */
   updateText() {
     this._text = '';
-    let values: string[] = this._value.toString().split(' ');
+    let values: string[] = this._value.toString().split(this.separator);
     this.multiPickerColumns.forEach((col, index) => {
       let option = col.options.find(option => option.value.toString() === values[index]);
       if (option) {
@@ -382,13 +383,16 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
   }
 
   /**
-  * @private convert the Picker ionChange event object data to string
+  * @private Convert the picker ionChange event object data to string
   */
   convertObjectToString(newData) {
     let value = ``;
     this.multiPickerColumns.forEach((col, index) => {
-      value += `${newData[col.name || index.toString()].value} `;
-    })
-    return value.trim();
+      value += `${newData[col.name || index.toString()].value}`;
+      if (index !== this.multiPickerColumns.length - 1) {
+        value += this.separator;
+      }
+    });
+    return value;
   }
 }

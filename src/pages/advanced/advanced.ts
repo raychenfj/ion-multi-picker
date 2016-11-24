@@ -18,6 +18,9 @@ export class AdvancedExamplePage {
 	fruits: any[];
 	fruit: Fruit;
 	Fruit;
+	sepVal = '1_1 2_1 2 1';
+	sepColumns:any[];
+	separator = '_';
 
 
 	constructor(private navCtrl: NavController) {
@@ -116,5 +119,33 @@ export class AdvancedExamplePage {
         ]
       }
     ]
+
+		// Using custom separator and the value contains space 
+		this.sepColumns = [
+			{
+				options: [{ text: '1', value: '1' },
+				{ text: '2', value: '2' },
+				{ text: '3', value: '3' }]
+			},
+			{
+				options: [{ text: '1-1', value: '1 1' },
+				{ text: '1-2', value: '1 2' },
+				{ text: '2-1', value: '2 1' },
+				{ text: '2-2', value: '2 2' },
+				{ text: '3-1', value: '3 1' },]
+			},
+			{
+				options: [{ text: '1-1-1', value: '1 1 1' },
+				{ text: '1-1-2', value: '1 1 2' },
+				{ text: '1-2-1', value: '1 2 1' },
+				{ text: '1-2-2', value: '1 2 2' },
+				{ text: '2-1-1', value: '2 1 1' },
+				{ text: '2-1-2', value: '2 1 2' },
+				{ text: '2-2-1', value: '2 2 1' },
+				{ text: '2-2-2', value: '2 2 2' },
+				{ text: '3-1-1', value: '3 1 1' },
+				{ text: '3-1-2', value: '3 1 2' },]
+			}
+		];
 	}
 }

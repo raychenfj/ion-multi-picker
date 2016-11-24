@@ -34,6 +34,8 @@ npm install ion-multi-picker --save
 ```
 
 ## Usage
+
+### Basic
 1.Import MultiPickerModule to your app/module.
 ```Typescript
 import { MultiPickerModule } from 'ion-multi-picker';
@@ -140,7 +142,7 @@ Set `disabled` to `true` to prevent interaction.
     </ion-item>
 ```
 
-## New Feature, Support Enum
+### Using Enum
 
 It's a good case to use picker to choose value for an enum variable. 
 
@@ -180,6 +182,17 @@ export class YourPage {
 </ion-item>
 ```
 
+### Separator ( new in version 1.0.9 )
+When there are multiple columns, it need a separator to separate values from different columns. 
+
+The separator is space `' '` by default. Now you can customize the separator by using input property `[separator]`.
+
+Instead of define a property in your controller, you can directly pass a string or a char like below:
+```
+<ion-multi-picker id="separator" [(ngModel)]="sepVal" item-content [multiPickerColumns]="sepColumns" [separator]="'_'"></ion-multi-picker>
+```    
+
+And the multi picker's return value should format like `val1_val2_val3`.
 
 ## Attributes
 | Attribute | Description | Type | Options | Default|
@@ -225,3 +238,6 @@ Finally, send me a `PULL REQUEST`.
 
 ## License
 MIT
+
+## Change Log
+[Change log is here](https://github.com/raychenfj/ion-multi-picker/blob/master/CHANGELOG.md)
