@@ -7,7 +7,7 @@ export interface MultiPickerOption {
 }
 
 export interface MultiPickerColumn {
-  name:string,
+  name?:string,
   options: MultiPickerOption[]
   alias?:string,
   parentCol?:string,

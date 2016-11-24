@@ -1,6 +1,8 @@
 import { AfterContentInit, Component, EventEmitter, forwardRef, HostListener, Input, OnDestroy, Optional, Output, ViewEncapsulation } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Picker, PickerController, Form, Item, PickerColumn, PickerColumnOption } from 'ionic-angular';
+import _ from 'lodash';
+import moment from 'moment';
 import { MultiPickerColumn, MultiPickerOption } from './multi-picker-options';
 
 export const MULTI_PICKER_VALUE_ACCESSOR: any = {
@@ -40,6 +42,7 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
    * @private
    */
   id: string;
+  multiPickerColumns: MultiPickerColumn[] = [];
   /**
    * @private
    */
@@ -58,7 +61,7 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
   /**
    * @input
    */
-  @Input() multiPickerColumns: MultiPickerColumn[] = [];
+  @Input() filterDays: Function = (days: Array<number>, month: number, year: number): number[] =>{ return days };
 
   /**
    * @output {any} Any expression to evaluate when the multi picker selection has changed.
@@ -133,18 +136,13 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
 
     this.generate(picker);
 
-    const someDependent = this.multiPickerColumns.find((col)=> {
-      return !!col.options.find(option => !!option.parentVal )
-    });
-    if (this.multiPickerColumns.length > 1 && someDependent) {
-      for (let i = 0; i < picker.getColumns().length; i++) {
-        this.validate(picker);
-      }
-
-      picker.ionChange.subscribe(() => {
-        this.validate(picker);
-      });
+    for (let i = 0; i < picker.getColumns().length; i++) {
+      this.validate(picker);
     }
+
+    picker.ionChange.subscribe(() => {
+      this.validate(picker);
+    });
 
     picker.present(pickerOptions);
 
@@ -154,12 +152,36 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
     });
   }
 
+  toOption(num, extend?)  {
+    return _.extend({text: `${num}`, value: `${num}`}, extend || {})
+  };
+
+  toVals(options: MultiPickerOption[]): number[] {
+    return _.map(options, option => parseInt(option.value))
+  }
+
   /**
    * Initialize the picker panel, set selectedIndex and add columns
    * @private
    */
   generate(picker: Picker) {
     let values = this._value.toString().split(' ');
+
+    const range = (start, end)=> _.range(start, end + 1).map(val => { return this.toOption(val) });
+    const currentYear = moment().year();
+    this.multiPickerColumns = [
+      {
+        options: range(1, 31),
+      },
+      {
+        options: range(1, 12),
+      },
+      {
+        options: range(currentYear - 2, currentYear + 2)
+      }
+    ];
+
+
     this.multiPickerColumns.forEach((col, index) => {
       let selectedIndex = col.options.findIndex(option => option.value == values[index]);
       if (selectedIndex === -1 && index > 0) {
@@ -188,29 +210,25 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
     this.divyColumns(picker);
   }
 
+  _filterDays(days: Array<number>, month: number, year: number): number[] {
+    let lastMonthDay = moment([year, month - 1, 1]).endOf('month').date();
+    return _.filter(days, day => day <= lastMonthDay)
+  }
+
   /**
    * Validate the selected option, escpecially for dependent picker
    * @private
    */
   validate(picker: Picker) {
     let columns = picker.getColumns();
-    for (let i = 0; i < columns.length; i++) {
-      let curCol: PickerColumn = columns[i];
-      let parentCol: PickerColumn = this.getParentCol(i, columns);
-      if (parentCol) {
-        let parentOption: MultiPickerOption = parentCol.options[parentCol.selectedIndex];
-        let selectedOptionWillChanged: boolean = false;
-        let curParentVal = this.getOptionParentValue(i, curCol.selectedIndex);
-        if (curParentVal && curParentVal != parentOption.value) {
-          selectedOptionWillChanged = true;
-        }
-
-        curCol.options.forEach((option: PickerColumnOption, index) => {
-          option.disabled = this.getOptionDisabled(i, index) || this.parentValIsExistAndNotIncludes(i, index, parentOption.value);
-        });
-        if (selectedOptionWillChanged)  break;
-      }
-    }
+    let allowedDays = this.toVals(columns[0].options);
+    let month = parseInt(columns[1].options[columns[1].selectedIndex].value);
+    let year = parseInt(columns[2].options[columns[2].selectedIndex].value);
+    allowedDays = this._filterDays(allowedDays, month, year);
+    allowedDays = this.filterDays(allowedDays, month, year);
+    _(columns[0].options).each(dayOption => {
+      dayOption.disabled = !_(allowedDays).includes(parseInt(dayOption.value))
+    });
     picker.refresh();
   }
 
@@ -222,28 +240,6 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
     let parentVal = this.multiPickerColumns[colIndex].options[optionIndex].parentVal
     if (parentVal) parentVal = [].concat(parentVal);
     return parentVal;
-  }
-
-  parentValIsExistAndIncludes(colIndex: number, optionIndex: number, val): boolean {
-    let parentVal = this.getOptionParentValue(colIndex, optionIndex);
-    return parentVal && (parentVal.indexOf(val) != -1)
-  }
-
-  parentValIsExistAndNotIncludes(colIndex: number, optionIndex: number, val): boolean {
-    let parentVal = this.getOptionParentValue(colIndex, optionIndex);
-    return parentVal && (parentVal.indexOf(val) == -1)
-  }
-
-  getOptionDisabled(colIndex: number, optionIndex: number): boolean {
-    return this.multiPickerColumns[colIndex].options[optionIndex].disabled;
-  }
-
-  getParentCol(childColIndex: number, columns: PickerColumn[]): PickerColumn {
-    var parentColAlias = this.multiPickerColumns[childColIndex].parentCol;
-    if (parentColAlias)
-      return columns[this.multiPickerColumns.findIndex(col=> col.alias == parentColAlias)];
-    else
-      return columns[childColIndex - 1]
   }
 
   /**
