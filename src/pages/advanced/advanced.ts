@@ -14,7 +14,7 @@ export class AdvancedExamplePage {
 	default = '1 1-2 1-2-2';
 	dependentColumns: any[];
 	independentColumns: any[];
-  aliasColumns: any[];
+  parentColumns: any[];
 	fruits: any[];
 	fruit: Fruit;
 	Fruit;
@@ -25,27 +25,27 @@ export class AdvancedExamplePage {
 		this.dependentColumns = [
 			{
 				options: [{ text: '1', value: '1' },
-				{ text: '2', value: '2' },
-				{ text: '3', value: '3' }]
+					{ text: '2', value: '2' },
+					{ text: '3', value: '3' }]
 			},
 			{
 				options: [{ text: '1-1', value: '1-1', parentVal: '1' },
-				{ text: '1-2', value: '1-2', parentVal: '1' },
-				{ text: '2-1', value: '2-1', parentVal: '2' },
-				{ text: '2-2', value: '2-2', parentVal: '2' },
-				{ text: '3-1', value: '3-1', parentVal: '3' },]
+					{ text: '1-2', value: '1-2', parentVal: '1' },
+					{ text: '2-1', value: '2-1', parentVal: '2' },
+					{ text: '2-2', value: '2-2', parentVal: '2' },
+					{ text: '3-1', value: '3-1', parentVal: '3' },]
 			},
 			{
 				options: [{ text: '1-1-1', value: '1-1-1', parentVal: '1-1' },
-				{ text: '1-1-2', value: '1-1-2', parentVal: '1-1' },
-				{ text: '1-2-1', value: '1-2-1', parentVal: '1-2' },
-				{ text: '1-2-2', value: '1-2-2', parentVal: '1-2' },
-				{ text: '2-1-1', value: '2-1-1', parentVal: '2-1' },
-				{ text: '2-1-2', value: '2-1-2', parentVal: '2-1' },
-				{ text: '2-2-1', value: '2-2-1', parentVal: '2-2' },
-				{ text: '2-2-2', value: '2-2-2', parentVal: '2-2' },
-				{ text: '3-1-1', value: '3-1-1', parentVal: '3-1' },
-				{ text: '3-1-2', value: '3-1-2', parentVal: '3-1' },]
+					{ text: '1-1-2', value: '1-1-2', parentVal: '1-1' },
+					{ text: '1-2-1', value: '1-2-1', parentVal: '1-2' },
+					{ text: '1-2-2', value: '1-2-2', parentVal: '1-2' },
+					{ text: '2-1-1', value: '2-1-1', parentVal: '2-1' },
+					{ text: '2-1-2', value: '2-1-2', parentVal: '2-1' },
+					{ text: '2-2-1', value: '2-2-1', parentVal: '2-2' },
+					{ text: '2-2-2', value: '2-2-2', parentVal: '2-2' },
+					{ text: '3-1-1', value: '3-1-1', parentVal: '3-1' },
+					{ text: '3-1-2', value: '3-1-2', parentVal: '3-1' },]
 			}
 		];
 
@@ -53,27 +53,27 @@ export class AdvancedExamplePage {
 		this.independentColumns = [
 			{
 				options: [{ text: '1', value: '1' },
-				{ text: '2', value: '2' },
-				{ text: '3', value: '3' }]
+					{ text: '2', value: '2' },
+					{ text: '3', value: '3' }]
 			},
 			{
 				options: [{ text: '1-1', value: '1-1' },
-				{ text: '1-2', value: '1-2' },
-				{ text: '2-1', value: '2-1' },
-				{ text: '2-2', value: '2-2' },
-				{ text: '3-1', value: '3-1' },]
+					{ text: '1-2', value: '1-2' },
+					{ text: '2-1', value: '2-1' },
+					{ text: '2-2', value: '2-2' },
+					{ text: '3-1', value: '3-1' },]
 			},
 			{
 				options: [{ text: '1-1-1', value: '1-1-1' },
-				{ text: '1-1-2', value: '1-1-2' },
-				{ text: '1-2-1', value: '1-2-1' },
-				{ text: '1-2-2', value: '1-2-2' },
-				{ text: '2-1-1', value: '2-1-1' },
-				{ text: '2-1-2', value: '2-1-2' },
-				{ text: '2-2-1', value: '2-2-1' },
-				{ text: '2-2-2', value: '2-2-2' },
-				{ text: '3-1-1', value: '3-1-1' },
-				{ text: '3-1-2', value: '3-1-2' },]
+					{ text: '1-1-2', value: '1-1-2' },
+					{ text: '1-2-1', value: '1-2-1' },
+					{ text: '1-2-2', value: '1-2-2' },
+					{ text: '2-1-1', value: '2-1-1' },
+					{ text: '2-1-2', value: '2-1-2' },
+					{ text: '2-2-1', value: '2-2-1' },
+					{ text: '2-2-2', value: '2-2-2' },
+					{ text: '3-1-1', value: '3-1-1' },
+					{ text: '3-1-2', value: '3-1-2' },]
 			}
 		];
 
@@ -82,20 +82,34 @@ export class AdvancedExamplePage {
 		this.Fruit = Fruit;
 		this.fruits = convertEnumToColumn(this.Fruit);
 
-    this.aliasColumns = [
+		// Using parentCol
+    this.parentColumns = [
       {
-        parentCol: 'months',
+				name: 'child',
+        parentCol: 'parent',
+        options: [
+          { text: '1-1-1', value: '1-1-1', parentVal: '1-1' },
+					{ text: '1-1-2', value: '1-1-2', parentVal: '1-1' },
+          { text: '1-2-1', value: '1-2-1', parentVal: '1-2' },
+					{ text: '1-2-2', value: '1-2-2', parentVal: '1-2' },
+          { text: '2-1-1', value: '2-1-1', parentVal: '2-1' },
+					{ text: '2-1-2', value: '2-1-2', parentVal: '2-1' },
+          { text: '2-2-1', value: '2-2-1', parentVal: '2-2' },
+          { text: '2-2-2', value: '2-2-2', parentVal: '2-2' }
+        ]
+      },
+			{
+				name: 'parent',
+				parentCol: 'ancestor',
         options: [
           { text: '1-1', value: '1-1', parentVal: '1' },
-          { text: '1-2', value: '2-1', parentVal: '1'},
-          { text: '1-3', value: '3-1', parentVal: '1' },
-
-          { text: '2-1', value: '1-2', parentVal: '2' },
-          { text: '2-2', value: '2-2', parentVal: '2' }
+					{ text: '1-2', value: '1-2', parentVal: '1' },
+          { text: '2-1', value: '2-1', parentVal: '2' },
+					{ text: '2-2', value: '2-2', parentVal: '2' },
         ]
       },
       {
-        alias: 'months',
+				name: 'ancestor',
         options: [
           { text: '1', value: '1' },
           { text: '2', value: '2' }

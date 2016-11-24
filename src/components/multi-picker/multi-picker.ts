@@ -133,10 +133,9 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
 
     this.generate(picker);
 
-    const someDependent = this.multiPickerColumns.find(function (col) {
-      return col.options[0].parentVal
-    });
-    if (this.multiPickerColumns.length > 1 && someDependent) {
+    // Determine if the picker is a dependent picker
+    let isDependent = this.multiPickerColumns.findIndex(col => col.options[0].parentVal) > -1;
+    if (this.multiPickerColumns.length > 1 && isDependent) {
       for (let i = 0; i < picker.getColumns().length; i++) {
         this.validate(picker);
       }
@@ -189,6 +188,7 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
     for (let i = 0; i < columns.length; i++) {
       let curCol: PickerColumn = columns[i];
       let parentCol: PickerColumn = this.getParentCol(i, columns);
+      if (!parentCol) continue;
       let curOption: MultiPickerOption = curCol.options[curCol.selectedIndex];
       let parentOption: MultiPickerOption = parentCol.options[parentCol.selectedIndex];
       let selectedOptionWillChanged: boolean = false;
@@ -206,7 +206,7 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
       } else {
         curCol.options.forEach((option: MultiPickerOption, index) => {
           let parentVal = this.getOptionParentValue(i, option);
-          option.disabled = parentVal != null && parentVal != parentOption.value;
+          option.disabled = parentVal != null && parentVal !== parentOption.value;
         });
       }
     }
@@ -214,17 +214,21 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
   }
 
   /**
-   * get parentVal for an option
+   * Get parentVal for an option
    * @private
    */
   getOptionParentValue(colIndex, option) {
     return this.multiPickerColumns[colIndex].options.find(opt => opt.value == option.value).parentVal;
   }
 
+  /**
+   * Get the parentCol for a column based on the property parentCol
+   * The value parentCol could be the name or alias of a column
+   */
   getParentCol(childColIndex: number, columns: PickerColumn[]): PickerColumn {
-    var parentColAlias = this.multiPickerColumns[childColIndex].parentCol;
-    if (parentColAlias)
-      return columns[this.multiPickerColumns.findIndex(col=> col.alias == parentColAlias)];
+    var parent = this.multiPickerColumns[childColIndex].parentCol;
+    if (parent)
+      return columns[this.multiPickerColumns.findIndex(col => col.name === parent || col.alias === parent)];
     else
       return columns[childColIndex - 1]
   }
@@ -267,9 +271,9 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
    * @private
    */
   setValue(newData: any) {
-    if(newData=== null || newData === undefined){
+    if (newData === null || newData === undefined) {
       this._value = '';
-    }else{
+    } else {
       this._value = newData;
     }
   }
