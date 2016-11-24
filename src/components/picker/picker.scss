@@ -1,0 +1,34 @@
+$cus-picker-width: 100% !default;
+$cus-picker-max-width: 500px !default;
+$z-index-overlay-wrapper: 10 !default;
+$cus-picker-bkg: #fff !default;
+$cus-picker-height: 260px !default;
+
+div.cus-picker-wrapper {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 0 auto;
+    max-width: $cus-picker-max-width;
+    width: $cus-picker-width;
+    z-index: $z-index-overlay-wrapper;
+    background-color: $cus-picker-bkg;
+    height: $cus-picker-height;
+    border-top: 0.55px solid #dedede;
+}
+
+div.cus-picker-toolbar {
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-justify-content: flex-end;
+    -ms-flex-pack: end;
+    justify-content: flex-end;
+    height: 44px;
+    background: #fff;
+}
+
+div.cus-picker-columns {
+    height:216px;
+}

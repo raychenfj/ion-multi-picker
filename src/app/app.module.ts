@@ -5,6 +5,8 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { SimpleExamplePage } from '../pages/simple/simple';
 import { AdvancedExamplePage } from '../pages/advanced/advanced';
 import { MultiPicker } from '../components/multi-picker/multi-picker';
+import { Picker } from '../components/picker/picker';
+import { PickerCmp } from '../components/picker/picker-component';
 
 @NgModule({
   declarations: [
@@ -12,7 +14,8 @@ import { MultiPicker } from '../components/multi-picker/multi-picker';
     TabsPage,
     SimpleExamplePage,
     AdvancedExamplePage,
-    MultiPicker
+    MultiPicker,
+    PickerCmp
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -25,6 +28,6 @@ import { MultiPicker } from '../components/multi-picker/multi-picker';
     AdvancedExamplePage,
     MultiPicker
   ],
-  providers: []
+  providers: [Picker]
 })
-export class AppModule {}
+export class AppModule { }
