@@ -1,6 +1,6 @@
 import { AfterContentInit, Component, EventEmitter, forwardRef, HostListener, Input, OnDestroy, Optional, Output, ViewEncapsulation } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import {Picker, PickerController, Form, Item, PickerColumn} from 'ionic-angular';
+import { Picker, PickerController, Form, Item, PickerColumn, PickerColumnOption } from 'ionic-angular';
 import { MultiPickerColumn, MultiPickerOption } from './multi-picker-options';
 
 export const MULTI_PICKER_VALUE_ACCESSOR: any = {
@@ -165,14 +165,22 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
       if (selectedIndex === -1 && index > 0) {
         let preCol = picker.getColumns()[index - 1];
         let preOption: MultiPickerOption = preCol.options[preCol.selectedIndex];
-        selectedIndex = col.options.findIndex(option => this.getOptionParentValue(index, option) === preOption.value);
+        selectedIndex = col.options.indexOf(col.options.find((option, optionIndex) => {
+          return this.getOptionParentValue(index, optionIndex) === preOption.value
+        }));
       }
 
       let column: any = {
         name: col.name || index.toString(),
-        options: col.options.map(option => { return { text: option.text, value: option.value, disabled: false } }),
+        options: col.options.map(option => {
+          return {
+            text: option.text,
+            value: option.value,
+            disabled: option.disabled
+          }
+        }),
         selectedIndex: selectedIndex != -1 ? selectedIndex : 0
-      }
+      };
 
       picker.addColumn(column);
     });
@@ -189,27 +197,27 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
     for (let i = 0; i < columns.length; i++) {
       let curCol: PickerColumn = columns[i];
       let parentCol: PickerColumn = this.getParentCol(i, columns);
-      if (parentCol) {
-        let curOption: MultiPickerOption = curCol.options[curCol.selectedIndex];
-        let parentOption: MultiPickerOption = parentCol.options[parentCol.selectedIndex];
-        let selectedOptionWillChanged: boolean = false;
-        let curParentVal = this.getOptionParentValue(i, curOption);
-        if (curParentVal && curParentVal != parentOption.value) {
-          selectedOptionWillChanged = true;
-        }
-        if (selectedOptionWillChanged) {
-          curCol.options.forEach((option: MultiPickerOption, index) => {
-            let parentVal = this.getOptionParentValue(i, option);
-            option.disabled = parentVal != parentOption.value || index > curCol.options.findIndex((opt: MultiPickerOption) => this.getOptionParentValue(i, opt) == parentOption.value);
-          });
+      let parentOption: MultiPickerOption = parentCol.options[parentCol.selectedIndex];
+      let selectedOptionWillChanged: boolean = false;
+      let curParentVal = this.getOptionParentValue(i, curCol.selectedIndex);
+      if (curParentVal && curParentVal != parentOption.value) {
+        selectedOptionWillChanged = true;
+      }
+      if (selectedOptionWillChanged) {
+        curCol.options.forEach((option: PickerColumnOption, index) => {
+          let parentVal = this.getOptionParentValue(i, index);
+          let parentOptionIndex = curCol.options.indexOf(curCol.options.find((opt: PickerColumnOption, j) => {
+            return this.getOptionParentValue(i, j) == parentOption.value
+          }));
+          option.disabled = this.getOptionDisabled(i, index) || (parentVal != parentOption.value || index > parentOptionIndex)
+        });
 
-          break;
-        } else {
-          curCol.options.forEach((option: MultiPickerOption, index) => {
-            let parentVal = this.getOptionParentValue(i, option);
-            option.disabled = parentVal != null && parentVal != parentOption.value;
-          });
-        }
+        break;
+      } else {
+        curCol.options.forEach((option: PickerColumnOption, index) => {
+          let parentVal = this.getOptionParentValue(i, index);
+          option.disabled = this.getOptionDisabled(i, index) || parentVal && parentVal != parentOption.value;
+        });
       }
     }
     picker.refresh();
@@ -219,8 +227,12 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
    * get parentVal for an option
    * @private
    */
-  getOptionParentValue(colIndex, option) {
-    return this.multiPickerColumns[colIndex].options.find(opt => opt.value == option.value).parentVal;
+  getOptionParentValue(colIndex: number, optionIndex: number): string {
+    return this.multiPickerColumns[colIndex].options[optionIndex].parentVal;
+  }
+
+  getOptionDisabled(colIndex: number, optionIndex: number): boolean {
+    return this.multiPickerColumns[colIndex].options[optionIndex].disabled;
   }
 
   getParentCol(childColIndex: number, columns: PickerColumn[]): PickerColumn {
