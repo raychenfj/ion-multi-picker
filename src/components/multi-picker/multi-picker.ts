@@ -133,8 +133,8 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
 
     this.generate(picker);
 
-    const someDependent = this.multiPickerColumns.find(function (col) {
-      return col.options[0].parentVal
+    const someDependent = this.multiPickerColumns.find((col)=> {
+      return !!col.options.find(option => !!option.parentVal )
     });
     if (this.multiPickerColumns.length > 1 && someDependent) {
       for (let i = 0; i < picker.getColumns().length; i++) {
@@ -204,22 +204,11 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
         if (curParentVal && curParentVal != parentOption.value) {
           selectedOptionWillChanged = true;
         }
-        if (selectedOptionWillChanged) {
-          curCol.options.forEach((option: PickerColumnOption, index) => {
-            let parentVal = this.getOptionParentValue(i, index);
-            let parentOptionIndex = curCol.options.indexOf(curCol.options.find((opt: PickerColumnOption, j) => {
-              return this.getOptionParentValue(i, j) == parentOption.value
-            }));
-            option.disabled = this.getOptionDisabled(i, index) || (parentVal != parentOption.value || index > parentOptionIndex)
-          });
 
-          break;
-        } else {
-          curCol.options.forEach((option: PickerColumnOption, index) => {
-            let parentVal = this.getOptionParentValue(i, index);
-            option.disabled = this.getOptionDisabled(i, index) || parentVal && parentVal != parentOption.value;
-          });
-        }
+        curCol.options.forEach((option: PickerColumnOption, index) => {
+          option.disabled = this.getOptionDisabled(i, index) || this.parentValIsExistAndNotIncludes(i, index, parentOption.value);
+        });
+        if (selectedOptionWillChanged)  break;
       }
     }
     picker.refresh();
@@ -229,8 +218,20 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
    * get parentVal for an option
    * @private
    */
-  getOptionParentValue(colIndex: number, optionIndex: number): string {
-    return this.multiPickerColumns[colIndex].options[optionIndex].parentVal;
+  getOptionParentValue(colIndex: number, optionIndex: number): Array<any>  {
+    let parentVal = this.multiPickerColumns[colIndex].options[optionIndex].parentVal
+    if (parentVal) parentVal = [].concat(parentVal);
+    return parentVal;
+  }
+
+  parentValIsExistAndIncludes(colIndex: number, optionIndex: number, val): boolean {
+    let parentVal = this.getOptionParentValue(colIndex, optionIndex);
+    return parentVal && (parentVal.indexOf(val) != -1)
+  }
+
+  parentValIsExistAndNotIncludes(colIndex: number, optionIndex: number, val): boolean {
+    let parentVal = this.getOptionParentValue(colIndex, optionIndex);
+    return parentVal && (parentVal.indexOf(val) == -1)
   }
 
   getOptionDisabled(colIndex: number, optionIndex: number): boolean {

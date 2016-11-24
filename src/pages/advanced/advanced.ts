@@ -15,6 +15,7 @@ export class AdvancedExamplePage {
 	dependentColumns: any[];
 	independentColumns: any[];
   aliasColumns: any[];
+  disabledOptionsColumns: any[];
 	fruits: any[];
 	fruit: Fruit;
 	Fruit;
@@ -82,7 +83,7 @@ export class AdvancedExamplePage {
 		this.Fruit = Fruit;
 		this.fruits = convertEnumToColumn(this.Fruit);
 
-    this.aliasColumns = [
+    this.disabledOptionsColumns = [
       {
         parentCol: 'months',
         options: [
@@ -99,6 +100,25 @@ export class AdvancedExamplePage {
         options: [
           { text: '1', value: '1' },
           { text: '2', value: '2' }
+        ]
+      }
+    ];
+
+    this.aliasColumns = [
+      {
+        parentCol: 'months',
+        options: [
+          { text: '1', value: '1' },
+          { text: '2', value: '2' },
+          { text: '3', value: '3', parentVal: ['1', '3'] },
+        ]
+      },
+      {
+        alias: 'months',
+        options: [
+          { text: '1', value: '1' },
+          { text: '2', value: '2' },
+          { text: '3', value: '3' }
         ]
       }
     ]

@@ -2,7 +2,7 @@
 export interface MultiPickerOption {
   text?: string
   value?: any;
-  parentVal?: any;
+  parentVal?: any | Array<any>;
   disabled?:boolean;
 }
 
