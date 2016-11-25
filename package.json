@@ -58,7 +58,7 @@
     "typescript": "^2.0.7",
     "webpack": "^1.13.3"
   },
-  "name": "ion-datetime-picker",
+  "name": "ion2-datetime-picker",
   "description": "Ion Multi Item Picker--An Ionic2 Custom Picker Component",
   "cordovaPlugins": [
     "cordova-plugin-device",
