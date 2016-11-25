@@ -196,6 +196,47 @@ And the multi picker's return value should format like `val1_val2_val3`.
 
 ### Parent Column
 
+When use as a dependent picker, by default the dependency sequence is from left to right.
+
+Now with `parentCol`, you can configure your own dependency sequence when needed, like from right to left.
+
+The picker columns should be configured as below. The `parentCol` should be another column's `name` or `alias`.
+
+```
+	// Using parentCol
+    this.parentColumns = [
+      {
+		name: 'child',
+        parentCol: 'parent',
+        options: [
+          { text: '1-1-1', value: '1-1-1', parentVal: '1-1' },
+		  { text: '1-1-2', value: '1-1-2', parentVal: '1-1' },
+          { text: '1-2-1', value: '1-2-1', parentVal: '1-2' },
+		  { text: '1-2-2', value: '1-2-2', parentVal: '1-2' },
+          { text: '2-1-1', value: '2-1-1', parentVal: '2-1' },
+		  { text: '2-1-2', value: '2-1-2', parentVal: '2-1' },
+          { text: '2-2-1', value: '2-2-1', parentVal: '2-2' },
+          { text: '2-2-2', value: '2-2-2', parentVal: '2-2' }
+        ]
+      },{
+		name: 'parent',
+		parentCol: 'ancestor',
+        options: [
+          { text: '1-1', value: '1-1', parentVal: '1' },
+		  { text: '1-2', value: '1-2', parentVal: '1' },
+          { text: '2-1', value: '2-1', parentVal: '2' },
+		  { text: '2-2', value: '2-2', parentVal: '2' },
+        ]
+      },{
+		name: 'ancestor',
+        options: [
+          { text: '1', value: '1' },
+          { text: '2', value: '2' }
+        ]
+      }
+    ];
+```
+
 ## Attributes
 | Attribute | Description | Type | Options | Default|
 |-----------|-------------|------|---------|--------|
