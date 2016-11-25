@@ -1,40 +1,31 @@
-<!--<ion-header>-->
-  <!--<ion-navbar>-->
-    <!--<ion-title>-->
-      <!--Advanced Example-->
-    <!--</ion-title>-->
-  <!--</ion-navbar>-->
-<!--</ion-header>-->
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Advanced Example
+    </ion-title>
+  </ion-navbar>
+</ion-header>
 
-<!--<ion-content padding class="advanced">-->
-    <!--<ion-item>-->
-        <!--<ion-label>Independent Picker</ion-label>-->
-        <!--<ion-multi-picker item-content [multiPickerColumns]="independentColumns"></ion-multi-picker>-->
-    <!--</ion-item>-->
-    <!--<ion-item>-->
-        <!--<ion-label>Dependent Picker</ion-label>-->
-        <!--<ion-multi-picker id='advanced' item-content [multiPickerColumns]="dependentColumns"></ion-multi-picker>-->
-    <!--</ion-item>-->
-    <!--<ion-item>-->
-        <!--<ion-label>Disabled Picker</ion-label>-->
-        <!--<ion-multi-picker item-content [multiPickerColumns]="dependentColumns" [disabled]="true"></ion-multi-picker>-->
-    <!--</ion-item>-->
-    <!--<ion-item>-->
-        <!--<ion-label>Default Value</ion-label>-->
-        <!--<ion-multi-picker id="default" [(ngModel)] = "default" item-content [multiPickerColumns]="dependentColumns"></ion-multi-picker>-->
-    <!--</ion-item>-->
-    <!--<ion-item>-->
-        <!--<ion-label>Fruit Picker</ion-label>-->
-        <!--<ion-multi-picker id="fruit" [(ngModel)] = "fruit" item-content [multiPickerColumns]="fruits"></ion-multi-picker>-->
-    <!--</ion-item>-->
-
-    <!--<ion-item>-->
-      <!--<ion-label>Disabled options</ion-label>-->
-      <!--<ion-multi-picker item-content [multiPickerColumns]="disabledOptionsColumns"></ion-multi-picker>-->
-    <!--</ion-item>-->
-
-    <!--<ion-item>-->
-      <!--<ion-label>Alias</ion-label>-->
-      <!--<ion-multi-picker item-content [multiPickerColumns]="aliasColumns"></ion-multi-picker>-->
-    <!--</ion-item>-->
-<!--</ion-content>-->
+<ion-content padding class="advanced">
+  <form [formGroup]="formGroup">
+    <ion-item>
+      <ion-label>Advanced DatePicker</ion-label>
+      <ion-multi-picker  item-content
+                         [filterDays]="filterDays" [formControl]="formGroup.controls.date"
+                         [weekends]='[6,7]' [displayFormat]="'DD.MM.YYYY'">
+      </ion-multi-picker>
+    </ion-item>
+  </form>
+  <pre>
+    &lt;form [formGroup]="formGroup"&gt;
+      &lt;ion-item&gt;
+        &lt;ion-label&gt;Advanced Picker&lt;/ion-label&gt;
+        &lt;ion-multi-picker  item-content
+                           [filterDays]="filterDays" [formControl]="formGroup.controls.date"
+                           [weekends]='[6,7]' [displayFormat]="'DD.MM.YYYY'"&gt;
+        &lt;/ion-multi-picker&gt;
+      &lt;/ion-item&gt;
+    &lt;/form&gt;
+  </pre>
+  <pre>formGroup.controls.date.value = {{formGroup.controls.date.value}}</pre>
+</ion-content>
