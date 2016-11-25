@@ -194,6 +194,8 @@ Instead of define a property in your controller, you can directly pass a string 
 
 And the multi picker's return value should format like `val1_val2_val3`.
 
+### Parent Column
+
 ## Attributes
 | Attribute | Description | Type | Options | Default|
 |-----------|-------------|------|---------|--------|
@@ -208,6 +210,8 @@ And the multi picker's return value should format like `val1_val2_val3`.
 |-----------|-------------|------|---------|--------|
 |options| **Required**, Options in a column | Array of MultiPickerOption | - | - |
 |name| Optional, Column name | String | - | index start from 0 |
+|parentCol|Optional, when used as a dependent picker, you can specify the parent column|String| - |previous column|,
+|alias|Optional, alias for a column, when use parentCol, it will find the column with same name or alias|String| - | - | ,
 
 * **MultiPickerOption**
 
@@ -215,7 +219,7 @@ And the multi picker's return value should format like `val1_val2_val3`.
 |-----------|-------------|------|---------|--------|
 |text| **Required**, text displayed in the picker column|String|-|-|
 |value|**Required**, the associated value of the text|String|-|-|
-|parentVal|Optional, specify the dependency between current column and previous column|String|Value from your previos column|-|
+|parentVal|Optional, specify the dependency between current column and previous column|String|Value from your parent column|-|
 |disabled|Optional, the option is visible or not| Boolean|-| false|
 
 
