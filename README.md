@@ -34,6 +34,8 @@ npm install ion-multi-picker --save
 ```
 
 ## Usage
+
+### Basic
 1.Import MultiPickerModule to your app/module.
 ```Typescript
 import { MultiPickerModule } from 'ion-multi-picker';
@@ -140,7 +142,7 @@ Set `disabled` to `true` to prevent interaction.
     </ion-item>
 ```
 
-## New Feature, Support Enum
+### Using Enum
 
 It's a good case to use picker to choose value for an enum variable. 
 
@@ -180,6 +182,60 @@ export class YourPage {
 </ion-item>
 ```
 
+### Separator ( new in version 1.0.9 )
+When there are multiple columns, it need a separator to separate values from different columns. 
+
+The separator is space `' '` by default. Now you can customize the separator by using input property `[separator]`.
+
+Instead of define a property in your controller, you can directly pass a string or a char like below:
+```
+<ion-multi-picker id="separator" [(ngModel)]="sepVal" item-content [multiPickerColumns]="sepColumns" [separator]="'_'"></ion-multi-picker>
+```    
+
+And the multi picker's return value should format like `val1_val2_val3`.
+
+### Parent Column
+
+When use as a dependent picker, by default the dependency sequence is from left to right.
+
+Now with `parentCol`, you can configure your own dependency sequence when needed, like from right to left.
+
+The picker columns should be configured as below. The `parentCol` should be another column's `name` or `alias`.
+
+```
+	// Using parentCol
+    this.parentColumns = [
+      {
+		name: 'child',
+        parentCol: 'parent',
+        options: [
+          { text: '1-1-1', value: '1-1-1', parentVal: '1-1' },
+		  { text: '1-1-2', value: '1-1-2', parentVal: '1-1' },
+          { text: '1-2-1', value: '1-2-1', parentVal: '1-2' },
+		  { text: '1-2-2', value: '1-2-2', parentVal: '1-2' },
+          { text: '2-1-1', value: '2-1-1', parentVal: '2-1' },
+		  { text: '2-1-2', value: '2-1-2', parentVal: '2-1' },
+          { text: '2-2-1', value: '2-2-1', parentVal: '2-2' },
+          { text: '2-2-2', value: '2-2-2', parentVal: '2-2' }
+        ]
+      },{
+		name: 'parent',
+		parentCol: 'ancestor',
+        options: [
+          { text: '1-1', value: '1-1', parentVal: '1' },
+		  { text: '1-2', value: '1-2', parentVal: '1' },
+          { text: '2-1', value: '2-1', parentVal: '2' },
+		  { text: '2-2', value: '2-2', parentVal: '2' },
+        ]
+      },{
+		name: 'ancestor',
+        options: [
+          { text: '1', value: '1' },
+          { text: '2', value: '2' }
+        ]
+      }
+    ];
+```
 
 ## Attributes
 | Attribute | Description | Type | Options | Default|
@@ -195,6 +251,8 @@ export class YourPage {
 |-----------|-------------|------|---------|--------|
 |options| **Required**, Options in a column | Array of MultiPickerOption | - | - |
 |name| Optional, Column name | String | - | index start from 0 |
+|parentCol|Optional, when used as a dependent picker, you can specify the parent column|String| - |previous column|,
+|alias|Optional, alias for a column, when use parentCol, it will find the column with same name or alias|String| - | - | ,
 
 * **MultiPickerOption**
 
@@ -202,7 +260,7 @@ export class YourPage {
 |-----------|-------------|------|---------|--------|
 |text| **Required**, text displayed in the picker column|String|-|-|
 |value|**Required**, the associated value of the text|String|-|-|
-|parentVal|Optional, specify the dependency between current column and previous column|String|Value from your previos column|-|
+|parentVal|Optional, specify the dependency between current column and previous column|String|Value from your parent column|-|
 |disabled|Optional, the option is visible or not| Boolean|-| false|
 
 
@@ -225,3 +283,6 @@ Finally, send me a `PULL REQUEST`.
 
 ## License
 MIT
+
+## Change Log
+[Change log is here](https://github.com/raychenfj/ion-multi-picker/blob/master/CHANGELOG.md)
