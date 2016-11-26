@@ -1,5 +1,11 @@
-export class MultiPickerTimeColumns extends MultiPickerType{
-  protected _columns: IMultiPickerTimeColumns;
+import moment from 'moment';
+import { PickerColumn } from 'ionic-angular';
+
+import { MultiPickerType, IMultiPickerTimeTypeColumns } from '../multi-picker-types';
+import { MultiPickerColumnHours, MultiPickerColumnMinutes } from '../multi-picker-columns';
+
+export class MultiPickerTimeType extends MultiPickerType{
+  protected _columns: IMultiPickerTimeTypeColumns;
   private min: moment.Moment;
   private max: moment.Moment;
   constructor(cmpAttrs) {

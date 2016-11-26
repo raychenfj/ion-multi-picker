@@ -1,7 +1,9 @@
 import _ from 'lodash';
 import moment from 'moment';
 
-export MultiPickerColumnDays from './columns/days';
+export { MultiPickerColumnDays } from './columns/days';
+export { MultiPickerColumnHours } from './columns/hours';
+export { MultiPickerColumnMinutes } from './columns/minutes';
 
 export interface IMultiPickerOption {
   text?: string
@@ -16,7 +18,6 @@ export interface IMultiPickerColumn {
 
 export class MultiPickerColumn implements IMultiPickerColumn {
   options: Array<IMultiPickerOption>;
-  protected baseOptions: Array<IMultiPickerOption>;
   static momentMap = { day: 'date' };
 
   constructor(
