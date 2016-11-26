@@ -5,18 +5,18 @@ import { PickerColumn } from 'ionic-angular';
 import { MultiPicker } from './multi-picker'
 import { MultiPickerColumn, MultiPickerColumnDays, MultiPickerColumnMinutes, MultiPickerColumnHours } from './multi-picker-options';
 
-interface IMultiPickerDateColumns {
+export interface IMultiPickerDateColumns {
   daysCol: MultiPickerColumnDays,
   monthsCol: MultiPickerColumn,
   yearsCol: MultiPickerColumn
 }
 
-interface IMultiPickerTimeColumns {
+export interface IMultiPickerTimeColumns {
   hoursCol: MultiPickerColumn,
   minutesCol: MultiPickerColumn
 }
 
-class MultiPickerColumns {
+export class MultiPickerColumns {
   protected _columns: IMultiPickerDateColumns |  IMultiPickerTimeColumns;
 
   get(): IMultiPickerDateColumns |  IMultiPickerTimeColumns {
