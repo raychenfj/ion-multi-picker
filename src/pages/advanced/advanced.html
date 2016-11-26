@@ -10,22 +10,44 @@
   <form [formGroup]="formGroup">
     <ion-item>
       <ion-label>Advanced DatePicker</ion-label>
-      <ion-multi-picker  item-content
+      <ion-multi-picker  item-content type="date"
                          [filterDays]="filterDays" [formControl]="formGroup.controls.date"
                          [weekends]='[6,7]' [displayFormat]="'DD.MM.YYYY'">
       </ion-multi-picker>
     </ion-item>
+    <pre>
+      &lt;form [formGroup]="formGroup"&gt;
+        &lt;ion-item&gt;
+          &lt;ion-label&gt;Advanced Picker&lt;/ion-label&gt;
+          &lt;ion-multi-picker  item-content type="date"
+                             [filterDays]="filterDays" [formControl]="formGroup.controls.date"
+                             [weekends]='[6,7]' [displayFormat]="'DD.MM.YYYY'"&gt;
+          &lt;/ion-multi-picker&gt;
+        &lt;/ion-item&gt;
+      &lt;/form&gt;
+    </pre>
+    <pre>formGroup.controls.date.value = {{formGroup.controls.date.value}}</pre>
+
+    <hr>
+    <ion-item>
+      <ion-label>TimePicker with min and max</ion-label>
+      <ion-multi-picker item-content
+                        [min]="formGroup.controls.minTime.value" [max]="formGroup.controls.maxTime.value"
+                        [formControl]="formGroup.controls.time">
+      </ion-multi-picker>
+    </ion-item>
+    <pre>
+      &lt;ion-multi-picker item-content [min]="minTime" [max]="maxTime" [formControl]="formGroup.controls.time"&gt;&lt;/ion-multi-picker&gt;
+    </pre>
+    <pre>formGroup.controls.date.value = {{formGroup.controls.time.value}}</pre>
+    <ion-item>
+      <ion-label>Min</ion-label>
+      <ion-multi-picker item-content [formControl]="formGroup.controls.minTime"></ion-multi-picker>
+    </ion-item>
+    <ion-item>
+      <ion-label>Max</ion-label>
+      <ion-multi-picker item-content [formControl]="formGroup.controls.maxTime"></ion-multi-picker>
+    </ion-item>
   </form>
-  <pre>
-    &lt;form [formGroup]="formGroup"&gt;
-      &lt;ion-item&gt;
-        &lt;ion-label&gt;Advanced Picker&lt;/ion-label&gt;
-        &lt;ion-multi-picker  item-content
-                           [filterDays]="filterDays" [formControl]="formGroup.controls.date"
-                           [weekends]='[6,7]' [displayFormat]="'DD.MM.YYYY'"&gt;
-        &lt;/ion-multi-picker&gt;
-      &lt;/ion-item&gt;
-    &lt;/form&gt;
-  </pre>
-  <pre>formGroup.controls.date.value = {{formGroup.controls.date.value}}</pre>
+
 </ion-content>

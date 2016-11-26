@@ -15,7 +15,7 @@ export interface IMultiPickerColumn {
 export class MultiPickerColumn implements IMultiPickerColumn {
   options: Array<IMultiPickerOption>;
   protected baseOptions: Array<IMultiPickerOption>;
-  static momentMap = { day: 'date', month: 'month', year: 'year' };
+  static momentMap = { day: 'date' };
 
   constructor(
     public name: string,
@@ -26,7 +26,7 @@ export class MultiPickerColumn implements IMultiPickerColumn {
   }
 
   get momentName() {
-    return MultiPickerColumn.momentMap[this.name]
+    return MultiPickerColumn.momentMap[this.name] || this.name
   }
 
   get values(): number[] {
@@ -34,16 +34,19 @@ export class MultiPickerColumn implements IMultiPickerColumn {
   }
 
   protected initOptions(): void {
-    if (!this.baseOptions) this.baseOptions = this.range(this.firstOptionValue, this.lastOptionValue);
-    this.options = _.clone(this.baseOptions);
+    this.options = this.range(this.firstOptionValue, this.lastOptionValue);
   }
 
   protected range(from:number, to:number): Array<IMultiPickerOption> {
     return this.toOptions(_.range(from, to + 1))
   }
 
+  protected optionText(num: number): string {
+    return `${num}`
+  }
+
   protected toOption(num: number, extend?: Object): IMultiPickerOption  {
-    return _.extend({ text: `${num}`, value: num }, extend || {})
+    return _.extend({ text: this.optionText(num), value: num }, extend || {})
   };
 
   protected toOptions(nums: Array<number>): Array<IMultiPickerOption>  {
@@ -58,6 +61,7 @@ export class MultiPickerColumn implements IMultiPickerColumn {
 export class MultiPickerColumnDays extends MultiPickerColumn implements IMultiPickerColumn {
   weekends: Array<number>;
   customFilterDays: Function;
+  existingDates: Object = {};
 
   constructor(
     public name: string,
@@ -86,10 +90,14 @@ export class MultiPickerColumnDays extends MultiPickerColumn implements IMultiPi
   }
 
   filterDays(month: number, year: number): MultiPickerColumnDays {
-    this.initOptions();
-    let lastMonthDay = super.toMoment(year, month, 1).endOf('month').date();
-    let days = this.values;
-    this.options = super.toOptions(_.filter(days, day => day <= lastMonthDay));
+    if (!this.existingDates[year] || ! this.existingDates[year][month]) {
+      this.initOptions();
+      let lastMonthDay = super.toMoment(year, month, 1).endOf('month').date();
+      let days = this.values;
+      this.existingDates[year] = this.existingDates[year] || {};
+      this.existingDates[year][month] = super.toOptions(_.filter(days, day => day <= lastMonthDay));
+    }
+    this.options = this.existingDates[year][month];
     return this
   }
 
@@ -100,5 +108,62 @@ export class MultiPickerColumnDays extends MultiPickerColumn implements IMultiPi
         return !_.includes(this.weekends, super.toMoment(year, month, day).weekday())
       }));
     return this
+  }
+}
+
+export class MultiPickerColumnMinutes extends MultiPickerColumn implements IMultiPickerColumn {
+  existingMinutes: Object = {};
+  min: moment.Moment;
+  max: moment.Moment;
+  minHour: number;
+  minMinute: number;
+  maxHour: number;
+  maxMinute: number;
+
+  constructor(
+    public name: string,
+    protected firstOptionValue: number,
+    protected lastOptionValue: number,
+    min: moment.Moment|string,
+    max: moment.Moment|string
+  ) {
+    super(name, firstOptionValue, lastOptionValue);
+    this.min = moment(min);
+    this.max = moment(max);
+    this.minHour = this.min.hour();
+    this.minMinute = this.min.minute();
+    this.maxHour = this.max.hour();
+    this.maxMinute = this.max.minute();
+  }
+
+  filter(hour: number): Array<number> {
+    return this.filterLimits(hour).values
+  }
+
+  filterLimits(hour: number): MultiPickerColumnMinutes {
+    if (!this.existingMinutes[hour]) {
+      this.initOptions();
+      if (hour < this.minHour || this.maxHour < hour)
+        this.existingMinutes[hour] = [];
+      else if (!_([this.minHour, this.maxHour]).includes(hour) || this.minMinute == 0 && this.maxMinute == 59)
+        this.existingMinutes[hour] = this.values;
+      else if (hour == this.minHour && this.minMinute != 0)
+        this.existingMinutes[hour] = _.filter(this.values, minute => minute >= this.minMinute);
+      else if (hour == this.maxHour && this.maxMinute != 59)
+        this.existingMinutes[hour] = _.filter(this.values, minute => minute <= this.maxMinute);
+      this.existingMinutes[hour] = super.toOptions(this.existingMinutes[hour]);
+    }
+    this.options = this.existingMinutes[hour];
+    return this
+  }
+
+  protected optionText(num: number): string {
+    return _.padStart(`${num}`, 2, '0')
+  }
+}
+
+export class MultiPickerColumnHours extends MultiPickerColumn implements IMultiPickerColumn {
+  protected optionText(num: number): string {
+    return _.padStart(`${num}`, 2, '0')
   }
 }

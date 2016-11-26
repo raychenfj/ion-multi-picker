@@ -1,21 +1,19 @@
-import { AfterContentInit, Component, EventEmitter, forwardRef, HostListener, Input, OnDestroy, Optional, Output, ViewEncapsulation } from '@angular/core';
+import { AfterContentInit, Component, EventEmitter, forwardRef, HostListener, Input, OnDestroy, Optional, Output, ViewEncapsulation, OnInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Picker, PickerController, Form, Item } from 'ionic-angular';
 import _ from 'lodash';
 import moment from 'moment';
-import { MultiPickerColumn, MultiPickerColumnDays, IMultiPickerOption } from './multi-picker-options';
+import {
+  MultiPickerColumn, IMultiPickerOption, MultiPickerColumnDays,
+  MultiPickerColumnMinutes
+} from './multi-picker-options';
+import { MultiPickerDateColumns, MultiPickerTimeColumns } from './multi-picker-columns';
 
 export const MULTI_PICKER_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => MultiPicker),
   multi: true
 };
-
-interface IMultiPickerColumns {
-  daysCol: MultiPickerColumnDays,
-  monthsCol: MultiPickerColumn,
-  yearsCol: MultiPickerColumn
-}
 
 @Component({
   selector: 'ion-multi-picker',
@@ -36,7 +34,8 @@ interface IMultiPickerColumns {
   encapsulation: ViewEncapsulation.None,
 })
 
-export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDestroy {
+export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDestroy, OnInit {
+  static YEAR_ROUND = 2;
   _disabled: any = false;
   _labelId: string = '';
   _text: string = '';
@@ -48,7 +47,7 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
    * @private
    */
   id: string;
-  private multiPickerColumns: IMultiPickerColumns;
+  private multiPickerColumns: MultiPickerDateColumns | MultiPickerTimeColumns;
 
   /**
    * @input {string} The text to display on the picker's cancel button. Default: `Cancel`.
@@ -65,7 +64,10 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
    */
   @Input('filterDays') customFilterDays: Function;
   @Input() weekends: string|string[];
-  @Input() displayFormat: string = 'DD.MM.YYYY';
+  @Input() type: string = 'time';
+  @Input() displayFormat: string;
+  @Input() min: moment.Moment = moment().subtract(MultiPicker.YEAR_ROUND, 'year').startOf('year');
+  @Input() max: moment.Moment = moment().add(MultiPicker.YEAR_ROUND, 'year').endOf('year');
   /**
    * @output {any} Any expression to evaluate when the multi picker selection has changed.
    */
@@ -88,6 +90,10 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
       this._item.setElementClass('item-multi-picker', true);
       this._value = this._value || '';
     }
+  }
+
+  ngOnInit() {
+    this.displayFormat = this.type == 'date' ? 'DD.MM.YYYY' : 'HH:mm';
   }
 
   @HostListener('click', ['$event'])
@@ -113,9 +119,8 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
    * @private
    */
   open() {
-    if (this._disabled) {
-      return;
-    }
+    this.validateValue();
+    if (this._disabled) return;
 
     let pickerOptions: any = {};
 
@@ -138,13 +143,10 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
     ];
 
     this.generate(picker);
-
-    for (let i = 0; i < picker.getColumns().length; i++) {
-      this.validate(picker);
-    }
+    this.validateColumns(picker);
 
     picker.ionChange.subscribe(() => {
-      this.validate(picker);
+      this.validateColumns(picker);
     });
     picker.present(pickerOptions);
 
@@ -159,16 +161,21 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
   }
 
   generate(picker: Picker) {
-    const currentYear = moment().year();
-    this.multiPickerColumns = {
-      daysCol: new MultiPickerColumnDays('day', 1, 31, this.customFilterDays, this.weekends),
-      monthsCol: new MultiPickerColumn('month', 1, 12),
-      yearsCol: new MultiPickerColumn('year', currentYear - 2, currentYear + 2)
-    };
+    if (this.type == 'date') {
+      this.multiPickerColumns = new MultiPickerDateColumns({
+        customFilterDays: this.customFilterDays,
+        weekends: this.weekends
+      })
+    } else {
+      this.multiPickerColumns = new MultiPickerTimeColumns({
+        min: this.min,
+        max: this.max
+      })
+    }
 
-    _.each(this.multiPickerColumns, (col, key) => {
+    _.each(this.multiPickerColumns.get(), (col, key) => {
       let selectedIndex = this.selectedOptionIndex(col);
-      if (key == 'monthsCol') selectedIndex++;
+      if (key == 'monthsCol' && selectedIndex) selectedIndex++;
       picker.addColumn({
         name: col.name,
         options: col.options,
@@ -178,28 +185,25 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
     this.divyColumns(picker);
   }
 
-  validate(picker: Picker) {
+  validateColumns(picker: Picker) {
     let columns = picker.getColumns();
-    let month: number, year: number;
-    if (_.some(columns.map(col => !col.selectedIndex))) {
-      [month, year] = [moment().month() + 1, moment().year()];
-      let day = moment().date();
-      _(columns).each((col, i) => {
-        col.selectedIndex = col.selectedIndex || _.findIndex(col.options, (option)=> option['value'] == [day, month, year][i])
-      })
-    } else {
-      [month, year] = _.map([1, 2], numCol => parseInt(columns[numCol].options[columns[numCol].selectedIndex].value));
-    }
-    let allowedDays = this.multiPickerColumns.daysCol.filter(month, year);
-    _(columns[0].options).each(dayOption => {
-      dayOption.disabled = !_(allowedDays).includes(parseInt(dayOption.value));
-    });
+    this.multiPickerColumns.validate(columns);
+    this.multiPickerColumns.dealDoneVisibleBnt(columns, picker.data.buttons[1]);
 
-    let isSomeDisabled = _.some(
-      _.map(columns, (col, index) => col.options[col.selectedIndex].disabled)
-    );
-    picker.data.buttons[1].cssRole = isSomeDisabled ? 'hide' : '';
     picker.refresh();
+  }
+
+  validateValue() {
+    if (this._value) {
+      let valueMoment = moment(this._value);
+      if (this.type == 'date') {
+        let dayColumn = new MultiPickerColumnDays('day', 1, 31, this.customFilterDays, this.weekends);
+        if (!_(dayColumn.filter(valueMoment.month() + 1, valueMoment.year())).includes(valueMoment.date())) this.onChange('');
+      } else {
+        let minuteColumn = new MultiPickerColumnMinutes('minute', 0, 59, this.min, this.max);
+        if (!_(minuteColumn.filter(valueMoment.hour())).includes(valueMoment.minute())) this.onChange('');
+      }
+    }
   }
 
   selectedOptionIndex(col: MultiPickerColumn): number {
@@ -249,10 +253,6 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
     }
   }
 
-  getValue(): string {
-    return this._value;
-  }
-
   checkHasValue(inputValue: any) {
     if (this._item) {
       this._item.setElementClass('input-has-value', !!(inputValue && inputValue !== ''));
@@ -281,6 +281,7 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
 
   ngAfterContentInit() {
     // update how the multi picker value is displayed as formatted text
+    this.validateValue();
     this.updateText();
   }
 
@@ -316,7 +317,7 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
   */
   convertObjectToString(newData) {
     let newMomentObj = _.mapValues(newData, (timepart)=> timepart['value']);
-    newMomentObj.month--;
-    return moment(newMomentObj).format();
+    if (newMomentObj.month) newMomentObj.month--;
+    return _.isEmpty(newMomentObj) ? '' : moment(newMomentObj).format();
   }
 }
