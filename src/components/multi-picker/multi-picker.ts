@@ -4,10 +4,10 @@ import { Picker, PickerController, Form, Item } from 'ionic-angular';
 import _ from 'lodash';
 import moment from 'moment';
 import {
-  MultiPickerColumn, IMultiPickerOption, MultiPickerColumnDays,
+  MultiPickerType, IMultiPickerOption, MultiPickerColumnDays,
   MultiPickerColumnMinutes
-} from './multi-picker-options';
-import { MultiPickerDateColumns, MultiPickerTimeColumns } from './multi-picker-columns';
+} from './multi-picker-columns';
+import { MultiPickerDateColumns, MultiPickerTimeColumns } from './multi-picker-types';
 
 export const MULTI_PICKER_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,

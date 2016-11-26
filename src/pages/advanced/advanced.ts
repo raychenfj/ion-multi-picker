@@ -12,7 +12,7 @@ export class AdvancedExamplePage {
   formGroup: FormGroup = this.formBuilder.group({
     date: [moment().format()],
     time: [moment().format()],
-    minTime: [moment('09:10', 'HH:mm').format()],
+    minTime: [moment('09:00', 'HH:mm').format()],
     maxTime: [moment('10:40', 'HH:mm').format()]
   });
 	constructor(private navCtrl: NavController) {
