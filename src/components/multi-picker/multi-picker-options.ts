@@ -1,10 +1,6 @@
 import _ from 'lodash';
 import moment from 'moment';
 
-export { MultiPickerColumnDays } from './columns/days';
-export { MultiPickerColumnHours } from './columns/hours';
-export { MultiPickerColumnMinutes } from './columns/minutes';
-
 export interface IMultiPickerOption {
   text?: string
   value?: any;

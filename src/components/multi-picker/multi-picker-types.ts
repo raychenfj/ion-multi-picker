@@ -1,26 +1,24 @@
 import _ from 'lodash';
 import { PickerColumn } from 'ionic-angular';
 
-import { MultiPickerColumn, MultiPickerColumnDays } from './multi-picker-columns';
+import { MultiPickerColumn } from './multi-picker-options';
+import { MultiPickerColumnDays } from './columns/days';
 
-export { MultiPickerDateType } from './types/date';
-export { MultiPickerTimeType } from './types/time';
-
-export interface IMultiPickerDateTypeColumns {
+export interface IMultiPickerTypeDateColumns {
   daysCol: MultiPickerColumnDays,
   monthsCol: MultiPickerColumn,
   yearsCol: MultiPickerColumn
 }
 
-export interface IMultiPickerTimeTypeColumns {
+export interface IMultiPickerTypeTimeColumns {
   hoursCol: MultiPickerColumn,
   minutesCol: MultiPickerColumn
 }
 
 export class MultiPickerType {
-  protected _columns: IMultiPickerDateTypeColumns |  IMultiPickerTimeTypeColumns;
+  protected _columns: IMultiPickerTypeDateColumns |  IMultiPickerTypeTimeColumns;
 
-  get(): IMultiPickerDateTypeColumns |  IMultiPickerTimeTypeColumns {
+  get(): IMultiPickerTypeDateColumns |  IMultiPickerTypeTimeColumns {
     return this._columns
   }
 

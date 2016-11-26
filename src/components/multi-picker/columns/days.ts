@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-import { MultiPickerColumn, IMultiPickerColumn } from '../multi-picker-columns'
+import { MultiPickerColumn, IMultiPickerColumn } from '../multi-picker-options';
 
 export class MultiPickerColumnDays extends MultiPickerColumn implements IMultiPickerColumn {
   weekends: Array<number>;
