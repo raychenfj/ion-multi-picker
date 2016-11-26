@@ -118,7 +118,7 @@ export class AdvancedExamplePage {
           { text: '2', value: '2' }
         ]
       }
-    ]
+    ];
 
 		// Using custom separator and the value contains space 
 		this.sepColumns = [
