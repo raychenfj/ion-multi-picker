@@ -29,8 +29,11 @@ export class MultiPickerType {
     button.cssRole = isSomeDisabled ? 'hide' : '';
   }
 
-  protected allSelectedIndexesBlank(columns: PickerColumn[]): boolean {
-    return _.every(columns.map(col => !_.isNumber(col.selectedIndex)))
+  protected someSelectedIndexBlank(columns: PickerColumn[]): boolean {
+    return _.some(columns.map(col => {
+      let isNumber = _.isNumber(col.selectedIndex);
+      return !isNumber || isNumber && col.selectedIndex < 0
+    }))
   }
 
   protected setDefaultSelectedIndexes(columns: PickerColumn[], values: Array<number>): void {

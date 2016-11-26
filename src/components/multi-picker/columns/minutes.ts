@@ -36,15 +36,14 @@ export class MultiPickerColumnMinutes extends MultiPickerColumn implements IMult
   filterLimits(hour: number): MultiPickerColumnMinutes {
     if (!this.existingMinutes[hour]) {
       this.initOptions();
+      let existingMinutes = this.values;
       if (hour < this.minHour || this.maxHour < hour)
-        this.existingMinutes[hour] = [];
-      else if (!_([this.minHour, this.maxHour]).includes(hour) || this.minMinute == 0 && this.maxMinute == 59)
-        this.existingMinutes[hour] = this.values;
+        existingMinutes = [];
       else if (hour == this.minHour && this.minMinute != 0)
-        this.existingMinutes[hour] = _.filter(this.values, minute => minute >= this.minMinute);
+        existingMinutes = _.filter(this.values, minute => minute >= this.minMinute);
       else if (hour == this.maxHour && this.maxMinute != 59)
-        this.existingMinutes[hour] = _.filter(this.values, minute => minute <= this.maxMinute);
-      this.existingMinutes[hour] = super.toOptions(this.existingMinutes[hour]);
+        existingMinutes = _.filter(this.values, minute => minute <= this.maxMinute);
+      this.existingMinutes[hour] = super.toOptions(existingMinutes);
     }
     this.options = this.existingMinutes[hour];
     return this

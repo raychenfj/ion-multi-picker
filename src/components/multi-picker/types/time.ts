@@ -22,7 +22,7 @@ export class MultiPickerTypeTime extends MultiPickerType{
 
   validate(columns: PickerColumn[]) {
     let hour: number;
-    if (this.allSelectedIndexesBlank(columns)) {
+    if (this.someSelectedIndexBlank(columns)) {
       let _moment: moment.Moment = moment();
       if (moment({hour: this.min.hour(), minute: this.min.minute()}).isAfter(_moment)) _moment = this.min;
       if (moment({hour: this.max.hour(), minute: this.max.minute()}).isBefore(_moment)) _moment = this.max;

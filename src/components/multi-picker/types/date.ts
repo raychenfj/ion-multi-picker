@@ -21,7 +21,7 @@ export class MultiPickerTypeDate extends MultiPickerType{
 
   validate(columns: PickerColumn[]) {
     let month: number, year: number;
-    if (this.allSelectedIndexesBlank(columns)) {
+    if (this.someSelectedIndexBlank(columns)) {
       const _moment = moment();
       [month, year] = [_moment.month() + 1, _moment.year()];
       this.setDefaultSelectedIndexes(columns, [_moment.date(), month, year]);
