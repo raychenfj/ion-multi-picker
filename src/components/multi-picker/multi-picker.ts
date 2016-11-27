@@ -210,6 +210,7 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
       let column: any = {
         name: col.name || index.toString(),
         options: options.map(option => { return { text: option.text, value: option.value, disabled: false } }),
+        columnWidth: col.columnWidth
       }
       // Set selectedIndex
       let selectedIndex = column.options.findIndex(option => option.value == values[index]);
@@ -233,6 +234,7 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
       let i = this._sequence[j];
       let curCol: PickerColumn = columns[i];
       let parentCol: PickerColumn = this.getParentCol(i, columns);
+      console.log(i, parentCol);
       if (!parentCol) continue;
       let curOption: MultiPickerOption = curCol.options[curCol.selectedIndex];
 
@@ -241,10 +243,12 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
         parentCol.selectedIndex = 0;
       }
 
-      let parentOption: MultiPickerOption = parentCol.options[parentCol.selectedIndex];
-      // let selectedOptionWillChanged: boolean = false;
-      let curParentVal = this.getOptionParentValue(i, curOption);
-      if (curParentVal && curParentVal != parentOption.value) {
+      let parentOption: MultiPickerOption = parentCol.options[parentCol.selectedIndex] || {};
+      let curParentVal;
+      if (curOption) {
+        curParentVal = this.getOptionParentValue(i, curOption);
+      }
+      if (curParentVal != parentOption.value) {
         curCol.options.splice(0, curCol.options.length);
         this.multiPickerColumns[i].options.forEach(option => {
           if (option.parentVal == parentOption.value) {
@@ -256,7 +260,6 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
         });
       }
     }
-    picker.refresh();
   }
 
   /**
@@ -268,17 +271,17 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
   }
 
   /**
-   * Get the parentCol for a column based on the property parentCol
-   * The value parentCol could be the name or alias of a column
+   * Get the parentCol for a column 
    */
   getParentCol(childColIndex: number, columns: PickerColumn[]): PickerColumn {
-    var parent = this.multiPickerColumns[childColIndex].parentCol;
-    if (parent) {
-      return columns[this.multiPickerColumns.findIndex(col => col.name === parent || col.alias === parent)];
+    // Get the child column's position in the sequence array
+    let pos = this._sequence.findIndex(idx => idx === childColIndex);
+    if (pos > 0) {
+      // The parent column index is the previous element's value in the sequence array
+      return columns[this._sequence[pos - 1]]
     }
-    else {
-      return columns[childColIndex - 1]
-    }
+    // If index = 0, then the column is a ancestor, has no parent
+    return null;
   }
 
   /**
@@ -301,16 +304,29 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
 
     if (columns.length === 2) {
       var width = Math.max(columns[0], columns[1]);
-      pickerColumns[0].columnWidth = pickerColumns[1].columnWidth = `${width * 16}px`;
+      if (!pickerColumns[0].columnWidth) {
+        pickerColumns[0].columnWidth = `${width * 16}px`;
+      }
+      if (!pickerColumns[1].columnWidth) {
+        pickerColumns[1].columnWidth = `${width * 16}px`;
+      }
 
     } else if (columns.length === 3) {
       var width = Math.max(columns[0], columns[2]);
-      pickerColumns[1].columnWidth = `${columns[1] * 16}px`;
-      pickerColumns[0].columnWidth = pickerColumns[2].columnWidth = `${width * 16}px`;
-
+      if (!pickerColumns[1].columnWidth) {
+        pickerColumns[1].columnWidth = `${columns[1] * 16}px`;
+      }
+      if (!pickerColumns[0].columnWidth) {
+        pickerColumns[0].columnWidth = `${width * 16}px`;
+      }
+      if (!pickerColumns[2].columnWidth) {
+        pickerColumns[2].columnWidth = `${width * 16}px`;
+      }
     } else if (columns.length > 3) {
       columns.forEach((col, i) => {
-        pickerColumns[i].columnWidth = `${col * 12}px`;
+        if (!pickerColumns[i].columnWidth) {
+          pickerColumns[i].columnWidth = `${col * 12}px`;
+        }
       });
     }
   }

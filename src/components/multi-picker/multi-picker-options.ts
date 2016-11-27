@@ -10,5 +10,6 @@ export interface MultiPickerColumn {
   name:string,
   parentCol:string,
   alias:string,
+  columnWidth:string,
   options: MultiPickerOption[]
 }
