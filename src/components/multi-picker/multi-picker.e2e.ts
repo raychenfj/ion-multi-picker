@@ -61,10 +61,10 @@ describe('MultiPicker', () => {
             element.all(by.className('picker-col')).get(0).all(by.className('picker-opt')).get(1).click();
             browser.sleep(SLEEP);
             //Pick 2-2
-            element.all(by.className('picker-col')).get(1).all(by.className('picker-opt')).get(3).click();
+            element.all(by.className('picker-col')).get(1).all(by.className('picker-opt')).get(1).click();
             browser.sleep(SLEEP);
             //Pick 2-2-2
-            element.all(by.className('picker-col')).get(2).all(by.className('picker-opt')).get(7).click();
+            element.all(by.className('picker-col')).get(2).all(by.className('picker-opt')).get(1).click();
             browser.sleep(SLEEP);
             // Click Done
             element.all(by.className('picker-button')).get(1).click();
@@ -126,10 +126,10 @@ describe('MultiPicker', () => {
             element.all(by.className('picker-col')).get(2).all(by.className('picker-opt')).get(1).click();
             browser.sleep(SLEEP);
             // Pick 2-2
-            element.all(by.className('picker-col')).get(1).all(by.className('picker-opt')).get(3).click();
+            element.all(by.className('picker-col')).get(1).all(by.className('picker-opt')).get(1).click();
             browser.sleep(SLEEP);
             // Pick 2-2-2
-            element.all(by.className('picker-col')).get(0).all(by.className('picker-opt')).get(7).click();
+            element.all(by.className('picker-col')).get(0).all(by.className('picker-opt')).get(1).click();
             browser.sleep(SLEEP);
             // Pick Done
             element.all(by.className('picker-button')).get(1).click();

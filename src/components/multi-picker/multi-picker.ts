@@ -38,6 +38,7 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
   _pickerCmp: PickerCmp;
   _pickerColumnCmps: PickerColumnCmp[];
   _isDependent: boolean = false;
+  _sequence: number[] = [];
 
   /**
    * @private
@@ -143,6 +144,7 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
     // Determine if the picker is a dependent picker
     // let isDependent = this.multiPickerColumns.some(col => col.options.some(opt=>opt.parentVal));
     if (this.multiPickerColumns.length > 1 && this._isDependent) {
+      this.generateSequence();
       for (let i = 0; i < picker.getColumns().length; i++) {
         this.validate(picker);
       }
@@ -164,42 +166,56 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
   }
 
   /**
+   * Determine the sequence to traverse the columns
+   * @private
+   */
+  generateSequence() {
+    let hasParentCol = this.multiPickerColumns.some(col => col.parentCol !== undefined);
+    // If it is a independent picker or doesn't specify parentCol, then validate the columns from left to right
+    if (!this._isDependent || !hasParentCol) {
+      this.multiPickerColumns.forEach((col, index) => this._sequence.push(index));
+    } else {
+      // If specify the parentCol, there must be a column without parentCol, which is ancestor
+      let name = undefined;
+      let alias = undefined;
+      for (let i = 0; i < this.multiPickerColumns.length; i++) {
+        let index = this.multiPickerColumns.findIndex(col => col.parentCol === name || col.parentCol === alias);
+        name = this.multiPickerColumns[index].name;
+        alias = this.multiPickerColumns[index].alias;
+        if (index > -1) {
+          this._sequence.push(index);
+        }
+      }
+    }
+  }
+
+  /**
    * Initialize the picker panel, set selectedIndex and add columns
    * @private
    */
   generate(picker: Picker) {
     let values = this._value.toString().split(this.separator);
     this.multiPickerColumns.forEach((col, index) => {
-      // let selectedIndex = col.options.findIndex(option => option.value == values[index]);
-      // There isn't default value, set the selectedIndex to 0
-      // selectedIndex = selectedIndex === -1 ? 0 : selectedIndex;
-      // console.log(selectedIndex);
+      // Find the selected options, use its parentVal later
+      let selectedOpt = col.options.find(option => option.value == values[index]) || col.options[0];
 
-      // if (selectedIndex === -1 && index > 0) {
-      //   let preCol = picker.getColumns()[index - 1];
-      //   let preOption: MultiPickerOption = preCol.options[preCol.selectedIndex];
-      //   selectedIndex = col.options.findIndex(option => this.getOptionParentValue(index, option) === preOption.value);
-      // }
       let options = col.options;
       // When use as a dependent picker, only generate options which parentVal equal to value of its parent column
       if (this._isDependent && index > 0) {
-        let preCol = picker.getColumns()[index - 1];
-        let preOption: MultiPickerOption = preCol.options[preCol.selectedIndex];
-        options = options.filter(option => option.parentVal === preOption.value);
+        // Only keep the options with same parentVal
+        options = options.filter(option => option.parentVal === selectedOpt.parentVal);
       }
 
       // Generate picker column
       let column: any = {
         name: col.name || index.toString(),
         options: options.map(option => { return { text: option.text, value: option.value, disabled: false } }),
-        // selectedIndex: selectedIndex != -1 ? selectedIndex : 0
       }
+      // Set selectedIndex
       let selectedIndex = column.options.findIndex(option => option.value == values[index]);
+      // There isn't default value, set the selectedIndex to 0
       selectedIndex = selectedIndex === -1 ? 0 : selectedIndex;
       column.selectedIndex = selectedIndex;
-      
-
-
 
       picker.addColumn(column);
     });
@@ -213,7 +229,8 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
    */
   validate(picker: Picker) {
     let columns = picker.getColumns();
-    for (let i = 0; i < columns.length; i++) {
+    for (let j = 0; j < this._sequence.length; j++) {
+      let i = this._sequence[j];
       let curCol: PickerColumn = columns[i];
       let parentCol: PickerColumn = this.getParentCol(i, columns);
       if (!parentCol) continue;
@@ -225,12 +242,9 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
       }
 
       let parentOption: MultiPickerOption = parentCol.options[parentCol.selectedIndex];
-      let selectedOptionWillChanged: boolean = false;
+      // let selectedOptionWillChanged: boolean = false;
       let curParentVal = this.getOptionParentValue(i, curOption);
       if (curParentVal && curParentVal != parentOption.value) {
-        selectedOptionWillChanged = true;
-      }
-      if (selectedOptionWillChanged) {
         curCol.options.splice(0, curCol.options.length);
         this.multiPickerColumns[i].options.forEach(option => {
           if (option.parentVal == parentOption.value) {
@@ -240,19 +254,7 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
             setTimeout(() => this._pickerColumnCmps[i].setSelected(0, 150), 0);
           }
         });
-        // curCol.options.forEach((option: MultiPickerOption, index) => {
-        //   let parentVal = this.getOptionParentValue(i, option);
-        //   option.disabled = parentVal != parentOption.value || index > curCol.options.findIndex((opt: MultiPickerOption) => this.getOptionParentValue(i, opt) == parentOption.value);
-        // });
-
-        // break;
       }
-      // else {
-      //   curCol.options.forEach((option: MultiPickerOption, index) => {
-      //     let parentVal = this.getOptionParentValue(i, option);
-      //     option.disabled = parentVal != null && parentVal !== parentOption.value;
-      //   });
-      // }
     }
     picker.refresh();
   }
@@ -262,9 +264,6 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
    * @private
    */
   getOptionParentValue(colIndex, option) {
-    console.log(option);
-    console.log(option.value);
-    console.log(this.multiPickerColumns[colIndex].options);
     return this.multiPickerColumns[colIndex].options.find(opt => opt.value == option.value).parentVal;
   }
 
