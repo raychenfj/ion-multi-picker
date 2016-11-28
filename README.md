@@ -70,13 +70,15 @@ constructor(private navCtrl: NavController) {
 	this.simpleColumns = [
 		{
 			name: 'col1',
-			options: [{ text: '1', value: '1' },
+			options: [
+        { text: '1', value: '1' },
 				{ text: '2', value: '2' },
 				{ text: '3', value: '3' }]
 		},
 		{
 			name: 'col2',
-			options: [{ text: '1-1', value: '1-1' },
+			options: [
+        { text: '1-1', value: '1-1' },
 				{ text: '1-2', value: '1-2' },
 				{ text: '2-1', value: '2-1' },
 				{ text: '2-2', value: '2-2' },
@@ -84,7 +86,8 @@ constructor(private navCtrl: NavController) {
 		},
 		{
 			name: 'col3',
-			options: [{ text: '1-1-1', value: '1-1-1' },
+			options: [
+        { text: '1-1-1', value: '1-1-1' },
 				{ text: '1-1-2', value: '1-1-2' },
 				{ text: '1-2-1', value: '1-2-1' },
 				{ text: '1-2-2', value: '1-2-2' },
@@ -102,12 +105,14 @@ You can use `parentVal` property to create dependency between each column.
 ```typescript
 	this.dependentColumns = [
 		{
-			options: [{ text: '1', value: '1' },
+			options: [
+        { text: '1', value: '1' },
 				{ text: '2', value: '2' },
 				{ text: '3', value: '3' }]
 		},
 		{
-			options: [{ text: '1-1', value: '1-1', parentVal: '1' },
+			options: [
+        { text: '1-1', value: '1-1', parentVal: '1' },
 				{ text: '1-2', value: '1-2', parentVal: '1' },
 				{ text: '2-1', value: '2-1', parentVal: '2' },
 				{ text: '2-2', value: '2-2', parentVal: '2' },
@@ -182,7 +187,7 @@ export class YourPage {
 </ion-item>
 ```
 
-### Separator ( new in version 1.0.9 )
+### Value Separator
 When there are multiple columns, it need a separator to separate values from different columns. 
 
 The separator is space `' '` by default. Now you can customize the separator by using input property `[separator]`.
@@ -203,32 +208,32 @@ Now with `parentCol`, you can configure your own dependency sequence when needed
 The picker columns should be configured as below. The `parentCol` should be another column's `name` or `alias`.
 
 ```
-	// Using parentCol
+    // Using parentCol
     this.parentColumns = [
       {
-		name: 'child',
+        name: 'child',
         parentCol: 'parent',
         options: [
           { text: '1-1-1', value: '1-1-1', parentVal: '1-1' },
-		  { text: '1-1-2', value: '1-1-2', parentVal: '1-1' },
+          { text: '1-1-2', value: '1-1-2', parentVal: '1-1' },
           { text: '1-2-1', value: '1-2-1', parentVal: '1-2' },
-		  { text: '1-2-2', value: '1-2-2', parentVal: '1-2' },
+          { text: '1-2-2', value: '1-2-2', parentVal: '1-2' },
           { text: '2-1-1', value: '2-1-1', parentVal: '2-1' },
-		  { text: '2-1-2', value: '2-1-2', parentVal: '2-1' },
+          { text: '2-1-2', value: '2-1-2', parentVal: '2-1' },
           { text: '2-2-1', value: '2-2-1', parentVal: '2-2' },
           { text: '2-2-2', value: '2-2-2', parentVal: '2-2' }
         ]
       },{
-		name: 'parent',
-		parentCol: 'ancestor',
+        name: 'parent',
+        parentCol: 'ancestor',
         options: [
           { text: '1-1', value: '1-1', parentVal: '1' },
-		  { text: '1-2', value: '1-2', parentVal: '1' },
+          { text: '1-2', value: '1-2', parentVal: '1' },
           { text: '2-1', value: '2-1', parentVal: '2' },
-		  { text: '2-2', value: '2-2', parentVal: '2' },
+          { text: '2-2', value: '2-2', parentVal: '2' },
         ]
       },{
-		name: 'ancestor',
+        name: 'ancestor',
         options: [
           { text: '1', value: '1' },
           { text: '2', value: '2' }
@@ -242,6 +247,7 @@ The picker columns should be configured as below. The `parentCol` should be anot
 |-----------|-------------|------|---------|--------|
 |multiPickerColumns| **Required**, configure multi picker columns | Array of  MultiPickerColumn| - | - |
 |item-content|**Required**, add this attribute so that this custom component can be display correctly under `ion-item` tag| - | - | - |
+|separator|Optional, charactor to separate value from each column| String | - | space |
 
 ## Types
 
@@ -251,8 +257,9 @@ The picker columns should be configured as below. The `parentCol` should be anot
 |-----------|-------------|------|---------|--------|
 |options| **Required**, Options in a column | Array of MultiPickerOption | - | - |
 |name| Optional, Column name | String | - | index start from 0 |
-|parentCol|Optional, when used as a dependent picker, you can specify the parent column|String| - |previous column|,
-|alias|Optional, alias for a column, when use parentCol, it will find the column with same name or alias|String| - | - | ,
+|parentCol|Optional, when used as a dependent picker, you can specify the parent column|String| - |previous column|
+|alias|Optional, alias for a column, when use parentCol, it will find the column with same name or alias|String| - | - |
+|columnWidth|Optional, specify the column width manually, it accepts a string including **unit** like `%` and `px`|String|-|-|
 
 * **MultiPickerOption**
 

@@ -138,11 +138,8 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
 
     // Determine if the picker is a dependent picker
     this._isDependent = this.multiPickerColumns.some(col => col.options.some(opt => opt.parentVal));
-
     this.generate(picker);
 
-    // Determine if the picker is a dependent picker
-    // let isDependent = this.multiPickerColumns.some(col => col.options.some(opt=>opt.parentVal));
     if (this.multiPickerColumns.length > 1 && this._isDependent) {
       this.generateSequence();
       for (let i = 0; i < picker.getColumns().length; i++) {
