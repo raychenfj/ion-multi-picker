@@ -39,3 +39,4 @@ test/
 *.zip
 *.ngfactory.ts
 package/
+typings
