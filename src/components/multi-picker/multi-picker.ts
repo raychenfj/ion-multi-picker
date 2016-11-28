@@ -231,7 +231,6 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
       let i = this._sequence[j];
       let curCol: PickerColumn = columns[i];
       let parentCol: PickerColumn = this.getParentCol(i, columns);
-      console.log(i, parentCol);
       if (!parentCol) continue;
       let curOption: MultiPickerOption = curCol.options[curCol.selectedIndex];
 
