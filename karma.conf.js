@@ -1,17 +1,19 @@
+var path = require('path');
+
 module.exports = function (config) {
   config.set({
-
+    basePath: '',
     frameworks: ['jasmine'],
     reporters: [
       'progress',
       'coverage',
     ],
-    files:[
-        'src/**/*.spec.ts'
+    files: [
+      { pattern: './karma-shim.js', watched: false }
     ],
 
-    browsers:[
-        'Chrome'
+    browsers: [
+      'PhantomJS'
     ],
 
     singleRun: true,
@@ -19,7 +21,7 @@ module.exports = function (config) {
     colors: true,
 
     preprocessors: {
-      '**/*.ts': ['webpack','sourcemap']
+      './karma-shim.js': ['webpack', 'sourcemap']
     },
 
     // Configure code coverage reporter

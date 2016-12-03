@@ -3,6 +3,7 @@
 ## [1.1.0]
 ### Changed
 * To improve the performance of dependent picker, the multi picker will generate picker columns dynamically at run time
+
 ### Added
 * Expose `columnWidth`, allow to configure column width manually
 
@@ -23,5 +24,6 @@
 ### Added
 * Migrate to inonic 2.0.0-rc2
 * Support binding enum to ngModel, please refer to fruit picker 
+
 ### Removed
 * Remove city picker. it's a bad use case, column with too many options will cause performance issuses on mobile devices

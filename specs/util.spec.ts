@@ -1,4 +1,4 @@
-import { convertEnumToColumn } from './util';
+import { convertEnumToColumn } from '../src/util';
 
 enum MockFruit{
     Apple,
