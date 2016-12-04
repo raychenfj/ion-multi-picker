@@ -75,11 +75,7 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
    */
   @Output() ionCancel: EventEmitter<any> = new EventEmitter();
 
-  constructor(
-    private _form: Form,
-    @Optional() private _item: Item,
-    @Optional() private _pickerCtrl: PickerController
-  ) {
+  constructor( private _form: Form, @Optional() private _item: Item, @Optional() private _pickerCtrl: PickerController) {
     this._form.register(this);
     if (_item) {
       this.id = 'dt-' + _item.registerInput('multi-picker');
@@ -190,7 +186,7 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
    * Initialize the picker panel, set selectedIndex and add columns
    * @private
    */
-  generate(picker: Picker) {
+  generate(picker: any) {
     let values = this._value.toString().split(this.separator);
     this.multiPickerColumns.forEach((col, index) => {
       // Find the selected options, use its parentVal later
@@ -198,7 +194,7 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
 
       let options = col.options;
       // When use as a dependent picker, only generate options which parentVal equal to value of its parent column
-      if (this._isDependent && index > 0) {
+      if (this._isDependent) {
         // Only keep the options with same parentVal
         options = options.filter(option => option.parentVal === selectedOpt.parentVal);
       }
@@ -225,7 +221,7 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
    * Validate the selected option, escpecially for dependent picker
    * @private
    */
-  validate(picker: Picker) {
+  validate(picker: any) {
     let columns = picker.getColumns();
     for (let j = 0; j < this._sequence.length; j++) {
       let i = this._sequence[j];
@@ -283,7 +279,7 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
   /**
    * @private
    */
-  divyColumns(picker: Picker) {
+  divyColumns(picker: any) {
     let pickerColumns = picker.getColumns();
     let columns: number[] = [];
 
@@ -366,7 +362,7 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
         this._text += `${option.text} `
       }
     });
-    this._text.trim();
+    this._text = this._text.trim();
   }
 
   /**
