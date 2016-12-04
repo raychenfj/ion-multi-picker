@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
-import { PickerController, Form, Item } from 'ionic-angular';
+import { PickerController, Form, Item, PickerColumnCmp } from 'ionic-angular';
 import { MultiPicker } from '../../../src/components/multi-picker/multi-picker';
 
 let comp: MultiPicker;
@@ -10,25 +10,34 @@ let de: DebugElement;
 let el: HTMLElement;
 
 const pickerControllerStub = {
+    create: function() {
+        return pickerStub;
+    }
 }
 
 const formStub = {
-    register: function () { },
-    deregister: function () { }
+    register: function() { },
+    deregister: function() { }
 }
 
 const itemStub = {
-    registerInput: function () { },
-    setElementClass: function () { }
+    registerInput: function() { },
+    setElementClass: function() { }
 };
 
 const pickerStub = {
     columns: [],
-    getColumns: function () {
+    getColumns: function() {
         return this.columns;
     },
-    addColumn: function (column) {
+    addColumn: function(column) {
         this.columns.push(column);
+    },
+    present: function() { },
+    onDidDismiss: function() { },
+    ionChange: { subscribe: function() { } },
+    instance: {
+        _cols: { toArray: function() { } }
     }
 }
 
@@ -50,7 +59,7 @@ describe('MultiPicker', () => {
     });
 
     it('should not open picker when disabled', () => {
-        comp._disabled = true;
+        comp.disabled = true;
         expect(comp.open()).toBeUndefined();
     });
 
@@ -62,13 +71,13 @@ describe('MultiPicker', () => {
     });
 
     it('should generate sequence from right to left', () => {
-        comp._isDependent = false;
+        comp._isDependent = true;
         comp.multiPickerColumns = [
             { name: 'child', parentCol: 'parent' },
             { name: 'parent', parentCol: 'ancestor' },
             { name: 'ancestor' }];
         comp.generateSequence();
-        expect(comp._sequence).toEqual([0, 1, 2]);
+        expect(comp._sequence).toEqual([2, 1, 0]);
     });
 
     it('should set value to empty', () => {
@@ -90,7 +99,7 @@ describe('MultiPicker', () => {
             { options: [{ text: '2-2-2', value: '2-2-2' }] }
         ];
         comp.setValue('2 2-2 2-2-2');
-        comp.updateText();
+        comp.ngAfterContentInit();
         expect(comp._text).toBe('2 2-2 2-2-2');
     });
 
@@ -129,14 +138,14 @@ describe('MultiPicker', () => {
             { columnWidth: '70px', options: [{ text: '2-2-2-2', value: '2-2-2-2' }] }
         ];
 
-        pickerStub.getColumns = function () {
+        pickerStub.getColumns = function() {
             return shortColumns;
         }
         comp.divyColumns(pickerStub);
         expect(shortColumns[0]['columnWidth']).toBe('10px');
         expect(shortColumns[1]['columnWidth']).toBe('30px');
 
-        pickerStub.getColumns = function () {
+        pickerStub.getColumns = function() {
             return middleColumns;
         }
         comp.divyColumns(pickerStub);
@@ -144,7 +153,7 @@ describe('MultiPicker', () => {
         expect(middleColumns[1]['columnWidth']).toBe('30px');
         expect(middleColumns[2]['columnWidth']).toBe('50px');
 
-        pickerStub.getColumns = function () {
+        pickerStub.getColumns = function() {
             return longColumns;
         }
         comp.divyColumns(pickerStub);
@@ -171,14 +180,14 @@ describe('MultiPicker', () => {
             { options: [{ text: '2-2-2-2', value: '2-2-2-2' }] }
         ];
 
-        pickerStub.getColumns = function () {
+        pickerStub.getColumns = function() {
             return shortColumns;
         }
         comp.divyColumns(pickerStub);
         expect(shortColumns[0]['columnWidth']).toBe('48px');
         expect(shortColumns[1]['columnWidth']).toBe('48px');
 
-        pickerStub.getColumns = function () {
+        pickerStub.getColumns = function() {
             return middleColumns;
         }
         comp.divyColumns(pickerStub);
@@ -186,7 +195,7 @@ describe('MultiPicker', () => {
         expect(middleColumns[1]['columnWidth']).toBe('48px');
         expect(middleColumns[2]['columnWidth']).toBe('80px');
 
-        pickerStub.getColumns = function () {
+        pickerStub.getColumns = function() {
             return longColumns;
         }
         comp.divyColumns(pickerStub);
@@ -225,7 +234,7 @@ describe('MultiPicker', () => {
             { selectedIndex: 0, options: [{ text: '1-1', value: '1-1' }, { text: '2-2', value: '2-2' }] },
             { selectedIndex: 0, options: [{ text: '1-1-1', value: '1-1-1' }, { text: '2-2-2', value: '2-2-2' }] }
         ];
-        pickerStub.getColumns = function () { return columns }
+        pickerStub.getColumns = function() { return columns }
 
         comp.multiPickerColumns = [
             { options: [{ text: '1', value: '1' }, { text: '2', value: '2' }] },
@@ -233,7 +242,52 @@ describe('MultiPicker', () => {
             { options: [{ text: '1-1-1', value: '1-1-1', parentVal: '1-1' }, { text: '2-2-2', value: '2-2-2', parentVal: '2-2' }] }
         ];
         comp._sequence = [0, 1, 2];
+        let pickerColumnCmpStub: PickerColumnCmp = { setSelected: function() { } };
+        comp._pickerColumnCmps = [pickerColumnCmpStub, pickerColumnCmpStub, pickerColumnCmpStub]
 
         comp.validate(pickerStub);
-    })
+    });
+
+    it('should open multi picker', () => {
+        comp.multiPickerColumns = [
+            { options: [{ text: '1', value: '1' }, { text: '2', value: '2' }] },
+            { options: [{ text: '1-1', value: '1-1', parentVal: '1' }, { text: '2-2', value: '2-2', parentVal: '2' }] },
+            { options: [{ text: '1-1-1', value: '1-1-1', parentVal: '1-1' }, { text: '2-2-2', value: '2-2-2', parentVal: '2-2' }] }
+        ];
+        let e: any = {
+            preventDefault: function() { },
+            stopPropagation: function() { }
+        }
+        comp._click(e);
+    });
+
+    it('should handle key up', () => {
+        comp.multiPickerColumns = [
+            { options: [{ text: '1', value: '1' }, { text: '2', value: '2' }] },
+            { options: [{ text: '1-1', value: '1-1', parentVal: '1' }, { text: '2-2', value: '2-2', parentVal: '2' }] },
+            { options: [{ text: '1-1-1', value: '1-1-1', parentVal: '1-1' }, { text: '2-2-2', value: '2-2-2', parentVal: '2-2' }] }
+        ];
+        comp._keyup();
+    });
+
+    it('should set and get disabled', () => {
+        comp.disabled = true;
+        expect(comp.disabled).toBeTruthy();
+    });
+
+    it('should change value and text', () => {
+        comp.multiPickerColumns = [
+            { options: [{ text: '2', value: '2' }] },
+            { options: [{ text: '2-2', value: '2-2', parentVal: '2' }] },
+            { options: [{ text: '2-2-2', value: '2-2-2', parentVal: '2-2' }] }
+        ];
+        let data = {
+            0: { value: '2' },
+            1: { value: '2-2' },
+            2: { value: '2-2-2' }
+        };
+        comp.onChange(data);
+        expect(comp._value).toBe('2 2-2 2-2-2');
+        expect(comp._text).toBe('2 2-2 2-2-2');
+    });
 });

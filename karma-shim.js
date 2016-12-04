@@ -22,12 +22,17 @@ require('zone.js/dist/fake-async-test');
  any file that ends with '.spec.ts' and get its path. By passing in true
  we say do this recursively
  */
-var appContext = require.context('./specs', true, /\.spec\.ts/);
+var testsContext = require.context('./specs', true, /\.spec\.ts/);
+var componentsContext = require.context('./src/components/multi-picker', true, /multi-picker\.ts/);
+var utilsContext = require.context('./src', true, /util\.ts/);
+
 
 // get all the files, for each file, call the context function
 // that will require the file and load it up here. Context will
 // loop and require those spec files here
-appContext.keys().forEach(appContext);
+testsContext.keys().forEach(testsContext);
+componentsContext.keys().forEach(componentsContext);
+utilsContext.keys().forEach(utilsContext);
 
 // Select BrowserDomAdapter.
 // see https://github.com/AngularClass/angular2-webpack-starter/issues/124
