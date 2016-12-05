@@ -131,7 +131,7 @@ You can use `parentVal` property to create dependency between each column.
 ```
 **Note: Don't miss the `item-content` attribute**
 
-Like other ionic components, you can use `(ngModel)]` to bind your data.
+Like other ionic components, you can use `[(ngModel)]` to bind your data.
 
 ```html
 	<ion-item>
