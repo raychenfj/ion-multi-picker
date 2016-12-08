@@ -2,9 +2,9 @@
 
 ## [1.1.1]
 ### Changed
-* The separator will separate not only the values from each column, but also the texts
+* The separator will separate not only the values from each column, but also the texts, ref to [issue #28](https://github.com/raychenfj/ion-multi-picker/issues/28)
 * When change the parent column, previously the multi picker will always reset the selcted index of child columns to 0, but now it will keep the selected index. 
-If the selcted index is less than the length of column options, then it remains; Otherwise, it will be set to length - 1, select the last option.
+If the selcted index is less than the length of column options, then it remains; Otherwise, it will be set to length - 1, select the last option. Ref to [issue #27](https://github.com/raychenfj/ion-multi-picker/issues/27)
 
 ## [1.1.0]
 ### Changed
