@@ -1,7 +1,7 @@
 # Ion-Multi-Picker 
 
 
-[![Dependency Status](https://david-dm.org/raychenfj/ion-multi-picker.svg)](https://david-dm.org/raychenfj/ion-multi-picker) [![devDependencies Status](https://david-dm.org/raychenfj/ion-multi-picker/dev-status.svg)](https://david-dm.org/raychenfj/ion-multi-picker?type=dev) [![npm version](https://badge.fury.io/js/ion-multi-picker.svg)](https://badge.fury.io/js/ion-multi-picker) [![npm download](https://img.shields.io/npm/dm/ion-multi-picker.svg)](https://www.npmjs.com/package/ion-multi-picker)
+[![Build Status](https://travis-ci.org/raychenfj/ion-multi-picker.svg?branch=master)](https://travis-ci.org/raychenfj/ion-multi-picker) [![Dependency Status](https://david-dm.org/raychenfj/ion-multi-picker.svg)](https://david-dm.org/raychenfj/ion-multi-picker) [![devDependencies Status](https://david-dm.org/raychenfj/ion-multi-picker/dev-status.svg)](https://david-dm.org/raychenfj/ion-multi-picker?type=dev) [![npm version](https://badge.fury.io/js/ion-multi-picker.svg)](https://badge.fury.io/js/ion-multi-picker) [![npm download](https://img.shields.io/npm/dm/ion-multi-picker.svg)](https://www.npmjs.com/package/ion-multi-picker)
 
 
 Ion Multi Item Picker--An Ionic2 Custom Picker Component
