@@ -1,5 +1,11 @@
 # Change Log
 
+## [1.1.1]
+### Changed
+* The separator will separate not only the values from each column, but also the texts
+* When change the parent column, previously the multi picker will always reset the selcted index of child columns to 0, but now it will keep the selected index. 
+If the selcted index is less than the length of column options, then it remains; Otherwise, it will be set to length - 1, select the last option.
+
 ## [1.1.0]
 ### Changed
 * To improve the performance of dependent picker, the multi picker will generate picker columns dynamically at run time

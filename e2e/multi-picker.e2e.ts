@@ -115,7 +115,7 @@ describe('MultiPicker', () => {
             // Pick Done
             element.all(by.className('picker-button')).get(1).click();
             browser.sleep(SLEEP);
-            expect(element(by.id('separator')).element(by.className('multi-picker-text')).getText()).toEqual('2 2-1 1-2-2');
+            expect(element(by.id('separator')).element(by.className('multi-picker-text')).getText()).toEqual('2_2-1_1-2-2');
         });
 
         it('should pick 2-2-2 2-2 2', () => {

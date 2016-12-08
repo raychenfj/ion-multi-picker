@@ -1,6 +1,6 @@
 import { AfterContentInit, Component, EventEmitter, forwardRef, HostListener, Input, OnDestroy, Optional, Output, ViewEncapsulation } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { Picker, PickerController, Form, Item, PickerColumn, PickerCmp, PickerColumnCmp } from 'ionic-angular';
+import { PickerController, Form, Item, PickerColumn, PickerCmp, PickerColumnCmp } from 'ionic-angular';
 import { MultiPickerColumn, MultiPickerOption } from './multi-picker-options';
 
 export const MULTI_PICKER_VALUE_ACCESSOR: any = {
@@ -75,7 +75,7 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
    */
   @Output() ionCancel: EventEmitter<any> = new EventEmitter();
 
-  constructor( private _form: Form, @Optional() private _item: Item, @Optional() private _pickerCtrl: PickerController) {
+  constructor(private _form: Form, @Optional() private _item: Item, @Optional() private _pickerCtrl: PickerController) {
     this._form.register(this);
     if (_item) {
       this.id = 'dt-' + _item.registerInput('multi-picker');
@@ -232,7 +232,7 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
 
       // In case the parentCol has been changed but the selectedIndex hasn't been updated yet
       if (parentCol.selectedIndex >= parentCol.options.length) {
-        parentCol.selectedIndex = 0;
+        parentCol.selectedIndex = parentCol.options.length - 1;
       }
 
       let parentOption: MultiPickerOption = parentCol.options[parentCol.selectedIndex] || {};
@@ -247,7 +247,8 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
             curCol.options.push({ text: option.text, value: option.value, disabled: false });
 
             // Magic, using timeout to set selectedIndex after rendering
-            setTimeout(() => this._pickerColumnCmps[i].setSelected(0, 150), 0);
+            let selectedIndex = curCol.selectedIndex >= curCol.options.length ? curCol.options.length - 1 : curCol.selectedIndex;
+            setTimeout(() => this._pickerColumnCmps[i].setSelected(selectedIndex, 150), 0);
           }
         });
       }
@@ -359,7 +360,10 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
     this.multiPickerColumns.forEach((col, index) => {
       let option = col.options.find(option => option.value.toString() === values[index]);
       if (option) {
-        this._text += `${option.text} `
+        this._text += `${option.text}`;
+        if (index < this.multiPickerColumns.length - 1) {
+          this._text += `${this.separator}`;
+        }
       }
     });
     this._text = this._text.trim();
