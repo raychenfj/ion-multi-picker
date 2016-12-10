@@ -103,7 +103,7 @@ describe('MultiPicker', () => {
         it('should pick 2 2-1 1-2-2',()=>{
             browser.sleep(SLEEP);
             // Default value
-            expect(element(by.id('separator')).element(by.className('multi-picker-text')).getText()).toEqual('1 1-2 1-2-1');
+            expect(element(by.id('separator')).element(by.className('multi-picker-text')).getText()).toEqual('1_1-2_1-2-1');
             element(by.id('separator')).click();
             browser.sleep(SLEEP);
             // Pick 2

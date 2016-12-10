@@ -100,7 +100,7 @@
       "locator": "ios"
     }
   ],
-  "version": "1.1.0",
+  "version": "1.1.1",
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
   "repository": {
