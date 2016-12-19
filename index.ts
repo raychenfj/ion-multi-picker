@@ -1,3 +1,3 @@
 export * from './directives';
-export * from './module';
+export { MultiPickerModule } from './module';
 export * from './src/util';
