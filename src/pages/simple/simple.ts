@@ -5,11 +5,7 @@ import {NavController} from 'ionic-angular';
 	templateUrl: 'simple.html',
 })
 export class SimpleExamplePage implements OnInit {
-	default: string = '1 1-2 1-2-2';
 	simpleColumns: any[];
-	independentColumns: any[];
-	cityPickerOption: any[];
-	datetime;
 
 	constructor(private navCtrl: NavController) {
 		this.simpleColumns = [
