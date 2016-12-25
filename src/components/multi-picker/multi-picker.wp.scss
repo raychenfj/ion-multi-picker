@@ -32,3 +32,16 @@ $multi-picker-wp-border-color:        $input-wp-border-color !default;
 .wp .item-multi-picker ion-label[floating] {
   transform: translate3d(8px, 41px, 0);
 }
+
+.item-datetime .label-wp {
+  color: $label-wp-text-color;
+}
+
+// Generate Windows Label colors
+// --------------------------------------------------
+
+@each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
+  .item-multi-picker .label-wp-#{$color-name} {
+    color: $color-base;
+  }
+}
