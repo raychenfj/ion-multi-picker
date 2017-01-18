@@ -1,5 +1,10 @@
 # Change Log
 
+## [1.1.4]
+### Changed
+* Update to ionic 2.0.0-rc5
+
+
 ## [1.1.3]
 ### Fixed
 * Fix label color bug, ref to [issue #34](https://github.com/raychenfj/ion-multi-picker/issues/34)

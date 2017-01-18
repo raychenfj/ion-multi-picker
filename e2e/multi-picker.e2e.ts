@@ -1,5 +1,4 @@
 import {element, by, browser} from 'protractor';
-import 'jasmine';
 
 const SLEEP = 1000;
 /**

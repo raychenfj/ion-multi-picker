@@ -23,9 +23,9 @@ Check out the live demo here: [https://raychenfj.github.io/ion-multi-picker/](ht
 
 ## Supported Version
 
-Ionic2 2.0.0-rc.4
+Ionic2 2.0.0-rc.5
 
-Ionic CLI 2.1.17
+Ionic CLI 2.2.1
 
 
 ## Installation
