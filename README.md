@@ -23,7 +23,7 @@ Check out the live demo here: [https://raychenfj.github.io/ion-multi-picker/](ht
 
 ## Supported Version
 
-Ionic2 2.0.0-rc.5
+Ionic2 2.0.1
 
 Ionic CLI 2.2.1
 
