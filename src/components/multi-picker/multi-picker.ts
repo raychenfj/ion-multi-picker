@@ -61,7 +61,7 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
   @Input() multiPickerColumns: MultiPickerColumn[] = [];
 
   /**
-   * @input {string} the character to separate values from different columns 
+   * @input {string} the character to separate values from different columns
    */
   @Input() separator: string = ' ';
 
@@ -202,7 +202,7 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
       // Generate picker column
       let column: any = {
         name: col.name || index.toString(),
-        options: options.map(option => { return { text: option.text, value: option.value, disabled: false } }),
+        options: options.map(option => { return { text: option.text, value: option.value, disabled: option.disabled || false } }),
         columnWidth: col.columnWidth
       }
       // Set selectedIndex
@@ -264,7 +264,7 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
   }
 
   /**
-   * Get the parentCol for a column 
+   * Get the parentCol for a column
    */
   getParentCol(childColIndex: number, columns: PickerColumn[]): PickerColumn {
     // Get the child column's position in the sequence array
