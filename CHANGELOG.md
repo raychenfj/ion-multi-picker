@@ -1,5 +1,15 @@
 # Change Log
 
+## [1.2.0]
+### Changed
+* Update to ionic 2.2.0
+* Update package.json
+
+
+### [1.1.5]
+### Changed
+* Update to ionic 2.0.1
+
 ## [1.1.4]
 ### Changed
 * Update to ionic 2.0.0-rc5

@@ -23,7 +23,7 @@ Check out the live demo here: [https://raychenfj.github.io/ion-multi-picker/](ht
 
 ## Supported Version
 
-Ionic2 2.0.1
+Ionic2 2.2.0
 
 Ionic CLI 2.2.1
 
@@ -284,7 +284,7 @@ The unit test framework is karma + webpack + jasmine. And e2e test is protractor
 
 Add your unit test and use `npm test` to start karma.
 
-Add your e2e test, run `ionic serve` and then in another terminal use `npm run e2e` to run protractor.
+Add your e2e test, run `ionic serve` on the example and then in another terminal use `npm run e2e` to run protractor on project root folder.
 
 You can also add your use case in the `app/pages`.
 

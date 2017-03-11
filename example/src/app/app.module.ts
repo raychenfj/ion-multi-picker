@@ -4,7 +4,7 @@ import { MyApp } from './app.component';
 import { TabsPage } from '../pages/tabs/tabs';
 import { SimpleExamplePage } from '../pages/simple/simple';
 import { AdvancedExamplePage } from '../pages/advanced/advanced';
-import { MultiPicker } from 'ion-multi-picker';
+import { MultiPickerModule } from 'ion-multi-picker';
 
 @NgModule({
   declarations: [
@@ -12,10 +12,10 @@ import { MultiPicker } from 'ion-multi-picker';
     TabsPage,
     SimpleExamplePage,
     AdvancedExamplePage,
-    MultiPicker
   ],
   imports: [
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    MultiPickerModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -23,7 +23,6 @@ import { MultiPicker } from 'ion-multi-picker';
     TabsPage,
     SimpleExamplePage,
     AdvancedExamplePage,
-    MultiPicker
   ],
   providers: []
 })
