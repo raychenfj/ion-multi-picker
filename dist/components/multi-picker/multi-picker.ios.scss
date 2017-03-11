@@ -1,0 +1,24 @@
+@import "ionic.globals.ios";
+@import "./multi-picker";
+
+// iOS Multi Picker
+// --------------------------------------------------
+
+$multi-picker-ios-padding-top:         $item-ios-padding-top !default;
+$multi-picker-ios-padding-right:       ($item-ios-padding-right / 2) !default;
+$multi-picker-ios-padding-bottom:      $item-ios-padding-bottom !default;
+$multi-picker-ios-padding-left:        $item-ios-padding-left !default;
+
+
+.ios multi-picker {
+  padding: $multi-picker-ios-padding-top $multi-picker-ios-padding-right $multi-picker-ios-padding-bottom $multi-picker-ios-padding-left;
+}
+
+// Generate iOS Label colors
+// --------------------------------------------------
+@each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
+  .item-multi-picker .label-ios-#{$color-name} {
+    color: $color-base;
+  }
+}
+

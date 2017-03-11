@@ -1,0 +1,31 @@
+@import "ionic.globals";
+
+// Multi-Picker
+// --------------------------------------------------
+ion-multi-picker {
+    display: flex;
+    overflow: hidden;
+}
+
+.multi-picker-text {
+    overflow: hidden;
+    flex: 1;
+    min-width: 16px;
+    min-height: 1.2em;
+    font-size: inherit;
+    line-height: 1.2;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.multi-picker-disabled,
+.item-multi-picker-disabled ion-label {
+    opacity: .4;
+    pointer-events: none;
+}
+
+.item-label-stacked ion-multi-picker,
+.item-label-floating ion-multi-picker {
+    padding-left: 0;
+    width: 100%;
+}

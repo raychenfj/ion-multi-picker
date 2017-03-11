@@ -1,0 +1,49 @@
+@import "ionic.globals.wp";
+@import "../components/item/item.wp";
+@import "../components/label/label.wp";
+@import "./multi-picker";
+
+// Windows Multi Picker
+// --------------------------------------------------
+
+$multi-picker-wp-min-width:           45% !default;
+
+$multi-picker-wp-padding-top:         $item-wp-padding-top !default;
+$multi-picker-wp-padding-right:       ($item-wp-padding-right / 2) !default;
+$multi-picker-wp-padding-bottom:      $item-wp-padding-bottom !default;
+$multi-picker-wp-padding-left:        $item-wp-padding-left !default;
+
+$multi-picker-wp-border-width:        2px !default;
+$multi-picker-wp-border-color:        $input-wp-border-color !default;
+
+.wp multi-picker {
+  padding: $multi-picker-wp-padding-top $multi-picker-wp-padding-right $multi-picker-wp-padding-bottom $multi-picker-wp-padding-left;
+
+  min-width: $multi-picker-wp-min-width;
+}
+
+.wp .multi-picker-text {
+  padding: 0 8px;
+
+  min-height: 3.4rem;
+
+  border: $multi-picker-wp-border-width solid $multi-picker-wp-border-color;
+  line-height: 3rem;
+}
+
+.wp .item-multi-picker ion-label[floating] {
+  transform: translate3d(8px, 41px, 0);
+}
+
+.item-datetime .label-wp {
+  color: $label-wp-text-color;
+}
+
+// Generate Windows Label colors
+// --------------------------------------------------
+
+@each $color-name, $color-base, $color-contrast in get-colors($colors-wp) {
+  .item-multi-picker .label-wp-#{$color-name} {
+    color: $color-base;
+  }
+}

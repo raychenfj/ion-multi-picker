@@ -1,0 +1,29 @@
+@import "ionic.globals.md";
+@import "../components/item/item.md";
+@import "../components/label/label.md";
+@import "./multi-picker";
+
+// Material Design Multi Picker
+// --------------------------------------------------
+
+$multi-picker-md-padding-top:         $item-md-padding-top !default;
+$multi-picker-md-padding-right:       ($item-md-padding-right / 2) !default;
+$multi-picker-md-padding-bottom:      $item-md-padding-bottom !default;
+$multi-picker-md-padding-left:        $item-md-padding-left !default;
+
+
+.md multi-picker {
+  padding: $multi-picker-md-padding-top $multi-picker-md-padding-right $multi-picker-md-padding-bottom $multi-picker-md-padding-left;
+}
+
+.item-multi-picker .label-md {
+  color: $label-md-text-color;
+}
+
+// Generate Material Design Label colors
+// --------------------------------------------------
+@each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
+  .item-multi-picker .label-md-#{$color-name} {
+    color: $color-base;
+  }
+}
