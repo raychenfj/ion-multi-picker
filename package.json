@@ -2,43 +2,35 @@
   "typescript": {
     "definition": "index.d.ts"
   },
+  "scripts": {
+    "e2e": "tsc -p ./config/tsconfig.test.json && concurrently \"webdriver-manager start\" \"protractor ./config/protractor.conf.js\"",
+    "test": "karma start ./config/karma.conf.js",
+    "build": "gulp",
+    "posttest": "remap-istanbul -i coverage/json/coverage-final.json -o coverage/html -t html"
+  },
   "files": [
     "dist"
   ],
-  "dependencies": {
-    "@angular/common": "2.2.1",
-    "@angular/compiler": "2.2.1",
-    "@angular/compiler-cli": "2.2.1",
-    "@angular/core": "2.2.1",
-    "@angular/forms": "2.2.1",
-    "@angular/http": "2.2.1",
-    "@angular/platform-browser": "2.2.1",
-    "@angular/platform-browser-dynamic": "2.2.1",
-    "@angular/platform-server": "2.2.1",
-    "@ionic/storage": "^1.1.7",
-    "ionic-angular": "2.0.1",
-    "ionic-native": "2.4.1",
-    "ionicons": "^3.0.0",
-    "rxjs": "5.0.0-beta.12",
-    "zone.js": "0.6.26",
-    "sw-toolbox": "3.4.0"
-  },
-  "scripts": {
-    "e2e": "tsc -p tsconfig.test.json && concurrently \"webdriver-manager start\" \"protractor protractor.conf.js\"",
-    "test": "karma start",
-    "posttest": "remap-istanbul -i coverage/json/coverage-final.json -o coverage/html -t html",
-    "coverage": "open \"coverage/PhantomJS 2.1.1 (Mac OS X 0.0.0)/index.html\"",
-    "test-watch": "karma start --auto-watch --no-single-run",
-    "clean": "ionic-app-scripts clean",
-    "build": "ionic-app-scripts build",
-    "ionic:build": "ionic-app-scripts build",
-    "ionic:serve": "ionic-app-scripts serve"
+  "peerDependencies": {
+    "ionic-angular": "^2.2.0"
   },
   "devDependencies": {
+    "ionic-angular": "^2.2.0",
+    "@angular/common": "2.4.8",
+    "@angular/compiler": "2.4.8",
+    "@angular/compiler-cli": "2.4.8",
+    "@angular/core": "2.4.8",
+    "@angular/forms": "2.4.8",
+    "@angular/http": "2.4.8",
+    "@angular/platform-browser": "2.4.8",
+    "@angular/platform-browser-dynamic": "2.4.8",
+    "@angular/platform-server": "2.4.8",
     "@angularclass/hmr": "^1.0.1",
     "@angularclass/hmr-loader": "^3.0.2",
     "@ionic/app-scripts": "^1.1.0",
     "angular2-template-loader": "^0.6.0",
+    "rxjs": "5.0.1",
+    "zone.js": "0.7.2",
     "awesome-typescript-loader": "^2.2.4",
     "concurrently": "^3.1.0",
     "copy-webpack-plugin": "^4.0.0",
@@ -82,22 +74,6 @@
   },
   "name": "ion-multi-picker",
   "description": "Ion Multi Item Picker--An Ionic2 Custom Picker Component",
-  "cordovaPlugins": [
-    "cordova-plugin-device",
-    "cordova-plugin-console",
-    "cordova-plugin-whitelist",
-    "cordova-plugin-splashscreen",
-    "cordova-plugin-statusbar",
-    "ionic-plugin-keyboard"
-  ],
-  "cordovaPlatforms": [
-    "ios",
-    {
-      "platform": "ios",
-      "version": "",
-      "locator": "ios"
-    }
-  ],
   "version": "1.1.5",
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",

@@ -1,13 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
 import { PickerController, Form, Item, PickerColumnCmp } from 'ionic-angular';
 import { MultiPicker } from '../../../src/components/multi-picker/multi-picker';
 
 let comp: MultiPicker;
 let fixture: ComponentFixture<MultiPicker>;
-let de: DebugElement;
-let el: HTMLElement;
 
 const pickerControllerStub = {
     create: function () {
