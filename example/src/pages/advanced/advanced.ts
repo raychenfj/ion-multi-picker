@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { convertEnumToColumn } from 'ion-multi-picker';
+import citise from '../../assets/chinese-cities.json';
 
 enum Fruit {
 	Apple, Orange, Melon, Banana, Pear,
@@ -21,6 +22,7 @@ export class AdvancedExamplePage {
 	sepVal = '1_1 2_1 2 1';
 	sepColumns: any[];
 	separator = '_';
+	cityColumns: any[];
 
 
 	constructor(private navCtrl: NavController) {
@@ -363,5 +365,8 @@ export class AdvancedExamplePage {
 				{ text: '3-1-2', value: '3 1 2' },]
 			}
 		];
+
+		// city columns
+		this.cityColumns = citise
 	}
 }

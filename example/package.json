@@ -1,5 +1,6 @@
 {
   "name": "ion-multi-picker-example",
+  "description": "ion-multi-picker example",
   "author": "raychenfj",
   "homepage": "https://github.com/raychenfj/ion-multi-picker",
   "private": false,
@@ -31,5 +32,10 @@
   "devDependencies": {
     "@ionic/app-scripts": "1.1.4",
     "typescript": "2.0.9"
-  }
+  },
+ "repository": {
+    "type": "git",
+    "url": "git+https://github.com/raychenfj/ion-multi-picker.git"
+  },
+  "license": "MIT"
 }
