@@ -290,8 +290,8 @@ You can also add your use case in the `app/pages`.
 
 Finally, send me a `PULL REQUEST`.
 
-#a Acknowledgement
-Thanks to [HonLuk}(https://github.com/HonLuk) for sharing the city data in the demo.
+# Acknowledgement
+Thanks to [HonLuk](https://github.com/HonLuk) for sharing the city data in the demo.
 
 ## License
 MIT
