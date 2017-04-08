@@ -143,6 +143,7 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
       }
 
       picker.ionChange.subscribe(() => {
+        this._pickerColumnCmps = picker && picker.instance && picker.instance._cols && picker.instance._cols.toArray();
         this.validate(picker);
       });
     }
@@ -151,7 +152,7 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
 
     this._isOpen = true;
     this._pickerCmp = picker.instance;
-    this._pickerColumnCmps = this._pickerCmp._cols.toArray();
+    this._pickerColumnCmps = picker && picker.instance && picker.instance._cols && picker.instance._cols.toArray();
 
     picker.onDidDismiss(() => {
       this._isOpen = false;
