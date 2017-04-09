@@ -399,7 +399,6 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
   ngAfterContentInit() {
     // update how the multi picker value is displayed as formatted text
     this.updateText();
-    console.log
   }
 
   /**
