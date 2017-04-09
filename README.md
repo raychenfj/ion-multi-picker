@@ -8,7 +8,7 @@ Ion Multi Item Picker--An Ionic2 Custom Picker Component
 
 Simulate IOS multi column picker by ionic2 picker.
 
-**for ionic 2.x, please use ion-multi-picker@1.x**
+**For ionic 2.x, please use ion-multi-picker 1.x**
 
 Github: [https://github.com/raychenfj/ion-multi-picker](https://github.com/raychenfj/ion-multi-picker)
 
