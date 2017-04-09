@@ -263,7 +263,6 @@ var MultiPicker = (function () {
     };
     MultiPicker.prototype.ngAfterContentInit = function () {
         this.updateText();
-        console.log;
     };
     MultiPicker.prototype.registerOnChange = function (fn) {
         var _this = this;
