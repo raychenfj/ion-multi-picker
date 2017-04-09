@@ -1,7 +1,8 @@
 "use strict";
-var core_1 = require('@angular/core');
-var forms_1 = require('@angular/forms');
-var ionic_angular_1 = require('ionic-angular');
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
+var forms_1 = require("@angular/forms");
+var ionic_angular_1 = require("ionic-angular");
 exports.MULTI_PICKER_VALUE_ACCESSOR = {
     provide: forms_1.NG_VALUE_ACCESSOR,
     useExisting: core_1.forwardRef(function () { return MultiPicker; }),
@@ -79,10 +80,12 @@ var MultiPicker = (function () {
                 _this.validate(picker);
             });
         }
-        picker.present(pickerOptions);
+        picker.present(pickerOptions).then(function () {
+            _this._pickerCmp = picker.instance;
+            _this._pickerColumnCmps = _this._pickerCmp._cols.toArray();
+            _this._pickerColumnCmps.forEach(function (col) { return col.lastIndex = -1; });
+        });
         this._isOpen = true;
-        this._pickerCmp = picker.instance;
-        this._pickerColumnCmps = this._pickerCmp._cols.toArray();
         picker.onDidDismiss(function () {
             _this._isOpen = false;
         });
@@ -130,7 +133,7 @@ var MultiPicker = (function () {
     MultiPicker.prototype.validate = function (picker) {
         var _this = this;
         var columns = picker.getColumns();
-        var _loop_1 = function(j) {
+        var _loop_1 = function (j) {
             var i = this_1._sequence[j];
             var curCol = columns[i];
             var parentCol = this_1.getParentCol(i, columns);
@@ -260,6 +263,7 @@ var MultiPicker = (function () {
     };
     MultiPicker.prototype.ngAfterContentInit = function () {
         this.updateText();
+        console.log;
     };
     MultiPicker.prototype.registerOnChange = function (fn) {
         var _this = this;
@@ -293,42 +297,42 @@ var MultiPicker = (function () {
         });
         return value;
     };
-    MultiPicker.decorators = [
-        { type: core_1.Component, args: [{
-                    selector: 'ion-multi-picker',
-                    template: '<div class="multi-picker-text">{{_text}}</div>' +
-                        '<button aria-haspopup="true" ' +
-                        'type="button" ' +
-                        '[id]="id" ' +
-                        'ion-button="item-cover" ' +
-                        '[attr.aria-labelledby]="_labelId" ' +
-                        '[attr.aria-disabled]="_disabled" ' +
-                        'class="item-cover">' +
-                        '</button>',
-                    host: {
-                        '[class.multi-picke-disabled]': '_disabled'
-                    },
-                    providers: [exports.MULTI_PICKER_VALUE_ACCESSOR],
-                    encapsulation: core_1.ViewEncapsulation.None,
-                },] },
-    ];
-    MultiPicker.ctorParameters = function () { return [
-        { type: ionic_angular_1.Form, },
-        { type: ionic_angular_1.Item, decorators: [{ type: core_1.Optional },] },
-        { type: ionic_angular_1.PickerController, decorators: [{ type: core_1.Optional },] },
-    ]; };
-    MultiPicker.propDecorators = {
-        'cancelText': [{ type: core_1.Input },],
-        'doneText': [{ type: core_1.Input },],
-        'multiPickerColumns': [{ type: core_1.Input },],
-        'separator': [{ type: core_1.Input },],
-        'ionChange': [{ type: core_1.Output },],
-        'ionCancel': [{ type: core_1.Output },],
-        '_click': [{ type: core_1.HostListener, args: ['click', ['$event'],] },],
-        '_keyup': [{ type: core_1.HostListener, args: ['keyup.space',] },],
-        'disabled': [{ type: core_1.Input },],
-    };
     return MultiPicker;
 }());
+MultiPicker.decorators = [
+    { type: core_1.Component, args: [{
+                selector: 'ion-multi-picker',
+                template: '<div class="multi-picker-text">{{_text}}</div>' +
+                    '<button aria-haspopup="true" ' +
+                    'type="button" ' +
+                    '[id]="id" ' +
+                    'ion-button="item-cover" ' +
+                    '[attr.aria-labelledby]="_labelId" ' +
+                    '[attr.aria-disabled]="_disabled" ' +
+                    'class="item-cover">' +
+                    '</button>',
+                host: {
+                    '[class.multi-picke-disabled]': '_disabled'
+                },
+                providers: [exports.MULTI_PICKER_VALUE_ACCESSOR],
+                encapsulation: core_1.ViewEncapsulation.None,
+            },] },
+];
+MultiPicker.ctorParameters = function () { return [
+    { type: ionic_angular_1.Form, },
+    { type: ionic_angular_1.Item, decorators: [{ type: core_1.Optional },] },
+    { type: ionic_angular_1.PickerController, decorators: [{ type: core_1.Optional },] },
+]; };
+MultiPicker.propDecorators = {
+    'cancelText': [{ type: core_1.Input },],
+    'doneText': [{ type: core_1.Input },],
+    'multiPickerColumns': [{ type: core_1.Input },],
+    'separator': [{ type: core_1.Input },],
+    'ionChange': [{ type: core_1.Output },],
+    'ionCancel': [{ type: core_1.Output },],
+    '_click': [{ type: core_1.HostListener, args: ['click', ['$event'],] },],
+    '_keyup': [{ type: core_1.HostListener, args: ['keyup.space',] },],
+    'disabled': [{ type: core_1.Input },],
+};
 exports.MultiPicker = MultiPicker;
 //# sourceMappingURL=multi-picker.js.map

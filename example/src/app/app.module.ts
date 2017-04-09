@@ -1,10 +1,14 @@
-import { NgModule } from '@angular/core';
-import { IonicApp, IonicModule } from 'ionic-angular';
+import { NgModule, ErrorHandler } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { TabsPage } from '../pages/tabs/tabs';
 import { SimpleExamplePage } from '../pages/simple/simple';
 import { AdvancedExamplePage } from '../pages/advanced/advanced';
 import { MultiPickerModule } from 'ion-multi-picker';
+
+import { StatusBar } from '@ionic-native/status-bar';
+import { SplashScreen } from '@ionic-native/splash-screen';
 
 @NgModule({
   declarations: [
@@ -14,6 +18,7 @@ import { MultiPickerModule } from 'ion-multi-picker';
     AdvancedExamplePage,
   ],
   imports: [
+    BrowserModule,
     IonicModule.forRoot(MyApp),
     MultiPickerModule
   ],
@@ -24,6 +29,10 @@ import { MultiPickerModule } from 'ion-multi-picker';
     SimpleExamplePage,
     AdvancedExamplePage,
   ],
-  providers: []
+  providers: [
+    StatusBar,
+    SplashScreen,
+    { provide: ErrorHandler, useClass: IonicErrorHandler }
+  ]
 })
 export class AppModule { }

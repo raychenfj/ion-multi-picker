@@ -1,6 +1,6 @@
 import { AfterContentInit, Component, EventEmitter, forwardRef, HostListener, Input, OnDestroy, Optional, Output, ViewEncapsulation } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { PickerController, Form, Item, PickerColumn, PickerCmp, PickerColumnCmp } from 'ionic-angular';
+import { Picker, PickerController, Form, Item, PickerColumn, PickerCmp, PickerColumnCmp } from 'ionic-angular';
 import { MultiPickerColumn, MultiPickerOption } from './multi-picker-options';
 
 export const MULTI_PICKER_VALUE_ACCESSOR: any = {
@@ -147,11 +147,13 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
       });
     }
 
-    picker.present(pickerOptions);
+    picker.present(pickerOptions).then(() => {
+      this._pickerCmp = picker.instance;
+      this._pickerColumnCmps = this._pickerCmp._cols.toArray();
+      this._pickerColumnCmps.forEach(col => col.lastIndex = -1)
+    });
 
     this._isOpen = true;
-    this._pickerCmp = picker.instance;
-    this._pickerColumnCmps = this._pickerCmp._cols.toArray();
 
     picker.onDidDismiss(() => {
       this._isOpen = false;
@@ -397,6 +399,7 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
   ngAfterContentInit() {
     // update how the multi picker value is displayed as formatted text
     this.updateText();
+    console.log
   }
 
   /**

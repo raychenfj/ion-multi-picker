@@ -8,6 +8,8 @@ Ion Multi Item Picker--An Ionic2 Custom Picker Component
 
 Simulate IOS multi column picker by ionic2 picker.
 
+**for ionic 2.x, please use ion-multi-picker@1.x**
+
 Github: [https://github.com/raychenfj/ion-multi-picker](https://github.com/raychenfj/ion-multi-picker)
 
 NPM: [https://www.npmjs.com/package/ion-multi-picker](https://www.npmjs.com/package/ion-multi-picker)
@@ -23,10 +25,7 @@ Check out the live demo here: [https://raychenfj.github.io/ion-multi-picker/](ht
 
 ## Supported Version
 
-Ionic2 2.2.0
-
-Ionic CLI 2.2.1
-
+Ionic2 3.0.1
 
 ## Installation
 ```
@@ -290,7 +289,7 @@ You can also add your use case in the `app/pages`.
 
 Finally, send me a `PULL REQUEST`.
 
-# Acknowledgement
+## Acknowledgement
 Thanks to [HonLuk](https://github.com/HonLuk) for sharing the city data in the demo.
 
 ## License

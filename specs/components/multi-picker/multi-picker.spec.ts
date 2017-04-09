@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { PickerController, Form, Item, PickerColumnCmp } from 'ionic-angular';
+import { PickerController, Form, Item } from 'ionic-angular';
 import { MultiPicker } from '../../../src/components/multi-picker/multi-picker';
 
 let comp: MultiPicker;
@@ -29,11 +29,11 @@ const pickerStub = {
     addColumn: function (column) {
         this.columns.push(column);
     },
-    present: function () { },
+    present: function () { return Promise.resolve() },
     onDidDismiss: function () { },
     ionChange: { subscribe: function () { } },
     instance: {
-        _cols: { toArray: function () { } }
+        _cols: { toArray: function () { return [{}, {}, {}] } }
     }
 }
 
@@ -238,7 +238,7 @@ describe('MultiPicker', () => {
             { options: [{ text: '1-1-1', value: '1-1-1', parentVal: '1-1' }, { text: '2-2-2', value: '2-2-2', parentVal: '2-2' }] }
         ];
         comp._sequence = [0, 1, 2];
-        let pickerColumnCmpStub: PickerColumnCmp = { setSelected: function () { } };
+        let pickerColumnCmpStub: any = { setSelected: function () { } };
         comp._pickerColumnCmps = [pickerColumnCmpStub, pickerColumnCmpStub, pickerColumnCmpStub]
 
         comp.validate(pickerStub);

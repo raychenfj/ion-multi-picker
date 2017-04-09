@@ -1,5 +1,9 @@
 # Change Log
 
+## [2.0.0]
+### changed
+* Update to ionic 3.0.1
+
 ## [1.2.0]
 ### Changed
 * Update to ionic 2.2.0
