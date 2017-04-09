@@ -1,2 +1,23 @@
+dist: trusty
+sudo: required
 language: node_js
-node_js: 6
+node_js: 7
+os:
+  - linux
+env:
+  global:
+    - DBUS_SESSION_BUS_ADDRESS=/dev/null
+    - DISPLAY=:99.0
+    - CHROME_BIN=chromium-browser
+before_script:
+  - sh -e /etc/init.d/xvfb start
+  - node_modules/protractor/bin/webdriver-manager update
+install:
+  - npm install
+  - npm install ionic -g
+  - cd example
+  - npm install
+  - cd ..
+script:
+  - npm run test
+  - npm run e2e

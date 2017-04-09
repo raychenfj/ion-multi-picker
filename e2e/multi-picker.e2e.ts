@@ -39,7 +39,7 @@ describe('MultiPicker', () => {
             // Click Done
             element.all(by.className('picker-button')).get(1).click();
             browser.sleep(SLEEP);
-            expect(element(by.id('simple')).element(by.className('multi-picker-text')).getText()).toEqual('2 1-2 1-1-2');
+            expect<any>(element(by.id('simple')).element(by.className('multi-picker-text')).getText()).toEqual('2 1-2 1-1-2');
         });
     });
 
@@ -68,7 +68,7 @@ describe('MultiPicker', () => {
             // Click Done
             element.all(by.className('picker-button')).get(1).click();
             browser.sleep(SLEEP);
-            expect(element(by.id('advanced')).element(by.className('multi-picker-text')).getText()).toEqual('2 2-2 2-2-2');
+            expect<any>(element(by.id('advanced')).element(by.className('multi-picker-text')).getText()).toEqual('2 2-2 2-2-2');
         })
 
         it('should be disabled', () => {
@@ -78,12 +78,12 @@ describe('MultiPicker', () => {
 
         it('should have default value 1 1-2 1-2-2', () => {
             browser.sleep(SLEEP);
-            expect(element(by.id('default')).element(by.className('multi-picker-text')).getText()).toEqual('1 1-2 1-2-2');
+            expect<any>(element(by.id('default')).element(by.className('multi-picker-text')).getText()).toEqual('1 1-2 1-2-2');
         });
 
         it('should have default value Melon', () => {
             browser.sleep(SLEEP);
-            expect(element(by.id('fruit')).element(by.className('multi-picker-text')).getText()).toEqual('Melon');
+            expect<any>(element(by.id('fruit')).element(by.className('multi-picker-text')).getText()).toEqual('Melon');
         });
 
         it('should pick Banana', () => {
@@ -96,13 +96,13 @@ describe('MultiPicker', () => {
             // Click Done
             element.all(by.className('picker-button')).get(1).click();
             browser.sleep(SLEEP);
-            expect(element(by.id('fruit')).element(by.className('multi-picker-text')).getText()).toEqual('Banana');
+            expect<any>(element(by.id('fruit')).element(by.className('multi-picker-text')).getText()).toEqual('Banana');
         });
 
         it('should pick 2 2-1 1-2-2',()=>{
             browser.sleep(SLEEP);
             // Default value
-            expect(element(by.id('separator')).element(by.className('multi-picker-text')).getText()).toEqual('1_1-2_1-2-1');
+            expect<any>(element(by.id('separator')).element(by.className('multi-picker-text')).getText()).toEqual('1_1-2_1-2-1');
             element(by.id('separator')).click();
             browser.sleep(SLEEP);
             // Pick 2
@@ -114,7 +114,7 @@ describe('MultiPicker', () => {
             // Pick Done
             element.all(by.className('picker-button')).get(1).click();
             browser.sleep(SLEEP);
-            expect(element(by.id('separator')).element(by.className('multi-picker-text')).getText()).toEqual('2_2-1_1-2-2');
+            expect<any>(element(by.id('separator')).element(by.className('multi-picker-text')).getText()).toEqual('2_2-1_1-2-2');
         });
 
         it('should pick 2-2-2 2-2 2', () => {
@@ -133,7 +133,7 @@ describe('MultiPicker', () => {
             // Pick Done
             element.all(by.className('picker-button')).get(1).click();
             browser.sleep(SLEEP);
-            expect(element(by.id('parent')).element(by.className('multi-picker-text')).getText()).toEqual('2-2-2 2-2 2');
+            expect<any>(element(by.id('parent')).element(by.className('multi-picker-text')).getText()).toEqual('2-2-2 2-2 2');
         })
     });
 });

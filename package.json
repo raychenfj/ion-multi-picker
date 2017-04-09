@@ -3,7 +3,10 @@
     "definition": "index.d.ts"
   },
   "scripts": {
-    "e2e": "tsc -p ./config/tsconfig.test.json && concurrently \"webdriver-manager start\" \"protractor ./config/protractor.conf.js\"",
+    "serve:e2e": "cd example && ionic serve",
+    "e2e": "tsc -p ./config/tsconfig.test.json && concurrently \"npm run serve:e2e\" \"sleep 30 && npm run protractor\" --kill-others --success first",
+    "preprotractor": "webdriver-manager update",
+    "protractor": "protractor ./config/protractor.conf.js",
     "test": "karma start ./config/karma.conf.js",
     "build": "gulp",
     "posttest": "remap-istanbul -i coverage/json/coverage-final.json -o coverage/html -t html"

@@ -1,5 +1,6 @@
 //jshint strict: false
 exports.config = {
+  directConnect: true,
 
   allScriptsTimeout: 11000,
 
