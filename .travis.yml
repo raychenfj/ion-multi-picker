@@ -14,7 +14,7 @@ before_script:
   - node_modules/protractor/bin/webdriver-manager update
 install:
   - npm install
-  - npm install ionic -g
+  - npm install ionic cordova -g
   - cd example
   - npm install
   - cd ..
