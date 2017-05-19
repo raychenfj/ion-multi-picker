@@ -174,7 +174,7 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
       let name = undefined;
       let alias = undefined;
       for (let i = 0; i < this.multiPickerColumns.length; i++) {
-        let index = this.multiPickerColumns.findIndex(col => col.parentCol === name || col.parentCol === alias);
+        let index = this.multiPickerColumns.findIndex(col => col.parentCol === name || (alias && col.parentCol === alias));
         name = this.multiPickerColumns[index].name;
         alias = this.multiPickerColumns[index].alias;
         if (index > -1) {
