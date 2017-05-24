@@ -1,5 +1,9 @@
 # Change Log
 
+## [2.0.1]
+### changed
+* fix bug that can't establish correct sequence between columns, ref to [issue#51](https://github.com/raychenfj/ion-multi-picker/issues/51)
+
 ## [2.0.0]
 ### changed
 * Update to ionic 3.0.1
