@@ -7,7 +7,7 @@ ion-multi-picker {
     overflow: hidden;
 }
 
-.multi-picker-text {
+.multi-picker-text,.multi-picker-placeholder {
     overflow: hidden;
     flex: 1;
     min-width: 16px;
@@ -16,6 +16,10 @@ ion-multi-picker {
     line-height: 1.2;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+
+.multi-picker-placeholder {
+    color:#999999
 }
 
 .multi-picker-disabled,

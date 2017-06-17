@@ -1,6 +1,6 @@
 import { AfterContentInit, Component, EventEmitter, forwardRef, HostListener, Input, OnDestroy, Optional, Output, ViewEncapsulation } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { Picker, PickerController, Form, Item, PickerColumn, PickerCmp, PickerColumnCmp } from 'ionic-angular';
+import { PickerController, Form, Item, PickerColumn, PickerCmp, PickerColumnCmp } from 'ionic-angular';
 import { MultiPickerColumn, MultiPickerOption } from './multi-picker-options';
 
 export const MULTI_PICKER_VALUE_ACCESSOR: any = {
@@ -11,15 +11,7 @@ export const MULTI_PICKER_VALUE_ACCESSOR: any = {
 
 @Component({
   selector: 'ion-multi-picker',
-  template: '<div class="multi-picker-text">{{_text}}</div>' +
-  '<button aria-haspopup="true" ' +
-  'type="button" ' +
-  '[id]="id" ' +
-  'ion-button="item-cover" ' +
-  '[attr.aria-labelledby]="_labelId" ' +
-  '[attr.aria-disabled]="_disabled" ' +
-  'class="item-cover">' +
-  '</button>',
+ 	templateUrl: 'multi-picker.html',
   host: {
     '[class.multi-picke-disabled]': '_disabled'
   },
@@ -64,6 +56,11 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
    * @input {string} the character to separate values from different columns
    */
   @Input() separator: string = ' ';
+
+  /**
+   * @input {string} the character to separate values from different columns
+   */
+  @Input() placeholder: string = '';
 
   /**
    * @output {any} Any expression to evaluate when the multi picker selection has changed.
@@ -138,9 +135,9 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
 
     if (this.multiPickerColumns.length > 1 && this._isDependent) {
       this.generateSequence();
-      for (let i = 0; i < picker.getColumns().length; i++) {
-        this.validate(picker);
-      }
+      // for (let i = 0; i < picker.getColumns().length; i++) {
+      //   this.validate(picker);
+      // }
 
       picker.ionChange.subscribe(() => {
         this.validate(picker);
@@ -151,6 +148,10 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
       this._pickerCmp = picker.instance;
       this._pickerColumnCmps = this._pickerCmp._cols.toArray();
       this._pickerColumnCmps.forEach(col => col.lastIndex = -1)
+
+      for (let i = 0; i < picker.getColumns().length; i++) {
+        this.validate(picker);
+      }
     });
 
     this._isOpen = true;
