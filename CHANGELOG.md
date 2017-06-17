@@ -1,5 +1,11 @@
 # Change Log
 
+## [2.0.2]
+### changed
+* fix bug that can't present the picker correctly when there is large amount of data, ref to [issue#50](https://github.com/raychenfj/ion-multi-picker/issues/50)
+### added
+* support placeholder
+
 ## [2.0.1]
 ### changed
 * fix bug that can't establish correct sequence between columns, ref to [issue#51](https://github.com/raychenfj/ion-multi-picker/issues/51)

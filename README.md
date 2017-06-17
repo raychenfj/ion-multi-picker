@@ -23,10 +23,6 @@ NPM: [https://www.npmjs.com/package/ion-multi-picker](https://www.npmjs.com/pack
 ## Demo
 Check out the live demo here: [https://raychenfj.github.io/ion-multi-picker/](https://raychenfj.github.io/ion-multi-picker/)
 
-## Supported Version
-
-Ionic2 3.0.1
-
 ## Installation
 ```
 npm install ion-multi-picker --save
@@ -249,6 +245,9 @@ The picker columns should be configured as below. The `parentCol` should be anot
 |multiPickerColumns| **Required**, configure multi picker columns | Array of  MultiPickerColumn| - | - |
 |item-content|**Required**, add this attribute so that this custom component can be display correctly under `ion-item` tag| - | - | - |
 |separator|Optional, charactor to separate value from each column| String | - | space |
+|cancelText|Optional, customize the cancel button text | String | - | Cancel
+|doneText|Optional, customize the done button text | String | - | Done
+|placeholder|Optional, set up a placeholder text when there is no option selected| String | - | - |
 
 ## Types
 
