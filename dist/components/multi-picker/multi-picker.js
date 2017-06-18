@@ -23,6 +23,7 @@ var MultiPicker = (function () {
         this.doneText = 'Done';
         this.multiPickerColumns = [];
         this.separator = ' ';
+        this.placeholder = '';
         this.ionChange = new core_1.EventEmitter();
         this.ionCancel = new core_1.EventEmitter();
         this._form.register(this);
@@ -73,9 +74,6 @@ var MultiPicker = (function () {
         this.generate(picker);
         if (this.multiPickerColumns.length > 1 && this._isDependent) {
             this.generateSequence();
-            for (var i = 0; i < picker.getColumns().length; i++) {
-                this.validate(picker);
-            }
             picker.ionChange.subscribe(function () {
                 _this.validate(picker);
             });
@@ -84,6 +82,9 @@ var MultiPicker = (function () {
             _this._pickerCmp = picker.instance;
             _this._pickerColumnCmps = _this._pickerCmp._cols.toArray();
             _this._pickerColumnCmps.forEach(function (col) { return col.lastIndex = -1; });
+            for (var i = 0; i < picker.getColumns().length; i++) {
+                _this.validate(picker);
+            }
         });
         this._isOpen = true;
         picker.onDidDismiss(function () {
@@ -100,7 +101,7 @@ var MultiPicker = (function () {
             var name_1 = undefined;
             var alias_1 = undefined;
             for (var i = 0; i < this.multiPickerColumns.length; i++) {
-                var index = this.multiPickerColumns.findIndex(function (col) { return col.parentCol === name_1 || col.parentCol === alias_1; });
+                var index = this.multiPickerColumns.findIndex(function (col) { return col.parentCol === name_1 || (alias_1 && col.parentCol === alias_1); });
                 name_1 = this.multiPickerColumns[index].name;
                 alias_1 = this.multiPickerColumns[index].alias;
                 if (index > -1) {
@@ -301,15 +302,7 @@ var MultiPicker = (function () {
 MultiPicker.decorators = [
     { type: core_1.Component, args: [{
                 selector: 'ion-multi-picker',
-                template: '<div class="multi-picker-text">{{_text}}</div>' +
-                    '<button aria-haspopup="true" ' +
-                    'type="button" ' +
-                    '[id]="id" ' +
-                    'ion-button="item-cover" ' +
-                    '[attr.aria-labelledby]="_labelId" ' +
-                    '[attr.aria-disabled]="_disabled" ' +
-                    'class="item-cover">' +
-                    '</button>',
+                templateUrl: 'multi-picker.html',
                 host: {
                     '[class.multi-picke-disabled]': '_disabled'
                 },
@@ -327,6 +320,7 @@ MultiPicker.propDecorators = {
     'doneText': [{ type: core_1.Input },],
     'multiPickerColumns': [{ type: core_1.Input },],
     'separator': [{ type: core_1.Input },],
+    'placeholder': [{ type: core_1.Input },],
     'ionChange': [{ type: core_1.Output },],
     'ionCancel': [{ type: core_1.Output },],
     '_click': [{ type: core_1.HostListener, args: ['click', ['$event'],] },],

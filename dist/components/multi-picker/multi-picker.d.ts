@@ -22,6 +22,7 @@ export declare class MultiPicker implements AfterContentInit, ControlValueAccess
     doneText: string;
     multiPickerColumns: MultiPickerColumn[];
     separator: string;
+    placeholder: string;
     ionChange: EventEmitter<any>;
     ionCancel: EventEmitter<any>;
     constructor(_form: Form, _item: Item, _pickerCtrl: PickerController);
