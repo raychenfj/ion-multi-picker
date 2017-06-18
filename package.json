@@ -82,7 +82,7 @@
   },
   "name": "ion-multi-picker",
   "description": "Ion Multi Item Picker--An Ionic2 Custom Picker Component",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
   "repository": {

@@ -247,7 +247,7 @@ The picker columns should be configured as below. The `parentCol` should be anot
 |separator|Optional, charactor to separate value from each column| String | - | space |
 |cancelText|Optional, customize the cancel button text | String | - | Cancel
 |doneText|Optional, customize the done button text | String | - | Done
-|placeholder|Optional, set up a placeholder text when there is no option selected| String | - | - |
+|placeholder (since 2.0.2)|Optional, set up a placeholder text when there is no option selected| String | - | - |
 
 ## Types
 
