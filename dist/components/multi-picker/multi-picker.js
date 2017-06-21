@@ -302,7 +302,7 @@ var MultiPicker = (function () {
 MultiPicker.decorators = [
     { type: core_1.Component, args: [{
                 selector: 'ion-multi-picker',
-                templateUrl: 'multi-picker.html',
+                template: "<div class=\"multi-picker-placeholder\" *ngIf=\"placeholder && !_text\">{{placeholder}}</div>\n             <div class=\"multi-picker-text\" *ngIf=\"!placeholder || _text\">{{_text}}</div>\n             <button aria-haspopup=\"true\" type=\"button\" [id]=\"id\" ion-button=\"item-cover\" [attr.aria-labelledby]=\"_labelId\" [attr.aria-disabled]=\"_disabled\" class=\"item-cover\"></button>",
                 host: {
                     '[class.multi-picke-disabled]': '_disabled'
                 },

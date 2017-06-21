@@ -1,5 +1,9 @@
 # Change Log
 
+## [2.0.3]
+### changed
+* fix critiical issue that can't html template [issue#56](https://github.com/raychenfj/ion-multi-picker/issues/56)
+
 ## [2.0.2]
 ### changed
 * fix bug that can't present the picker correctly when there is large amount of data, ref to [issue#50](https://github.com/raychenfj/ion-multi-picker/issues/50)

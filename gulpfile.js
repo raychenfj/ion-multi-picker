@@ -11,6 +11,10 @@ gulp.task('del', function() {
     return del(['dist', '*.scss', '*.tgz']);
 });
 
+gulp.task('copyhtml',function(){
+    gulp.src('src/components/multi-picker/*.html').pipe(gulp.dest('dist/components/multi-picker'));
+})
+
 gulp.task('copyscss', function() {
     gulp.src('src/components/multi-picker/*.scss').pipe(gulp.dest('dist/components/multi-picker'));
 });
@@ -25,7 +29,7 @@ gulp.task('post', function(){
 
 
 gulp.task('default', function() {
-    runSequence('del', 'copyscss', 'ngc', 'pack','post')
+    runSequence('del','copyhtml', 'copyscss', 'ngc', 'pack','post')
 });
 
 
