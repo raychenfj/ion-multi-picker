@@ -1,8 +1,12 @@
 # Change Log
 
+## [2.0.4]
+### changed
+* support ionic lazy loading [issue#49](https://github.com/raychenfj/ion-multi-picker/issues/49) and [issue#57](https://github.com/raychenfj/ion-multi-picker/issues/57)
+
 ## [2.0.3]
 ### changed
-* fix critiical issue that can't html template [issue#56](https://github.com/raychenfj/ion-multi-picker/issues/56)
+* fix critiical issue that can't load html template [issue#56](https://github.com/raychenfj/ion-multi-picker/issues/56)
 
 ## [2.0.2]
 ### changed
