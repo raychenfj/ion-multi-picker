@@ -1,14 +1,13 @@
 import { Component } from '@angular/core';
+import { IonicPage } from 'ionic-angular'
 
-import { SimpleExamplePage } from '../simple/simple';
-import { AdvancedExamplePage } from '../advanced/advanced';
-
+@IonicPage()
 @Component({
   templateUrl: 'tabs.html'
 })
 export class TabsPage {
-  simple:any = SimpleExamplePage;
-  advanced:any = AdvancedExamplePage;
+  simple: any = 'SimpleExamplePage';
+  advanced: any = 'AdvancedExamplePage';
 
   constructor() {
 
