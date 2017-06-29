@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, IonicPage } from 'ionic-angular';
 import { convertEnumToColumn } from 'ion-multi-picker';
 import citise from '../../assets/chinese-cities.json';
 
@@ -7,6 +7,7 @@ enum Fruit {
 	Apple, Orange, Melon, Banana, Pear,
 }
 
+@IonicPage()
 @Component({
 	templateUrl: 'advanced.html',
 })

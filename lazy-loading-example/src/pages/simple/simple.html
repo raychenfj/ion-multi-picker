@@ -1,0 +1,15 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>Simple Example</ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content padding class="simple">
+    <ion-item>
+        <ion-label>Simple Picker</ion-label>
+        <ion-multi-picker id='simple' item-content [multiPickerColumns]="simpleColumns"></ion-multi-picker>
+    </ion-item>
+    <ion-item>
+        <ion-label>Placeholder</ion-label>
+        <ion-multi-picker id='placeholder' item-content [multiPickerColumns]="simpleColumns" placeholder="placeholder"></ion-multi-picker>
+    </ion-item>
+</ion-content>

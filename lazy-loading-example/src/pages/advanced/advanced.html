@@ -1,0 +1,42 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>
+            Advanced Example
+        </ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding class="advanced">
+    <ion-item>
+        <ion-label>Independent Picker</ion-label>
+        <ion-multi-picker item-content [multiPickerColumns]="independentColumns"></ion-multi-picker>
+    </ion-item>
+    <ion-item>
+        <ion-label>Dependent Picker</ion-label>
+        <ion-multi-picker id='advanced' item-content [multiPickerColumns]="dependentColumns"></ion-multi-picker>
+    </ion-item>
+    <ion-item>
+        <ion-label>Disabled Picker</ion-label>
+        <ion-multi-picker item-content [multiPickerColumns]="dependentColumns" [disabled]="true"></ion-multi-picker>
+    </ion-item>
+    <ion-item>
+        <ion-label>Default Value</ion-label>
+        <ion-multi-picker id="default" [(ngModel)]="default" item-content [multiPickerColumns]="dependentColumns"></ion-multi-picker>
+    </ion-item>
+    <ion-item>
+        <ion-label>Fruit Picker</ion-label>
+        <ion-multi-picker id="fruit" [(ngModel)]="fruit" item-content [multiPickerColumns]="fruits"></ion-multi-picker>
+    </ion-item>
+    <ion-item>
+        <ion-label>Parent Columns</ion-label>
+        <ion-multi-picker id="parent" item-content [multiPickerColumns]="parentColumns"></ion-multi-picker>
+    </ion-item>
+    <ion-item>
+        <ion-label>With Separator</ion-label>
+        <ion-multi-picker id="separator" [(ngModel)]="sepVal" item-content [multiPickerColumns]="sepColumns" [separator]="separator"></ion-multi-picker>
+    </ion-item>
+    <ion-item>
+        <ion-label>Chinese City</ion-label>
+        <ion-multi-picker id="cities" item-content [multiPickerColumns]="cityColumns"></ion-multi-picker>
+    </ion-item>
+</ion-content>
