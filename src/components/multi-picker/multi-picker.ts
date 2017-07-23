@@ -34,6 +34,7 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
   _pickerColumnCmps: PickerColumnCmp[];
   _isDependent: boolean = false;
   _sequence: number[] = [];
+  _originSelectedIndexes: number[] = []
 
   /**
    * @private
@@ -51,6 +52,11 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
   @Input() doneText: string = 'Done';
 
   /**
+   * @input {string} The text to display on the picker's "Reset" button. Default: `Reset`.
+   */
+  @Input() resetText: string = 'Reset';
+
+  /**
    * @input {MultiPickerColumn} The columns display in the picker's panel.
    */
   @Input() multiPickerColumns: MultiPickerColumn[] = [];
@@ -64,6 +70,11 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
    * @input {string} the character to separate values from different columns
    */
   @Input() placeholder: string = '';
+
+  /**
+   * @input {boolean} display an additional reset button
+   */
+  @Input() showReset: Boolean = false;
 
   /**
    * @output {any} Any expression to evaluate when the multi picker selection has changed.
@@ -115,22 +126,10 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
     let pickerOptions: any = {};
 
     let picker = this._pickerCtrl.create(pickerOptions);
-    pickerOptions.buttons = [
-      {
-        text: this.cancelText,
-        role: 'cancel',
-        handler: () => {
-          this.ionCancel.emit(null);
-        }
-      },
-      {
-        text: this.doneText,
-        handler: (data: any) => {
-          this.onChange(data);
-          this.ionChange.emit(data);
-        }
-      }
-    ];
+    const cancel = { text: this.cancelText, role: 'multi-picker-cancel', handler: () => { this.ionCancel.emit(null); } }
+    const reset = { text: this.resetText, role: 'multi-picker-reset', handler: (data: any) => { this.reset(); return false; } }
+    const done = { text: this.doneText, handler: (data: any) => { this.onChange(data); this.ionChange.emit(data); } }
+    pickerOptions.buttons = this.showReset ? [cancel, reset, done] : [cancel, done];
 
     // Determine if the picker is a dependent picker
     this._isDependent = this.multiPickerColumns.some(col => col.options.some(opt => opt.parentVal));
@@ -193,6 +192,7 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
    * @private
    */
   generate(picker: any) {
+    this._originSelectedIndexes = [];
     let values = this._value.toString().split(this.separator);
     this.multiPickerColumns.forEach((col, index) => {
       // Find the selected options, use its parentVal later
@@ -216,6 +216,7 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
       // There isn't default value, set the selectedIndex to 0
       selectedIndex = selectedIndex === -1 ? 0 : selectedIndex;
       column.selectedIndex = selectedIndex;
+      this._originSelectedIndexes.push(selectedIndex);
 
       picker.addColumn(column);
     });
@@ -248,15 +249,15 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
       }
       if (curParentVal != parentOption.value) {
         curCol.options.splice(0, curCol.options.length);
+        // update column options
         this.multiPickerColumns[i].options.forEach(option => {
           if (option.parentVal == parentOption.value) {
             curCol.options.push({ text: option.text, value: option.value, disabled: false });
-
-            // Magic, using timeout to set selectedIndex after rendering
-            let selectedIndex = curCol.selectedIndex >= curCol.options.length ? curCol.options.length - 1 : curCol.selectedIndex;
-            setTimeout(() => this._pickerColumnCmps[i].setSelected(selectedIndex, 150), 0);
           }
         });
+        let selectedIndex = curCol.selectedIndex >= curCol.options.length ? curCol.options.length - 1 : curCol.selectedIndex;
+        // Magic, using timeout to set selectedIndex after rendering
+        setTimeout(() => this._pickerColumnCmps[i].setSelected(selectedIndex, 150), 0);
       }
     }
   }
@@ -459,5 +460,23 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
       }
     });
     return value;
+  }
+
+  /**
+   * @private reset the selection
+   */
+  reset() {
+    if (!this._pickerColumnCmps) return
+
+    if (this._isDependent) {
+      const index = this._sequence.find(index => this._pickerColumnCmps[index].col.selectedIndex !== this._originSelectedIndexes[index])
+
+      if (index === undefined) return
+
+      this._originSelectedIndexes.forEach((index, i) => this._pickerColumnCmps[i].col.selectedIndex = index)
+      this._pickerColumnCmps[index].setSelected(this._originSelectedIndexes[index], 0)
+    } else {
+      this._originSelectedIndexes.forEach((index, i) => this._pickerColumnCmps[i].setSelected(index, 0))
+    }
   }
 }

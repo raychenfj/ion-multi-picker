@@ -5,7 +5,7 @@ import { MyApp } from './app.component';
 import { TabsPage } from '../pages/tabs/tabs';
 import { SimpleExamplePage } from '../pages/simple/simple';
 import { AdvancedExamplePage } from '../pages/advanced/advanced';
-import { MultiPickerModule } from 'ion-multi-picker';
+import { MultiPickerModule } from '../../../src';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
