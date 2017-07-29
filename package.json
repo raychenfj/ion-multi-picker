@@ -81,11 +81,12 @@
     "url-loader": "^0.5.7",
     "webpack": "2.1.0-beta.25",
     "webpack-dashboard": "0.3.0",
-    "zone.js": "^0.8.4"
+    "zone.js": "^0.8.4",
+    "@types/handlebars": "4.0.33"
   },
   "name": "ion-multi-picker",
   "description": "Ion Multi Item Picker--An Ionic2 Custom Picker Component",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
   "repository": {

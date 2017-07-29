@@ -248,6 +248,8 @@ The picker columns should be configured as below. The `parentCol` should be anot
 |cancelText|Optional, customize the cancel button text | String | - | Cancel
 |doneText|Optional, customize the done button text | String | - | Done
 |placeholder (since 2.0.2)|Optional, set up a placeholder text when there is no option selected| String | - | - |
+|showReset (since 2.1.1)|Optional, add an additional reset button next to the cancel button| Bool | - | false
+|resetText (since 2.1.1)|Optional, customize the reset button text| String | - | Reset |
 
 ## Types
 

@@ -1,6 +1,11 @@
 # Change Log
 
-## [2.0.4]
+## [2.1.1]
+### added
+* add an additional reset button [issue#41](https://github.com/raychenfj/ion-multi-picker/issues/41)
+
+
+## [2.1.0]
 ### changed
 * support ionic lazy loading [issue#49](https://github.com/raychenfj/ion-multi-picker/issues/49) and [issue#57](https://github.com/raychenfj/ion-multi-picker/issues/57)
 
