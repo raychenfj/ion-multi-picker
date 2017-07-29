@@ -9,7 +9,8 @@
     "protractor": "protractor ./config/protractor.conf.js",
     "test": "karma start ./config/karma.conf.js",
     "build": "gulp",
-    "posttest": "remap-istanbul -i coverage/json/coverage-final.json -o coverage/html -t html"
+    "posttest": "remap-istanbul -i coverage/json/coverage-final.json -o coverage/html -t html",
+    "prepare":"npm run build"
   },
   "files": [
     "dist"
