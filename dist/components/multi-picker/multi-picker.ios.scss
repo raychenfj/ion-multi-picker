@@ -14,6 +14,17 @@ $multi-picker-ios-padding-left:        $item-ios-padding-left !default;
   padding: $multi-picker-ios-padding-top $multi-picker-ios-padding-right $multi-picker-ios-padding-bottom $multi-picker-ios-padding-left;
 }
 
+.ios {
+  .picker-toolbar-multi-picker-cancel {
+    flex: 0;
+    text-align: start;
+  }
+
+  .picker-toolbar-multi-picker-reset {
+    text-align: start;
+  }
+}
+
 // Generate iOS Label colors
 // --------------------------------------------------
 @each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {

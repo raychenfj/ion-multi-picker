@@ -19,11 +19,14 @@ var MultiPicker = (function () {
         this._isOpen = false;
         this._isDependent = false;
         this._sequence = [];
+        this._originSelectedIndexes = [];
         this.cancelText = 'Cancel';
         this.doneText = 'Done';
+        this.resetText = 'Reset';
         this.multiPickerColumns = [];
         this.separator = ' ';
         this.placeholder = '';
+        this.showReset = false;
         this.ionChange = new core_1.EventEmitter();
         this.ionCancel = new core_1.EventEmitter();
         this._form.register(this);
@@ -54,22 +57,10 @@ var MultiPicker = (function () {
         }
         var pickerOptions = {};
         var picker = this._pickerCtrl.create(pickerOptions);
-        pickerOptions.buttons = [
-            {
-                text: this.cancelText,
-                role: 'cancel',
-                handler: function () {
-                    _this.ionCancel.emit(null);
-                }
-            },
-            {
-                text: this.doneText,
-                handler: function (data) {
-                    _this.onChange(data);
-                    _this.ionChange.emit(data);
-                }
-            }
-        ];
+        var cancel = { text: this.cancelText, role: 'multi-picker-cancel', handler: function () { _this.ionCancel.emit(null); } };
+        var reset = { text: this.resetText, role: 'multi-picker-reset', handler: function (data) { _this.reset(); return false; } };
+        var done = { text: this.doneText, handler: function (data) { _this.onChange(data); _this.ionChange.emit(data); } };
+        pickerOptions.buttons = this.showReset ? [cancel, reset, done] : [cancel, done];
         this._isDependent = this.multiPickerColumns.some(function (col) { return col.options.some(function (opt) { return opt.parentVal; }); });
         this.generate(picker);
         if (this.multiPickerColumns.length > 1 && this._isDependent) {
@@ -112,6 +103,7 @@ var MultiPicker = (function () {
     };
     MultiPicker.prototype.generate = function (picker) {
         var _this = this;
+        this._originSelectedIndexes = [];
         var values = this._value.toString().split(this.separator);
         this.multiPickerColumns.forEach(function (col, index) {
             var selectedOpt = col.options.find(function (option) { return option.value == values[index]; }) || col.options[0];
@@ -127,6 +119,7 @@ var MultiPicker = (function () {
             var selectedIndex = column.options.findIndex(function (option) { return option.value == values[index]; });
             selectedIndex = selectedIndex === -1 ? 0 : selectedIndex;
             column.selectedIndex = selectedIndex;
+            _this._originSelectedIndexes.push(selectedIndex);
             picker.addColumn(column);
         });
         this.divyColumns(picker);
@@ -154,10 +147,10 @@ var MultiPicker = (function () {
                 this_1.multiPickerColumns[i].options.forEach(function (option) {
                     if (option.parentVal == parentOption.value) {
                         curCol.options.push({ text: option.text, value: option.value, disabled: false });
-                        var selectedIndex_1 = curCol.selectedIndex >= curCol.options.length ? curCol.options.length - 1 : curCol.selectedIndex;
-                        setTimeout(function () { return _this._pickerColumnCmps[i].setSelected(selectedIndex_1, 150); }, 0);
                     }
                 });
+                var selectedIndex_1 = curCol.selectedIndex >= curCol.options.length ? curCol.options.length - 1 : curCol.selectedIndex;
+                setTimeout(function () { return _this._pickerColumnCmps[i].setSelected(selectedIndex_1, 150); }, 0);
             }
         };
         var this_1 = this;
@@ -297,6 +290,21 @@ var MultiPicker = (function () {
         });
         return value;
     };
+    MultiPicker.prototype.reset = function () {
+        var _this = this;
+        if (!this._pickerColumnCmps)
+            return;
+        if (this._isDependent) {
+            var index = this._sequence.find(function (index) { return _this._pickerColumnCmps[index].col.selectedIndex !== _this._originSelectedIndexes[index]; });
+            if (index === undefined)
+                return;
+            this._originSelectedIndexes.forEach(function (index, i) { return _this._pickerColumnCmps[i].col.selectedIndex = index; });
+            this._pickerColumnCmps[index].setSelected(this._originSelectedIndexes[index], 0);
+        }
+        else {
+            this._originSelectedIndexes.forEach(function (index, i) { return _this._pickerColumnCmps[i].setSelected(index, 0); });
+        }
+    };
     return MultiPicker;
 }());
 MultiPicker.decorators = [
@@ -318,9 +326,11 @@ MultiPicker.ctorParameters = function () { return [
 MultiPicker.propDecorators = {
     'cancelText': [{ type: core_1.Input },],
     'doneText': [{ type: core_1.Input },],
+    'resetText': [{ type: core_1.Input },],
     'multiPickerColumns': [{ type: core_1.Input },],
     'separator': [{ type: core_1.Input },],
     'placeholder': [{ type: core_1.Input },],
+    'showReset': [{ type: core_1.Input },],
     'ionChange': [{ type: core_1.Output },],
     'ionCancel': [{ type: core_1.Output },],
     '_click': [{ type: core_1.HostListener, args: ['click', ['$event'],] },],

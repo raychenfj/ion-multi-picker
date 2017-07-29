@@ -17,12 +17,15 @@ export declare class MultiPicker implements AfterContentInit, ControlValueAccess
     _pickerColumnCmps: PickerColumnCmp[];
     _isDependent: boolean;
     _sequence: number[];
+    _originSelectedIndexes: number[];
     id: string;
     cancelText: string;
     doneText: string;
+    resetText: string;
     multiPickerColumns: MultiPickerColumn[];
     separator: string;
     placeholder: string;
+    showReset: Boolean;
     ionChange: EventEmitter<any>;
     ionCancel: EventEmitter<any>;
     constructor(_form: Form, _item: Item, _pickerCtrl: PickerController);
@@ -48,4 +51,5 @@ export declare class MultiPicker implements AfterContentInit, ControlValueAccess
     onTouched(): void;
     ngOnDestroy(): void;
     convertObjectToString(newData: any): string;
+    reset(): void;
 }

@@ -303,7 +303,7 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
     });
 
     if (columns.length === 2) {
-      var width = Math.max(columns[0], columns[1]);
+      const width = Math.max(columns[0], columns[1]);
       if (!pickerColumns[0].columnWidth) {
         pickerColumns[0].columnWidth = `${width * 16}px`;
       }
@@ -312,7 +312,7 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
       }
 
     } else if (columns.length === 3) {
-      var width = Math.max(columns[0], columns[2]);
+      const width = Math.max(columns[0], columns[2]);
       if (!pickerColumns[1].columnWidth) {
         pickerColumns[1].columnWidth = `${columns[1] * 16}px`;
       }
