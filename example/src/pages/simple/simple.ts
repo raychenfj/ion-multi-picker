@@ -6,6 +6,7 @@ import {NavController} from 'ionic-angular';
 })
 export class SimpleExamplePage implements OnInit {
 	simpleColumns: any[];
+	timeStarts: any;
 
 	constructor(private navCtrl: NavController) {
 		this.simpleColumns = [

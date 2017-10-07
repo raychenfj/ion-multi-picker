@@ -36,5 +36,6 @@ test/
 *.tgz
 *.zip
 *.ngfactory.ts
+.sourcemaps
 package/
 typings

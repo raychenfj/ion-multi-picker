@@ -12,4 +12,8 @@
         <ion-label>Placeholder</ion-label>
         <ion-multi-picker id='placeholder' item-content [multiPickerColumns]="simpleColumns" placeholder="placeholder"></ion-multi-picker>
     </ion-item>
+    <ion-item>
+        <ion-label>Start Time</ion-label>
+        <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="timeStarts"></ion-datetime>
+    </ion-item>
 </ion-content>
