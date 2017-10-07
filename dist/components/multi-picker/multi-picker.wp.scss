@@ -16,7 +16,7 @@ $multi-picker-wp-padding-left:        $item-wp-padding-left !default;
 $multi-picker-wp-border-width:        2px !default;
 $multi-picker-wp-border-color:        $input-wp-border-color !default;
 
-.wp multi-picker {
+.wp ion-multi-picker {
   padding: $multi-picker-wp-padding-top $multi-picker-wp-padding-right $multi-picker-wp-padding-bottom $multi-picker-wp-padding-left;
 
   min-width: $multi-picker-wp-min-width;
