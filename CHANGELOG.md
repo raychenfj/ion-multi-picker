@@ -1,5 +1,9 @@
 # Change Log
 
+## [2.1.2]
+### changed
+* fix style issue: the content text doesn't align with datetime component [issue#67](https://github.com/raychenfj/ion-multi-picker/issues/67)
+
 ## [2.1.1]
 ### added
 * add an additional reset button [issue#41](https://github.com/raychenfj/ion-multi-picker/issues/41)
