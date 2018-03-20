@@ -104,7 +104,7 @@ var MultiPicker = (function () {
     MultiPicker.prototype.generate = function (picker) {
         var _this = this;
         this._originSelectedIndexes = [];
-        var values = this._value.toString().split(this.separator);
+        var values = this._value && this._value.toString().split(this.separator) || '';
         this.multiPickerColumns.forEach(function (col, index) {
             var selectedOpt = col.options.find(function (option) { return option.value == values[index]; }) || col.options[0];
             var options = col.options;
@@ -174,8 +174,13 @@ var MultiPicker = (function () {
         pickerColumns.forEach(function (col, i) {
             columns.push(0);
             col.options.forEach(function (opt) {
-                if (opt.text.replace(/[^\x00-\xff]/g, "01").length > columns[i]) {
-                    columns[i] = opt.text.replace(/[^\x00-\xff]/g, "01").length;
+                if (opt.text) {
+                    if (typeof opt.text !== 'string') {
+                        opt.text = opt.text.toString();
+                    }
+                    if (opt.text.replace(/[^\x00-\xff]/g, "01").length > columns[i]) {
+                        columns[i] = opt.text.replace(/[^\x00-\xff]/g, "01").length;
+                    }
                 }
             });
         });
@@ -227,7 +232,7 @@ var MultiPicker = (function () {
     MultiPicker.prototype.updateText = function () {
         var _this = this;
         this._text = '';
-        var values = this._value.toString().split(this.separator);
+        var values = this._value && this._value.toString().split(this.separator) || '';
         this.multiPickerColumns.forEach(function (col, index) {
             var option = col.options.find(function (option) { return option.value.toString() === values[index]; });
             if (option) {
