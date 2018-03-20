@@ -92,7 +92,7 @@
   "typings": "./dist/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/a2net/ion-multi-picker.git"
+    "url": "git+https://github.com/raychenfj/ion-multi-picker.git"
   },
   "keywords": [
     "ionic",
