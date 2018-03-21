@@ -92,7 +92,7 @@
   "typings": "./dist/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/raychenfj/ion-multi-picker.git"
+    "url": "git+https://github.com/a2net/ion-multi-picker.git"
   },
   "keywords": [
     "ionic",
@@ -104,8 +104,8 @@
   "author": "raychenfj",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/raychenfj/ion-multi-picker/issues"
+    "url": "https://github.com/a2net/ion-multi-picker/issues"
   },
-  "homepage": "https://github.com/raychenfj/ion-multi-picker#readme",
+  "homepage": "https://github.com/a2net/ion-multi-picker#readme",
   "dependencies": {}
 }
