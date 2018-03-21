@@ -193,7 +193,7 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
    */
   generate(picker: any) {
     this._originSelectedIndexes = [];
-    let values = this._value.toString().split(this.separator);
+    let values = this._value && this._value.toString().split(this.separator) || '';
     this.multiPickerColumns.forEach((col, index) => {
       // Find the selected options, use its parentVal later
       let selectedOpt = col.options.find(option => option.value == values[index]) || col.options[0];
@@ -295,9 +295,14 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
       columns.push(0);
 
       col.options.forEach(opt => {
-        if (opt.text.replace(/[^\x00-\xff]/g, "01").length > columns[i]) {
-          columns[i] = opt.text.replace(/[^\x00-\xff]/g, "01").length;
-        }
+        if (opt.text) {
+          if (typeof opt.text !== 'string') {
+              opt.text = opt.text.toString();
+          }
+          if (opt.text.replace(/[^\x00-\xff]/g, "01").length > columns[i]) {
+              columns[i] = opt.text.replace(/[^\x00-\xff]/g, "01").length;
+          }
+      }
       });
 
     });
@@ -363,7 +368,7 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
    */
   updateText() {
     this._text = '';
-    let values: string[] = this._value.toString().split(this.separator);
+    let values: string[] = this._value && this._value.toString().split(this.separator) || '';
     this.multiPickerColumns.forEach((col, index) => {
       let option = col.options.find(option => option.value.toString() === values[index]);
       if (option) {
