@@ -77,6 +77,11 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
   @Input() showReset: Boolean = false;
 
   /**
+ * @input {string} css class to add to the picker
+ */
+  @Input() cssClass: string = '';
+
+  /**
    * @output {any} Any expression to evaluate when the multi picker selection has changed.
    */
   @Output() ionChange: EventEmitter<any> = new EventEmitter();
@@ -124,6 +129,10 @@ export class MultiPicker implements AfterContentInit, ControlValueAccessor, OnDe
     }
 
     let pickerOptions: any = {};
+
+    if(this.cssClass) {
+      pickerOptions.cssClass = this.cssClass;
+    }
 
     let picker = this._pickerCtrl.create(pickerOptions);
     const cancel = { text: this.cancelText, role: 'multi-picker-cancel', handler: () => { this.ionCancel.emit(null); } }

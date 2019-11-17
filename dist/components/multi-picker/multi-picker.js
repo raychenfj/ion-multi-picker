@@ -27,6 +27,7 @@ var MultiPicker = (function () {
         this.separator = ' ';
         this.placeholder = '';
         this.showReset = false;
+        this.cssClass = '';
         this.ionChange = new core_1.EventEmitter();
         this.ionCancel = new core_1.EventEmitter();
         this._form.register(this);
@@ -56,6 +57,9 @@ var MultiPicker = (function () {
             return;
         }
         var pickerOptions = {};
+        if (this.cssClass) {
+            pickerOptions.cssClass = this.cssClass;
+        }
         var picker = this._pickerCtrl.create(pickerOptions);
         var cancel = { text: this.cancelText, role: 'multi-picker-cancel', handler: function () { _this.ionCancel.emit(null); } };
         var reset = { text: this.resetText, role: 'multi-picker-reset', handler: function (data) { _this.reset(); return false; } };
@@ -331,6 +335,7 @@ MultiPicker.propDecorators = {
     'separator': [{ type: core_1.Input },],
     'placeholder': [{ type: core_1.Input },],
     'showReset': [{ type: core_1.Input },],
+    'cssClass': [{ type: core_1.Input },],
     'ionChange': [{ type: core_1.Output },],
     'ionCancel': [{ type: core_1.Output },],
     '_click': [{ type: core_1.HostListener, args: ['click', ['$event'],] },],
