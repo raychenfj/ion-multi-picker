@@ -34,6 +34,7 @@
     "@ionic-native/status-bar": "3.4.2",
     "@ionic/storage": "2.0.1",
     "@types/handlebars": "4.0.33",
+    "@types/jasmine": "^2.5.54",
     "@types/lodash": "^4.14.112",
     "angular2-template-loader": "^0.6.2",
     "awesome-typescript-loader": "^3.1.2",
