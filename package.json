@@ -68,7 +68,7 @@
     "null-loader": "^0.1.1",
     "phantomjs-prebuilt": "^2.1.13",
     "postcss-loader": "^1.1.0",
-    "protractor": "4.0.3",
+    "protractor": "^4.0.14",
     "raw-loader": "^0.5.1",
     "remap-istanbul": "^0.6.4",
     "run-sequence": "^1.2.2",
@@ -109,5 +109,8 @@
     "url": "https://github.com/raychenfj/ion-multi-picker/issues"
   },
   "homepage": "https://github.com/raychenfj/ion-multi-picker#readme",
-  "dependencies": {}
+  "dependencies": {},
+  "engines": {
+    "node": ">=8.0.0"
+  }
 }
