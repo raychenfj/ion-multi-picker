@@ -1,5 +1,9 @@
 # Change Log
 
+## [2.1.3]
+### changed
+* feature: can set cssClass  [PR#98](https://github.com/raychenfj/ion-multi-picker/pull/98)
+
 ## [2.1.2]
 ### changed
 * fix style issue: the content text doesn't align with datetime component [issue#67](https://github.com/raychenfj/ion-multi-picker/issues/67)
