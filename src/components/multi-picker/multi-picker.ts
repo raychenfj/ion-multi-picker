@@ -16,7 +16,7 @@ export const MULTI_PICKER_VALUE_ACCESSOR: any = {
              <div class="multi-picker-text" *ngIf="!placeholder || _text">{{_text}}</div>
              <button aria-haspopup="true" type="button" [id]="id" ion-button="item-cover" [attr.aria-labelledby]="_labelId" [attr.aria-disabled]="_disabled" class="item-cover"></button>`,
   host: {
-    '[class.multi-picke-disabled]': '_disabled'
+    '[class.multi-picker-disabled]': '_disabled'
   },
 
   providers: [MULTI_PICKER_VALUE_ACCESSOR],
